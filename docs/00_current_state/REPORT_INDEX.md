@@ -1,39 +1,25 @@
 # Report Index — WM1 / AEGIS vNext
 
-This index points to the Markdown reports archived in `docs/03_reports/`.
+This index lists the **currently archived core reports** in this repository. Historical/intermediate reports that are not listed here remain in the project workspace/Kingston lineage and can be added later if needed.
 
-## Reports
-- [`nhiem_vnext.wm1_aegis_incremental_candidate_live_mechanism_qualification.md`](../03_reports/aegis/nhiem_vnext.wm1_aegis_incremental_candidate_live_mechanism_qualification.md)
-- [`nhiem_vnext.wm1_v2r1_atomic_sensorcombined_provenance_wire_implementation_and_live_8session_soak.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_atomic_sensorcombined_provenance_wire_implementation_and_live_8session_soak.md)
-- [`nhiem_vnext.wm1_v2r1_atomic_timesync_provenance_and_live_campaign_equivalent_soak.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_atomic_timesync_provenance_and_live_campaign_equivalent_soak.md)
-- [`nhiem_vnext.wm1_v2r1_canonical_sensorcombined_timestamp_mapping_discontinuity_root_cause_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_canonical_sensorcombined_timestamp_mapping_discontinuity_root_cause_closure.md)
-- [`nhiem_vnext.wm1_v2r1_cross_topic_uxrce_update_head_of_line_blocking_root_cause_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_cross_topic_uxrce_update_head_of_line_blocking_root_cause_closure.md)
-- [`nhiem_vnext.wm1_v2r1_dual_domain_timestamp_contract_implementation_and_qualification.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_dual_domain_timestamp_contract_implementation_and_qualification.md)
-- [`nhiem_vnext.wm1_v2r1_e8_pending_ack_precedence_and_fresh_retry_readiness_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_e8_pending_ack_precedence_and_fresh_retry_readiness_closure.md)
-- [`nhiem_vnext.wm1_v2r1_exposure_continuity_and_h1000_source_validity_root_cause.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_exposure_continuity_and_h1000_source_validity_root_cause.md)
-- [`nhiem_vnext.wm1_v2r1_fresh_prospective_randomized_pilot_retry.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_fresh_prospective_randomized_pilot_retry.md)
-- [`nhiem_vnext.wm1_v2r1_fresh_prospective_randomized_pilot_retry_after_e8_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_fresh_prospective_randomized_pilot_retry_after_e8_closure.md)
-- [`nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_atomic_sensorcombined_provenance.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_atomic_sensorcombined_provenance.md)
-- [`nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_post_session_qualifier_repair.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_post_session_qualifier_repair.md)
-- [`nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_statebank_aura_bootstrap_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_statebank_aura_bootstrap_closure.md)
-- [`nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_strict_json_serialization_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_strict_json_serialization_closure.md)
-- [`nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_uxrce_logging_hol_repair.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_uxrce_logging_hol_repair.md)
-- [`nhiem_vnext.wm1_v2r1_historical_gap_acceptance_and_prospective_pilot_readiness_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_historical_gap_acceptance_and_prospective_pilot_readiness_closure.md)
-- [`nhiem_vnext.wm1_v2r1_kingston_recovery_and_sensor_pipeline_boundary_classification.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_kingston_recovery_and_sensor_pipeline_boundary_classification.md)
-- [`nhiem_vnext.wm1_v2r1_moving_source_gap_root_cause_and_nonscientific_qualification.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_moving_source_gap_root_cause_and_nonscientific_qualification.md)
-- [`nhiem_vnext.wm1_v2r1_orb_copy_substage_and_thread_stall_deep_root_cause_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_orb_copy_substage_and_thread_stall_deep_root_cause_closure.md)
-- [`nhiem_vnext.wm1_v2r1_prospective_fail_closed_randomized_pilot_execution.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_prospective_fail_closed_randomized_pilot_execution.md)
-- [`nhiem_vnext.wm1_v2r1_randomized_pilot_reset_recovery_and_readiness_root_cause(1).md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_randomized_pilot_reset_recovery_and_readiness_root_cause(1).md)
-- [`nhiem_vnext.wm1_v2r1_repaired_pilot_preflight_attestation_and_p2_timeout_root_cause.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_repaired_pilot_preflight_attestation_and_p2_timeout_root_cause.md)
-- [`nhiem_vnext.wm1_v2r1_reproduced_source_gap_boundary_root_cause_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_reproduced_source_gap_boundary_root_cause_closure.md)
-- [`nhiem_vnext.wm1_v2r1_safe_bounded_10min_upstream_lag_diagnostic_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_safe_bounded_10min_upstream_lag_diagnostic_closure.md)
-- [`nhiem_vnext.wm1_v2r1_sensorcombined_per_event_source_ledger_and_first_lost_boundary_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_sensorcombined_per_event_source_ledger_and_first_lost_boundary_closure.md)
-- [`nhiem_vnext.wm1_v2r1_sensorcombined_topic_bound_counters_and_gap_classification.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_sensorcombined_topic_bound_counters_and_gap_classification.md)
-- [`nhiem_vnext.wm1_v2r1_sensorcombined_upstream_gap_instrumented_classification.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_sensorcombined_upstream_gap_instrumented_classification.md)
-- [`nhiem_vnext.wm1_v2r1_statebank_aura_pre_science_bootstrap_root_cause_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_statebank_aura_pre_science_bootstrap_root_cause_closure.md)
-- [`nhiem_vnext.wm1_v2r1_strict_json_qualified_record_serialization_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_strict_json_qualified_record_serialization_closure.md)
-- [`nhiem_vnext.wm1_v2r1_timestamp_semantics_owner_review_and_dual_domain_contract_freeze.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_timestamp_semantics_owner_review_and_dual_domain_contract_freeze.md)
-- [`nhiem_vnext.wm1_v2r1_uxrce_publish_consume_lag_trigger_and_lock_wait_root_cause_capture.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_uxrce_publish_consume_lag_trigger_and_lock_wait_root_cause_capture.md)
-- [`nhiem_vnext.wm1_v2r1_uxrce_sensorcombined_poll_dispatch_deep_root_cause_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_uxrce_sensorcombined_poll_dispatch_deep_root_cause_closure.md)
-- [`nhiem_vnext.wm1_v2r1_within_run_randomized_pilot_retry(2).md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_within_run_randomized_pilot_retry(2).md)
-- [`nhiem_vnext.wm1_v2r1_within_run_randomized_pilot_retry(4).md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_within_run_randomized_pilot_retry(4).md)
+## Current core reports
+
+1. [`nhiem_vnext.wm1_v2r1_cross_topic_uxrce_update_head_of_line_blocking_root_cause_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_cross_topic_uxrce_update_head_of_line_blocking_root_cause_closure.md) — closes the reproduced 148-ms uXRCE HOL mechanism caused by synchronous diagnostics logging.
+2. [`nhiem_vnext.wm1_v2r1_canonical_sensorcombined_timestamp_mapping_discontinuity_root_cause_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_canonical_sensorcombined_timestamp_mapping_discontinuity_root_cause_closure.md) — proves the 183018-us event was a Timesync mapping transition, not native source loss.
+3. [`nhiem_vnext.wm1_v2r1_timestamp_semantics_owner_review_and_dual_domain_contract_freeze.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_timestamp_semantics_owner_review_and_dual_domain_contract_freeze.md) — freezes dual-domain native-source continuity + separate clock-alignment semantics.
+4. [`nhiem_vnext.wm1_v2r1_dual_domain_timestamp_contract_implementation_and_qualification.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_dual_domain_timestamp_contract_implementation_and_qualification.md) — implements and qualifies Option A semantics offline/replay.
+5. [`nhiem_vnext.wm1_v2r1_atomic_timesync_provenance_and_live_campaign_equivalent_soak.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_atomic_timesync_provenance_and_live_campaign_equivalent_soak.md) — identifies the live-wire provenance/interface gap and establishes WM1_DUAL_DOMAIN_TIMESTAMP_RECORD_V2.
+6. [`nhiem_vnext.wm1_v2r1_atomic_sensorcombined_provenance_wire_implementation_and_live_8session_soak.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_atomic_sensorcombined_provenance_wire_implementation_and_live_8session_soak.md) — implements SensorCombinedStampedV1 and passes live single-session + 8-session soak.
+7. [`nhiem_vnext.wm1_v2r1_statebank_aura_pre_science_bootstrap_root_cause_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_statebank_aura_pre_science_bootstrap_root_cause_closure.md) — closes the StateBank/AURA startup readiness race with an explicit all-stream barrier.
+8. [`nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_statebank_aura_bootstrap_closure.md`](../03_reports/wm1_v2r1/nhiem_vnext.wm1_v2r1_fresh_randomized_pilot_retry_after_statebank_aura_bootstrap_closure.md) — latest attempted root; stops pre-science because the specialized runner omitted `bootstrap_only=True`.
+
+## Current navigation
+
+- Pipeline state: [`PIPELINE_CURRENT_STATE_20260829.md`](PIPELINE_CURRENT_STATE_20260829.md)
+- Canonical architecture: [`../01_architecture/AURA_WISE_WM_AEGIS_VNEXT_MOVING_MODE_ARCHITECTURE.md`](../01_architecture/AURA_WISE_WM_AEGIS_VNEXT_MOVING_MODE_ARCHITECTURE.md)
+- Source registry pointer: [`../02_source_registry/SOURCE_REGISTRY_CURRENT.md`](../02_source_registry/SOURCE_REGISTRY_CURRENT.md)
+- Research synthesis: [`../04_research/CLOSED_LOOP_IDENTIFICATION_RESEARCH_SYNTHESIS.md`](../04_research/CLOSED_LOOP_IDENTIFICATION_RESEARCH_SYNTHESIS.md)
+
+## Not archived here
+
+Large raw runtime roots, telemetry, replay/capture bundles and datasets stay under `/media/nahhao74/KINGSTON`. This GitHub repository is for human-readable documentation, frozen decisions, source/provenance pointers and research synthesis.
