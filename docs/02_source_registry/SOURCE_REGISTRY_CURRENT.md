@@ -1,6 +1,6 @@
 # AURA–WISE–WM–AEGIS Source Registry — Current Pointer
 
-Current authoritative registry:
+Current authoritative registry identity:
 
 ```text
 AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v3
@@ -10,7 +10,18 @@ unresolved=3
 SHA256=b4026e78d7da685c11503e594784b00091cdf2f86453bbca198589a2b0d640da
 ```
 
-The full registry is maintained as both Markdown and JSON in the project source registry. This repository records the current identity and the source-governance rules required to interpret the archived pipeline reports.
+The repository now also archives the earlier Library registry snapshots explicitly, rather than only recording a pointer.
+
+## Archived Library snapshots
+
+Exact uploaded filenames are retained under `library_snapshots/`:
+
+- [`AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v1.json`](library_snapshots/AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v1.json) — 87 sources; original registry before locator resolution.
+- [`AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v1.md`](library_snapshots/AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v1.md) — Markdown rendering of v1.
+- [`AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v2(1).json`](library_snapshots/AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v2(1).json) — 87 sources; 84 resolved locators, 3 unresolved internal identities.
+- [`AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v2(1).md`](library_snapshots/AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v2(1).md) — Markdown rendering of v2.
+
+These snapshots are historical registry states and must not silently override the current v3 pointer. They are retained for provenance, audit, and reconstruction of which locators/authority classes were known at each stage.
 
 ## Unresolved internal identities
 
