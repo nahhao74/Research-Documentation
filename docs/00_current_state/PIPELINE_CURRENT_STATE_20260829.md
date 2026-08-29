@@ -14,9 +14,15 @@ with `B = active PX4 + AURA + FAST/T1/C1 baseline`.
 
 The randomized WM1 V2R1 pilot has not yet produced a complete valid 8-session / 96-block campaign. No efficacy claim or `ACTION_RESPONSE_IDENTIFIED` is authorized. SEALED remains locked and `production_authority=false`.
 
-The latest attempted scientific root stopped **before the first scientific T_D**, with zero scientific blocks/actions/manifest slots consumed. The direct cause was a specialized pilot-runner orchestration defect: the `block_index=-1` bootstrap call omitted the existing `bootstrap_only=True` flag and therefore fell through into the candidate-offer/C1-frontier path.
+The latest scientific root remained invalid infrastructure pre-science and immutable, but its direct orchestration defect has now been mechanically repaired and qualified outside that root. The specialized pilot runner now passes `bootstrap_only=True` for the session-start `block_index=-1` transaction, returns immediately after the accepted source-complete snapshot ACK, and does not enter candidate/C1/E8/scientific paths.
 
-The StateBank/AURA bootstrap readiness repair itself passed live in that root: all seven required streams were present and the snapshot ACK was accepted. The next implementation step is therefore the minimal call-site repair plus exact specialized-runner pre-science qualification; no broad subsystem redesign is indicated by current evidence.
+Exact live specialized-runner preflight passed with all seven StateBank streams present, AURA present, accepted snapshot ACK, zero candidate offers/publishes, zero C1 offer-frontier waits, zero E8 candidate transactions, no scientific `T_D`, zero scientific blocks/actions and zero manifest-slot consumption.
+
+Current state:
+
+`PILOT_BOOTSTRAP_ONLY_CALLSITE_REPAIR_QUALIFIED_READY_FOR_OWNER_FRESH_PILOT_RETRY_REVIEW`
+
+Therefore the immediate remaining gate is owner authorization for exactly one fresh randomized pilot root. The pilot itself remains the gate before action-conditioned WM scientific training.
 
 ## Closed blockers / qualified infrastructure
 
@@ -29,6 +35,8 @@ The StateBank/AURA bootstrap readiness repair itself passed live in that root: a
 - `SensorCombinedStampedV1` versioned observational wrapper provides atomic native source identity + sender mapping provenance while preserving the standard SensorCombined semantics.
 - Live single-session wrapper qualification passed; live 8-session CALM/GUST_E lifecycle soak passed.
 - StateBank/AURA startup race closed with an explicit all-required-stream readiness barrier plus atomic barrier recheck; exact pre-science bootstrap lifecycle qualified 8/8.
+- Specialized randomized-pilot bootstrap call-site defect closed: `bootstrap_only=True` is explicit for `block_index=-1`; exact real-runner preflight passed.
+- Follow-on observer handling of intentional bootstrap `accepted_status=None` was mechanically guarded and included in the final qualification.
 
 ## Frozen key contracts
 
@@ -42,8 +50,25 @@ The StateBank/AURA bootstrap readiness repair itself passed live in that root: a
 - Failed scientific roots are immutable; no patch-and-continue or partial-root pooling.
 - Large runtime/data artifacts remain under `/media/nahhao74/KINGSTON`.
 
+## Current qualified pilot-orchestration evidence
+
+- `RUN_TRANSACTION_CALLSITE_AUDIT=PASS`
+- `REGRESSION_TEST_RESULT=PASS_51`
+- `LIVE_EXACT_RUNNER_PREFLIGHT=PASS_FINAL_ROOT`
+- `STATEBANK_REQUIRED_STREAMS_PRESENT=7/7`
+- `BOOTSTRAP_SNAPSHOT_ACK=VALID_ACCEPTED`
+- `BOOTSTRAP_ONLY_FLAG_LIVE=PASS`
+- `BOOTSTRAP_RETURNED_BEFORE_CANDIDATE_PATH=true`
+- `CANDIDATE_OFFER_COUNT=0`
+- `CANDIDATE_PUBLISH_COUNT=0`
+- `C1_OFFER_FRONTIER_WAIT_COUNT=0`
+- `E8_CANDIDATE_TRANSACTION_COUNT=0`
+- `FIRST_SCIENTIFIC_T_D=NOT_REACHED`
+- `MANIFEST_SLOTS_CONSUMED=0`
+- native source max gap 8000 us; no >20-ms gap; clock/provenance invalid count 0.
+
 ## Immediate next gate
 
-Repair the specialized randomized-pilot bootstrap invocation to pass `bootstrap_only=True`, audit all `run_transaction()` call sites, and run one exact pre-science specialized-runner qualification proving snapshot ACK -> immediate bootstrap return with zero candidate offer, zero C1 offer-frontier wait, zero T_D and zero manifest slot consumption.
+Owner review may now authorize exactly one fresh WM1 V2R1 randomized pilot root using the repaired specialized runner and frozen manifest.
 
-Only after that qualification should the owner review authorization for exactly one fresh randomized pilot root.
+A successful complete 8-session / 96-block valid pilot is still required before interpreting P1/P2 treatment signal and before proceeding to action-conditioned World Model training. If the complete valid pilot has insufficient treatment SNR, move to owner experiment-design review rather than training on unresolved signal.
