@@ -1,6 +1,8 @@
 # AURA–WISE–WM–AEGIS Source Registry — Current Pointer
 
-Current authoritative registry identity:
+## GitHub-archived registry identity
+
+The latest **fully archived and hash-identified registry artifact currently present in this GitHub repository** remains:
 
 ```text
 AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v5
@@ -13,46 +15,60 @@ LOCAL_CANONICAL_MD_SHA256=5d8221715ce87f61c089ed53e4c0666851551b4a1591c20d4fd2fc
 
 GitHub retrieval index:
 
-- [`CURRENT_REGISTRY_V5.md`](CURRENT_REGISTRY_V5.md) — compact searchable v5 view with exact locators for all post-v2 additions (`SRC-088..SRC-123`), current authority rules, unresolved identities and research priorities.
+- [`CURRENT_REGISTRY_V5.md`](CURRENT_REGISTRY_V5.md) — compact searchable v5 view with exact locators for post-v2 additions through `SRC-123`.
 
-Historical entries `SRC-001..SRC-087` remain preserved in the archived Library snapshots under `library_snapshots/`. Registry v5 extends that lineage rather than replacing historical evidence.
+## Project-local research reference
 
-## Current v5 focus
+The current future implementation roadmap references:
 
-### Runtime / latency
+```text
+AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v7
+```
 
-- PX4 v1.15 filter/control latency.
-- uORB publish/subscribe and queue semantics.
-- PX4 task/work-queue scheduling and non-blocking constraints.
-- ROS 2 callback-chain response-time analysis.
-- Linux PREEMPT_RT and scheduler-latency measurement.
+However, the exact v7 machine-readable artifact, source count, resolved/unresolved counts and canonical hashes are **not archived in this repository at this revision**. Therefore this file does not invent or infer those identities from roadmap source IDs.
 
-### Predictive control / WISE
+Until the exact v7 registry artifact is added and verified:
 
-- acados and real-time iteration NMPC.
-- TinyMPC and embedded quadrotor MPC.
-- explicit MPC / multiparametric QP.
-- event-triggered robust MPC.
-- MPPI as a parallel sampling-based comparator.
+```text
+project research roadmap reference = v7
+latest GitHub-verifiable registry snapshot = v5
+```
 
-### World model / learned dynamics
+This distinction is deliberate provenance bookkeeping, not a downgrade of the project-local research state.
 
-- TD-MPC2 continuous-control world models.
-- physics-inspired temporal quadrotor dynamics.
-- residual dynamics / sparse GP-MPC.
-- SINDY-MPC and Koopman reduced-order modeling.
-- quickest-change detection as future AURA latency research only.
+## Current research directions reflected by the roadmap
+
+The project research set now informs work on:
+
+```text
+closed-loop randomized identification
+PX4/uXRCE/ROS end-to-end latency
+executor and scheduling determinism
+AURA change-detection challengers
+structured residual / temporal World Models
+SINDY / Koopman / sparse GP dynamics
+T_D -> T_A delay-aware prediction
+uncertainty-aware MPC
+bounded candidate enumeration
+TinyMPC / RTI / event-triggered WISE
+online low-dimensional adaptation
+AEGIS safety filters / runtime assurance
+```
+
+Exact source title/locator promotion still requires the actual registry entry or independent source verification; the roadmap alone is not a locator authority.
 
 ## Archived Library snapshots
 
-Exact historical filenames remain under `library_snapshots/`:
+Historical entries `SRC-001..SRC-087` remain preserved under `library_snapshots/`:
 
-- `AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v1.json`
-- `AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v1.md`
-- `AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v2(1).json`
-- `AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v2(1).md`
+```text
+AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v1.json
+AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v1.md
+AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v2(1).json
+AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v2(1).md
+```
 
-These are provenance snapshots and do not override v5.
+The v5 GitHub retrieval index extends this historical lineage.
 
 ## Unresolved internal identities
 
@@ -66,7 +82,7 @@ No similar file should be silently substituted for these unresolved identities.
 
 ## Retrieval / authority rule
 
-Prefer primary or official sources. For runtime causality:
+Prefer:
 
 ```text
 exact local source/build identity
