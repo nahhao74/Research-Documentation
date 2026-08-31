@@ -1,33 +1,27 @@
 # AURA–WISE–WORLD MODEL–AEGIS vNext
 ## Future Implementation and Research Roadmap
 
-**Canonical active roadmap version:** `v5 — CTEE-F / freshness / efficient identification / uncertainty expansion — 2026-08-31`  
+**Canonical active roadmap version:** `v6 — CALE causal-learning formalization / CEORP backend demotion — 2026-08-31`  
 **Scope:** Moving Mode only  
 **Research registry:** `AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v9`
 
-The exact full local roadmap artifact is:
+Full session artifact:
 
 ```text
-AURA_WISE_WM_AEGIS_FUTURE_IMPLEMENTATION_ROADMAP_v5_20260831.md
+AURA_WISE_WM_AEGIS_FUTURE_IMPLEMENTATION_ROADMAP_v6_CALE_20260831.md
 ```
 
-Detailed v5 algorithmic research note:
+Detailed CALE research note:
 
-[`ALGORITHMIC_RESEARCH_EXPANSION_CTEE_F_CIBES_UNCERTAINTY_20260831.md`](ALGORITHMIC_RESEARCH_EXPANSION_CTEE_F_CIBES_UNCERTAINTY_20260831.md)
+[`CALE_CAUSAL_ACTION_LEARNING_ENGINE_20260831.md`](CALE_CAUSAL_ACTION_LEARNING_ENGINE_20260831.md)
 
 Current execution ladder:
 
 [`../00_overview/CURRENT_EXECUTION_LADDER_PHASE0B2_20260831.md`](../00_overview/CURRENT_EXECUTION_LADDER_PHASE0B2_20260831.md)
 
-Current Source Registry index:
-
-[`../02_source_registry/CURRENT_REGISTRY_V9.md`](../02_source_registry/CURRENT_REGISTRY_V9.md)
-
-Historical roadmap snapshots remain retained for provenance.
-
 ---
 
-## 1. Canonical current state
+# 1. Canonical current state — unchanged by v6
 
 ```text
 STRUCTURAL_CLEANUP=CLOSED
@@ -55,20 +49,16 @@ EVENT_SCHEDULING_POLICY=
 DELAY_RESCHEDULE_WITHIN_BLOCK
 # RECOMMENDED, NOT FROZEN, NOT APPROVED
 
-COUNTERFACTUAL_IDENTIFIABILITY=REFERENCE_ONLY
-FULL_PREDICATE_COUNTERFACTUAL_SUPPORT=NOT_IDENTIFIABLE
-W_MAX_RUNTIME_FEASIBILITY=UNPROVEN
-
 FRESH_SCIENCE=BLOCKED
 SEALED=LOCKED_PRE_EVALUATION
 production_authority=false
 ```
 
-No research algorithm in v5 changes the exact next action.
+No CALE/CEORP work changes the exact next action.
 
 ---
 
-## 2. Immediate Phase-0 execution order
+# 2. Immediate Phase-0 execution order
 
 ```text
 OWNER AUTHORIZE Q1 NOSCIENCE NO-LAUNCH RUNTIME
@@ -77,22 +67,13 @@ Q1 bounded no-launch observation
         ↓
 offline full-predicate characterization
         ↓
-owner freezes:
-M_STABLE_US
-W_MAX_US
-scheduling/fail-closed policy
-source-time authority
+owner freezes M_STABLE_US / W_MAX_US / scheduling / source-time policy
         ↓
-Tarjan static dependency preflight
+Tarjan dependency preflight
         ↓
-CTEE benchmark against:
-- ad-hoc state machine
-- conventional timed FSM
-- timed-automata/runtime-enforcement baseline
+CTEE vs timed-FSM vs timed-runtime-enforcement benchmark
         ↓
-select smallest implementation that wins on measured KPI
-        ↓
-Option-B implementation
+select smallest qualifying Option-B implementation
         ↓
 deterministic regression
         ↓
@@ -107,512 +88,554 @@ scientific analysis
 causal dataset acceptance
 ```
 
-This remains the only valid path to World-Model action-response training.
+World-Model action-response training remains blocked until causal dataset acceptance.
 
 ---
 
-## 3. CTEE — current candidate runtime primitive
+# 3. v6 research change — CALE becomes the causal-learning abstraction
 
-CTEE is a project proposal for live causal/temporal eligibility:
-
-```text
-three-valued predicates
-PASS / FAIL / UNKNOWN
-        ↓
-source/provenance-bound max-plus eligibility frontier
-        ↓
-readiness potential / critical blocker
-        ↓
-atomic session/reset/generation recheck
-        ↓
-COMMIT / RECOMPUTE / FAIL CLOSED
-```
-
-CTEE is not a flight controller and does not replace AURA, FAST/T1/C1, WM, WISE, AEGIS or PX4.
-
-Current status:
+Claim-level novelty review found strong prior art for:
 
 ```text
-CTEE_NAME=PROJECT_PROPOSAL
-CTEE_PUBLICATION_NOVELTY=NOT_PROVEN
-CTEE_PRIOR_ART_COMPONENTS=STRONG
+Laguerre / Kautz / generalized orthonormal basis models
+OBF observer + prediction
+adaptive OBF/RLS
+set-membership and event-triggered update
+concurrent-learning informative data selection
+closed-loop probing
+state-space treatment-effect models
+latent intervention-state models
+embedded residual prediction
 ```
 
-`SRC-150` strengthens the prior-art baseline: timed runtime enforcement already supports delaying/suppressing timed events. Therefore CTEE must not claim novelty merely for waiting until a timing predicate becomes true.
-
-Potential contribution remains narrower:
+Therefore:
 
 ```text
-pre-treatment causal eligibility
-+
-source-time/session/reset/generation provenance
-+
-arm-neutral randomized intervention semantics
-+
-max-plus earliest admissible frontier
-+
-atomic generation-safe commit
-+
-bounded fail-closed execution
+CEORP_ORIGINAL_FORMULATION_NOVELTY=TOO_WEAK
+CEORP_STATUS=BACKEND_CANDIDATE
+CEORP_ROLE=CALE_OBF_IMPLEMENTATION_OPTION
 ```
 
-Retain CTEE only if it materially improves correctness, tail ready→commit timing/jitter, or engineering/forensic complexity relative to simpler timed solutions.
+The new primary research abstraction is:
+
+```text
+CALE — Causal Action Learning Engine
+```
+
+CALE is representation-agnostic. Its candidate novelty is not a particular filter; it is the ordering and enforcement of causal action-learning semantics.
 
 ---
 
-## 4. Supporting algorithm roles
-
-Keep roles separate:
+# 4. CTEE / CTEE-F / CALE responsibility split
 
 ```text
-Tarjan SCC
-= static dependency-cycle validation before runtime
-
 CTEE
-= candidate live causal/temporal eligibility
+= may this event/action occur now?
 
-Sweep Line
-= offline scientific interval/overlap/carryover validation
+CTEE-F
+= if admissible now, will the information/plan remain fresh when consumed?
 
-MCMF / network flow
-= future conditional allocation only when a real constrained-allocation problem exists
+CALE
+= may this completed transaction teach the action-response model?
+
+WISE
+= which admissible candidate should be selected?
+
+AEGIS
+= what bounded action may actually reach PX4?
+
+PX4
+= authoritative inner-loop execution
 ```
 
-Do not collapse these into one super-algorithm.
+These must remain separate mechanisms.
 
 ---
 
-## 5. New v5 research track — CTEE-F
+# 5. CALE causal graph
 
-### 5.1 Motivation
-
-CTEE answers:
-
-> Are all causal prerequisites admissible now?
-
-It does not fully answer:
-
-> Will the state/plan still be fresh enough when PX4 actually consumes it?
-
-The predictive chain can age information substantially:
+CALE must preserve exact identities:
 
 ```text
-StateBank snapshot
-→ World Model
-→ WISE
-→ AEGIS
-→ DDS / PX4 scheduling
-→ actual PX4 acceptance
+pre-treatment context X(T_D), z_B(T_D)
+        ↓
+randomized assignment Z
+        ↓
+requested action U_requested
+        ↓
+AEGIS bounds / projection / freshness / generation / authority
+        ↓
+accepted action U_A at T_A
+        ↓
+closed-loop response
+FAST / PX4 / allocation reactions included
+        ↓
+future outcome Y(T_A+h)
 ```
 
-### 5.2 CTEE-F definition
-
-**CTEE-F = Causal Temporal Eligibility and Freshness Engine**
-
-Let:
+Never collapse:
 
 ```text
-A_i       = current age of required information item i
-D_rem_wc  = justified remaining-delay envelope to its consumer
-A_i_max   = frozen freshness budget
-T_E       = CTEE causal eligibility frontier
+Z
+U_requested
+U_A
+T_D
+T_A
 ```
 
-Require:
+because in general:
 
 \[
-T_{now}\ge T_E
+U_{requested} \ne U_A
+\]
+
+under projection, saturation, rejection, timing or authority mediation.
+
+---
+
+# 6. Action-blind pre-treatment context state
+
+A future compact baseline/context state may be:
+
+\[
+z^B_{k+1}=A_\phi z^B_k+B_\phi \nu^B_k
+\]
+
+with the hard causal property:
+
+\[
+z^B(T_D)\in\mathcal F_{T_D^-}
+\]
+
+It must not use future treatment information to construct the pre-treatment state.
+
+Forbidden inputs before state freeze include:
+
+```text
+future accepted action
+future ACK
+T_A
+future outcome
+post-treatment response
+```
+
+A FAST/context head may read:
+
+\[
+\hat d_{fast}=C_d z^B
+\]
+
+while treatment U enters only the separate action-effect head after the pre-treatment context is fixed.
+
+---
+
+# 7. Minimal action-effect model
+
+Initial CALE work should remain linear-in-parameters:
+
+\[
+\psi_k(U)=
+\begin{bmatrix}
+z^B(T_D)\\
+X(T_D)\\
+U\\
+z^B(T_D)\otimes U
+\end{bmatrix}
 \]
 
 and:
 
 \[
-A_i + D_{rem,wc} \le A_{i,max}
+\hat G_h=\Theta_h^\top\psi_k(U)
 \]
 
-for all critical inputs/plans, plus the normal source/session/reset/generation atomic recheck.
-
-### 5.3 Age of Information
-
-Research basis: `SRC-151`.
-
-Potential measurements:
-
-```text
-state_source_age_us
-reference_age_us
-AURA_age_us
-WM_input_age_us
-WM_prediction_age_us
-WISE_plan_age_us
-AEGIS_candidate_age_us
-age_at_PX4_acceptance
-```
-
-AoI is a freshness metric; it does not itself define project-specific freshness budgets.
-
-### 5.4 Network Calculus
-
-Research basis: `SRC-152`.
-
-Network Calculus is a candidate method for deterministic remaining-delay/backlog bounds only after local assumptions are verified.
-
-Required order:
-
-```text
-measure ROS2/DDS/PX4 arrivals/service/scheduling
-→ verify model assumptions
-→ construct candidate bound
-→ validate bound against retained traces
-→ only then expose a D_remaining envelope to CTEE-F
-```
-
-Do not substitute a theoretical bound for local timing evidence.
-
-### 5.5 CTEE-F KPI
-
-Potential improvements:
-
-```text
-stale-plan execution ↓
-prediction applied to wrong state ↓
-deadline failures ↓
-tail age-at-application ↓
-unnecessary stale-plan reuse ↓
-effective tracking/planning utility ↑ indirectly
-```
-
-### 5.6 CTEE-F gate
-
-CTEE-F is not a Phase-0 dependency.
-
-Compare after Phase-1 timing data exists:
-
-```text
-TTL-only gate
-vs
-measured-age gate
-vs
-current-age + empirical p99 remaining delay
-vs
-CTEE-F + justified remaining-delay envelope
-```
-
-Retain only if measurable stale/deadline/closed-loop benefit exceeds added complexity.
-
-```text
-CTEE_F_STATUS=RESEARCH_HYPOTHESIS
-CTEE_F_CURRENT_PHASE0_DEPENDENCY=false
-CTEE_F_DOES_NOT_UNBLOCK_Q1=true
-```
-
----
-
-## 6. Phase 1 — latency, freshness and frequency-domain characterization
-
-After Phase-0 causal dataset acceptance, characterize the full chain:
-
-```text
-physical/source event
-→ PX4 source publication
-→ uXRCE serialization
-→ Agent receive
-→ ROS callback ready
-→ ROS callback scheduled
-→ AURA
-→ AEGIS
-→ DDS transmit
-→ PX4 receive
-→ PX4 accepted control cycle
-→ actuator
-→ plant response
-```
-
-Measure:
-
-```text
-p50 / p95 / p99 / max
-jitter
-deadline misses
-callback waiting vs compute
-source age
-queue depth
-drop/overwrite counts
-CPU load
-```
-
-Also perform bounded, authorized frequency-domain characterization:
-
-```text
-FFT / PSD
-cross-spectrum
-coherence
-closed-loop FRF
-MIMO FRF
-bounded multisine
-phase lag
-N↔E coupling
-resonance / oscillation
-```
-
-New v5 Phase-1 output:
-
-```text
-AoI at StateBank snapshot
-AoI at WM start/end
-AoI at WISE plan creation
-AoI at AEGIS decision
-AoI at PX4 acceptance
-
-D_remaining(context, load, executor state)
-```
-
-This evidence supports later CTEE-F shadow benchmarking.
-
----
-
-## 7. Phase 2 — AURA detector challengers
-
-Keep current AURA/W20 as baseline until a challenger wins on the same causal traces.
-
-Candidate families:
-
-```text
-W20 baseline
-CUSUM / QCD
-Random Fourier Feature sequential detector
-multivariate online changepoint detector
-multi-stream QCD variants
-```
-
-Required metrics:
-
-```text
-onset delay
-direction-change delay
-clear delay
-false-positive / false-negative
-amplitude/direction error
-phase delay
-CPU/sample
-memory
-tail execution time
-```
-
-Do not choose a detector because it is newer.
-
----
-
-## 8. Post-Phase-0 research — CIBES
-
-**CIBES = Causal Information-Budgeted Excitation Scheduler**
-
-This is explicitly **not** allowed inside the current frozen randomized pilot.
-
-After Phase-0 closure, CIBES may investigate safe probing actions that maximize information:
+The scientific target remains:
 
 \[
-U^* = \arg\max_U \operatorname{ExpectedInformationGain}(U)
-\]
-
-subject to:
-
-```text
-candidate authority limits
-operational state constraints
-CTEE admissibility
-carryover/refractory rules
-context support
-newly frozen randomization/design rule
-PX4 authority
-```
-
-Research basis: `SRC-153`.
-
-Potential KPI:
-
-```text
-treatment SNR ↑
-G_action identifiability ↑
-information per independent flight/session ↑
-required sessions ↓
-low-information exposures ↓
-```
-
-Critical boundary: adaptive action selection changes the experiment design. Any CIBES campaign requires a new causal/randomization contract including selection policy, probabilities, availability, logging and estimand/analysis adjustments.
-
-```text
-CIBES_STATUS=POST_PHASE0_RESEARCH_HYPOTHESIS
-CURRENT_FROZEN_SCIENCE_CHANGE_AUTHORIZED=false
-```
-
----
-
-## 9. Phase 3 — World Model
-
-Keep the minimum-complexity model ladder:
-
-```text
-M0 ZERO / constant
-M1 linear / ridge
-M2 local linear / LPV
-M3 SINDY
-M4 Koopman
-M5 tiny residual MLP
-M6 TCN only if history actually helps
-```
-
-Target decomposition remains:
-
-\[
-Y_{future}=F_B(X,h)+G_{action}(X,U,h)
+G^B_{action}(X,U,h)=Y(B+U,h)-Y(B+ZERO,h)
 \]
 
 with:
 
 ```text
-B = active PX4 + AURA + FAST/T1/C1
+B = active PX4 + AURA + FAST/T1/C1 baseline
 ```
 
-Also retain:
-
-```text
-StateBank history ablation
-T_D → T_A delay-aware state prediction
-uncertainty-aware prediction
-```
+CALE does not target a bare-airframe model.
 
 ---
 
-## 10. World-Model uncertainty ladder
+# 8. Causal Learning Admission Gate
 
-Do not jump directly to one uncertainty method.
+A transaction is not allowed to update parameters merely because it has high error or improves numerical rank.
 
-```text
-U0 residual empirical quantiles
-U1 heteroscedastic mean/variance
-U2 ensemble/bootstrap
-U3 conformal prediction/error bounds
-U4 set-membership uncertainty
-U5 tractable ellipsoidal outer approximation
-```
-
-### Conformal track
-
-Research basis: `SRC-154`.
-
-Potential benefits:
-
-```text
-empirical coverage calibration ↑
-OOD overconfidence ↓
-risk-aware WISE scoring ↑
-```
-
-The cited work includes a 12D quadcopter benchmark, but it does not authorize copying its controller architecture into this project.
-
-### Set-membership track
-
-Research basis: `SRC-155`, `SRC-156`.
-
-Potential benefits:
-
-```text
-explicit model-error/dynamics uncertainty set
-robust-optimization compatibility
-clear bounded-error interpretation under assumptions
-```
-
-Risks:
-
-```text
-conservatism
-nonlinear-set cost
-noise-bound misspecification
-```
-
-If exact sets are too expensive, test a conservative tractable outer approximation.
-
-Required evaluation:
-
-```text
-coverage
-conditional coverage by context
-OOD coverage
-set width / conservatism
-G_action prediction utility
-WISE closed-loop utility
-constraint violations
-runtime
-```
-
----
-
-## 11. Phase 4 — WISE planner ladder
-
-```text
-WISE-0 bounded candidate enumeration
-↓
-WISE-1 small QP / TinyMPC
-↓
-WISE-2 linear / Koopman MPC
-↓
-WISE-3 acados + RTI
-↓
-WISE-4 NMPC / MPPI only if earlier approaches are insufficient
-```
-
-World Model/WISE remain predictive refinement only; they never become a first-response prerequisite.
-
-Event-triggered reuse remains preferred when it reduces predictive-path contention without creating stale-plan execution.
-
----
-
-## 12. Phase 5 — bounded online adaptation
-
-Prefer:
-
-```text
-frozen representation
-+
-small adaptive coefficient/state vector
-+
-bounded update law
-+
-confidence / rollback
-```
-
-Do not default to unrestricted in-flight neural-network retraining.
-
-A Lyapunov-bounded adaptation challenger may be tested later if it improves nonstationary behavior while preserving bounded/fail-closed semantics.
-
----
-
-## 13. Phase 6 — AEGIS runtime assurance
-
-Future AEGIS research may add:
-
-```text
-uncertainty-aware projection
-Lyapunov analysis
-CLF
-CBF
-runtime-assurance switching/projection
-```
-
-while preserving PX4 inner-loop authority.
-
-Conceptually:
+Define:
 
 \[
-U_{safe}=\arg\min_U\|U-U_{WISE}\|^2
+q_k^{causal}
+=
+q_k^{pre}
+q_k^{treatment}
+q_k^{target}
+q_k^{provenance}
 \]
 
-subject to qualified safety/authority constraints.
+Required classes include:
+
+```text
+PRE
+T_D valid
+pre-treatment eligibility valid
+exact context session/reset/generation
+no future sample
+
+TREATMENT
+assignment identity exact
+requested action retained
+accepted action U_A known
+T_A known
+ACK/acceptance valid
+no stale-generation ambiguity
+
+TARGET
+same session/reset
+source-bound horizon target exists
+no prohibited carryover
+no cross-root reconstruction
+
+PROVENANCE
+source continuity valid
+clock/source-time provenance valid
+generation binding exact
+transaction identity exact
+```
+
+If any required predicate is FAIL or UNKNOWN:
+
+\[
+q_k^{causal}=0
+\]
+
+and exactly:
+
+\[
+\Theta_{k+1}=\Theta_k
+\]
+
+for that transaction.
+
+This is intended to become a machine-checkable learning invariant.
 
 ---
 
-## 14. Updated experiment sequence
+# 9. Informativeness comes second
+
+Only after:
+
+\[
+q_k^{causal}=1
+\]
+
+may CALE evaluate numerical informativeness.
+
+\[
+q_k^{learn}=q_k^{causal}\,q_k^{info}
+\]
+
+Possible q_info criteria:
+
+```text
+innovation magnitude
+feature novelty
+rank / minimum-singular-value improvement
+condition-number improvement
+context coverage improvement
+```
+
+Mandatory ordering:
+
+```text
+causal/provenance authority
+        ↓
+numerical informativeness
+        ↓
+parameter update
+```
+
+This is the central distinction from ordinary event-triggered adaptation, set-membership filtering, and concurrent-learning history selection.
+
+---
+
+# 10. Assignment effect versus accepted-action effect
+
+CALE must preserve two distinct causal targets.
+
+### Assigned-action / ITT-style head
+
+\[
+G_Z(X,Z,h)
+\]
+
+Question: what is the effect of assigning this randomized candidate under the frozen policy?
+
+### Accepted-action / realized-exposure head
+
+\[
+G_U(X,U_A,h)
+\]
+
+Question: what is the response to the action that actually crossed the qualified execution boundary?
+
+These are not automatically the same estimand.
+
+Naive conditioning on U_A can destroy randomization because acceptance/projection may depend on state.
+
+---
+
+# 11. Randomization-as-IV research branch
+
+Potential graph:
+
+```text
+Z randomized
+    ↓
+U_requested
+    ↓
+AEGIS / projection / constraints
+    ↓
+U_A
+    ↓
+Y
+```
+
+Research question:
+
+> Can randomized assignment Z serve as an instrument for realized accepted action U_A when estimating an accepted-action closed-loop response model?
+
+This branch must explicitly test/justify:
+
+```text
+relevance
+exclusion restrictions
+monotonicity / structural assumptions if required
+effect heterogeneity
+projection/saturation behavior
+context conditioning
+arm-neutral availability
+```
+
+No IV estimator is authorized merely because Z is randomized.
+
+The frozen assigned-arm estimator remains the scientific reference until a later contract explicitly changes it.
+
+---
+
+# 12. Theory targets
+
+### T1 — pre-treatment non-leakage
+
+If:
+
+\[
+z^B(T_D)\in\mathcal F_{T_D^-}
+\]
+
+then the context state contains no future treatment information by construction.
+
+### T2 — invalid-transaction non-update
+
+If:
+
+\[
+q_k^{causal}=0
+\]
+
+then:
+
+\[
+\Theta_{k+1}=\Theta_k
+\]
+
+exactly.
+
+### T3 — bounded adaptation
+
+With bounded features/residuals and parameter projection, establish a bounded update law.
+
+### T4 — causal identification conditions
+
+Determine assumptions under which admitted randomized transactions identify:
+
+```text
+assigned-action causal effects
+and/or
+accepted-action effects using randomized assignment as an instrument
+```
+
+These are research targets, not currently proven properties.
+
+---
+
+# 13. CALE backend ladder
+
+CALE must remain representation-agnostic:
+
+```text
+CALE-RIDGE
+small offline/online linear reference
+
+CALE-RLS
+recursive linear-in-parameters
+
+CALE-OBF
+Laguerre/Kautz orthonormal backend
+# CEORP-v3 maps here
+
+CALE-DMDc
+compact online dynamics challenger
+
+CALE-SINDY
+sparse equation challenger
+
+CALE-KOOPMAN
+small lifted model
+
+CALE-TINY-MLP
+only if structured models are insufficient
+```
+
+Representation choice comes after causal correctness.
+
+---
+
+# 14. Embedded/runtime target
+
+Preferred first CALE implementation:
+
+```text
+fixed-order state
+fixed fast-path iteration count
+no dynamic allocation
+no online backpropagation
+no large matrix inversion on FAST path
+no iterative optimizer in estimator
+small bounded adaptation path
+CPU implementation first
+SIMD/HVX/fixed-point only if measured useful
+```
+
+Target deployment class:
+
+```text
+QCS8550 onboard compute
+```
+
+Embedded execution itself is not a novelty claim.
+
+Desired engineering condition:
+
+```text
+predictor compute << transport/scheduling latency
+```
+
+---
+
+# 15. CALE benchmark / go-no-go
+
+Compare:
+
+```text
+A — frozen offline model, no online adaptation
+B — ordinary error-triggered RLS/update
+C — informative-only concurrent-learning style update
+D — CALE causal-admission + informativeness update
+```
+
+Scientific-correctness metrics:
+
+```text
+invalid transaction update count
+cross-generation update count
+post-treatment leakage
+wrong-action-label rate
+requested-vs-accepted mismatch
+```
+
+Prediction metrics:
+
+```text
+G_action H20/H40/H80 error
+CALM/GUST generalization
+session generalization
+accepted-action prediction error
+```
+
+Runtime metrics:
+
+```text
+CPU/update
+CPU/prediction
+p50/p95/p99/max
+memory
+allocations
+deadline misses
+```
+
+Engineering metrics:
+
+```text
+state count
+buffer count
+branch count
+causal-update LOC
+forensic/debug time
+```
+
+Retain CALE only if causal admission prevents a real invalid-learning failure class or materially improves robustness/generalization at acceptable runtime cost.
+
+Current state:
+
+```text
+CALE_STATUS=RESEARCH_HYPOTHESIS
+CALE_PUBLICATION_NOVELTY=PLAUSIBLE_NOT_PROVEN
+CALE_EXACT_PRIOR_ART_FOUND=false
+CALE_COMPONENT_PRIOR_ART=VERY_STRONG
+CALE_CURRENT_PHASE0_RUNTIME_DEPENDENCY=false
+CALE_DOES_NOT_UNBLOCK_Q1=true
+
+CEORP_STATUS=BACKEND_CANDIDATE
+CEORP_ROLE=CALE_OBF_IMPLEMENTATION_OPTION
+```
+
+---
+
+# 16. Other active research tracks retained from v5
+
+```text
+Tarjan SCC
+→ static dependency-cycle validation
+
+CTEE
+→ live temporal/causal eligibility candidate
+
+Sweep Line
+→ offline scientific interval validation
+
+CTEE-F
+→ eligibility + Age of Information + prospective remaining-delay/freshness
+
+CIBES
+→ post-Phase-0 information-efficient constrained experiment design
+
+Conformal / set-membership uncertainty
+→ future WM/WISE/AEGIS uncertainty ladder
+```
+
+None changes current Phase-0 authority.
+
+---
+
+# 17. Updated long-term experiment sequence
 
 ```text
 P0-Q1
@@ -630,8 +653,19 @@ DELAYED-LAUNCH QUALIFICATION
 P0-SCIENCE
 RANDOMIZED G_action PILOT + DATASET DECISION
         ↓
+C0
+CALE CAUSAL GRAPH + ESTIMAND / IV FORMALIZATION
+        ↓
+C1
+CALE-RIDGE OFFLINE BASELINE
+CAUSAL-ADMISSION vs UNRESTRICTED-UPDATE ABLATION
+        ↓
+C2
+CALE BACKEND BENCHMARK
+RLS / OBF / DMDc / SINDy / tiny model
+        ↓
 B2-OPTIONAL
-CIBES RESEARCH UNDER A NEW EXPERIMENT CONTRACT
+CIBES UNDER NEW EXPERIMENT CONTRACT
         ↓
 E1
 END-TO-END LATENCY + FFT/FRF
@@ -640,130 +674,56 @@ E1B
 AoI + AGE-AT-APPLICATION + REMAINING-DELAY ENVELOPE
         ↓
 E1C
-CTEE-F SHADOW / REPLAY BENCHMARK
+CTEE-F SHADOW BENCHMARK
         ↓
 E2
 AURA DETECTOR SHADOW BAKE-OFF
         ↓
-E3
-F_nominal MODEL LADDER
+E3/E4
+F_B + G_action MODEL LADDER
         ↓
-E4
-G_action MODEL LADDER
-        ↓
-E5
-HISTORY ABLATION
-        ↓
-E6
-T_D→T_A DELAY MODEL
+E5/E6
+HISTORY + T_D→T_A DELAY MODEL
         ↓
 E7
 UNCERTAINTY CALIBRATION
-quantile / ensemble / conformal / set-membership
         ↓
-E8
-WISE-0 CANDIDATE ENUMERATION
+E8+
+WISE / EVENT-TRIGGERED PLANNING / LIGHTWEIGHT MPC
         ↓
-E9
-EVENT-TRIGGERED WISE
+LOW-DIMENSIONAL ADAPTATION
         ↓
-E10
-TinyMPC / Koopman / RTI benchmark
-        ↓
-E11
-LOW-DIMENSIONAL ONLINE ADAPTATION
-        ↓
-E12
 FORMAL AEGIS SAFETY FILTER
 ```
 
 ---
 
-## 15. Go/no-go rules added in v5
+# 18. v6 design principle
 
-### CTEE
-
-Go only if it beats simpler timed alternatives on at least one meaningful axis without semantic regression:
+The research priority is now:
 
 ```text
-correctness
-or tail latency/jitter
-or engineering/forensic complexity
+causal estimand and treatment identity
+>
+learning-admission invariants
+>
+minimal numerical backend
+>
+higher model capacity
 ```
 
-### CTEE-F
-
-Go only if:
+not:
 
 ```text
-freshness/remaining-delay modeling predicts real stale-at-application cases
-AND CTEE-F reduces stale/deadline failures or improves closed-loop utility
-AND delay-bound assumptions are validated locally
-AND runtime overhead remains bounded
+invent a more complicated filter first
 ```
 
-### CIBES
-
-Go only if:
-
-```text
-information per independent session improves materially
-AND causal/randomization validity remains explicit
-AND operational constraints remain satisfied
-AND it is introduced only under a newly frozen post-Phase-0 experiment contract
-```
-
-### Conformal / set-membership uncertainty
-
-Go only if:
-
-```text
-coverage/calibration improves on held-out sessions/contexts
-AND OOD behavior beats simpler residual/ensemble baselines
-AND the resulting uncertainty is useful to WISE/AEGIS
-AND runtime/optimization cost is acceptable
-```
-
----
-
-## 16. v9 source mapping for new tracks
-
-```text
-SRC-150
-→ timed runtime enforcement competitor/baseline for CTEE
-
-SRC-151
-→ Age of Information / freshness
-
-SRC-152
-→ deterministic Network Calculus methodology
-
-SRC-153
-→ adaptive constrained experiment design / CIBES research
-
-SRC-154
-→ conformalized robust OOD MPC / quadcopter benchmark
-
-SRC-155
-→ set-membership uncertainty learning
-
-SRC-156
-→ tractable ellipsoidal set-membership approximation
-```
-
----
-
-## 17. Final design principle
+The overall project principle remains:
 
 ```text
 measure
-→ identify the real bottleneck
-→ introduce the smallest credible method
-→ compare against the simpler baseline
-→ validate causality / timing / runtime cost
-→ retain only if benefit is real
+→ identify a real bottleneck/failure class
+→ introduce the smallest credible mechanism
+→ compare against a simpler baseline
+→ retain only if measurable benefit is real
 ```
-
-The project should optimize for **measurable closed-loop value**, not algorithm count.
-
-The current next action remains Q1 authorization/execution; CTEE-F, CIBES and advanced uncertainty methods do not change that boundary.
