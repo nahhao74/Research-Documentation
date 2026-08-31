@@ -1,74 +1,58 @@
 # AURA–WISE–WM–AEGIS Source Registry — Current Pointer
 
-## GitHub-archived registry identity
+## Current registry identity
 
-The latest **fully archived and hash-identified registry artifact currently present in this GitHub repository** remains:
+The current project research registry is:
 
 ```text
-AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v5
-sources=123
-resolved=120
+AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v7
+sources=141
+resolved=138
 unresolved=3
-LOCAL_CANONICAL_JSON_SHA256=acc056ca6c475fb00c6173b54b7a4f779446c21588134bdb5ee23571fc1d16a2
-LOCAL_CANONICAL_MD_SHA256=5d8221715ce87f61c089ed53e4c0666851551b4a1591c20d4fd2fc40d71df6b7
+LIBRARY_ARTIFACT=AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v7.md
+LIBRARY_FILE_ID=file_000000001ea082118dccd3b98f68b166
 ```
 
 GitHub retrieval index:
 
-- [`CURRENT_REGISTRY_V5.md`](CURRENT_REGISTRY_V5.md) — compact searchable v5 view with exact locators for post-v2 additions through `SRC-123`.
+- [`CURRENT_REGISTRY_V7.md`](CURRENT_REGISTRY_V7.md) — current v7 retrieval view, including exact v6/v7 additions through `SRC-141`.
+- [`CURRENT_REGISTRY_V5.md`](CURRENT_REGISTRY_V5.md) — historical retrieval index covering post-v2 additions through `SRC-123`.
+- `library_snapshots/` — historical v1/v2 snapshots.
 
-## Project-local research reference
+The exact v7 Markdown artifact exists in the project/File Library and is the authority for v7 registry content. A v7 machine-readable JSON artifact/hash has not been promoted into this GitHub repository, so no JSON/hash identity is inferred here.
 
-The current future implementation roadmap references:
-
-```text
-AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v7
-```
-
-However, the exact v7 machine-readable artifact, source count, resolved/unresolved counts and canonical hashes are **not archived in this repository at this revision**. Therefore this file does not invent or infer those identities from roadmap source IDs.
-
-Until the exact v7 registry artifact is added and verified:
+## Registry lineage
 
 ```text
-project research roadmap reference = v7
-latest GitHub-verifiable registry snapshot = v5
+v1  87 sources; locators initially unresolved
+v2  87 sources; 84 resolved / 3 unresolved
+v3  SRC-088..SRC-094: pinned PX4/uXRCE/eProsima runtime references
+v4  SRC-095..SRC-103: PX4/Gazebo + uncertainty/planning/residual research
+v5  SRC-104..SRC-123: latency, scheduling, embedded predictive control, World Model research
+v6  SRC-124..SRC-127: learned residual MPC, online dynamics, latency-aware control, safety filter
+v7  SRC-128..SRC-141: DDS/ROS 2 latency, change detection, learned/adaptive disturbance modeling, runtime assurance
 ```
 
-This distinction is deliberate provenance bookkeeping, not a downgrade of the project-local research state.
+No existing source ID was deleted or renumbered in v7.
 
-## Current research directions reflected by the roadmap
+## Current research directions
 
-The project research set now informs work on:
+The v7 set informs work on:
 
 ```text
 closed-loop randomized identification
 PX4/uXRCE/ROS end-to-end latency
 executor and scheduling determinism
 AURA change-detection challengers
+learned/adaptive disturbance estimation
 structured residual / temporal World Models
-SINDY / Koopman / sparse GP dynamics
 T_D -> T_A delay-aware prediction
-uncertainty-aware MPC
+uncertainty-aware predictive control
 bounded candidate enumeration
 TinyMPC / RTI / event-triggered WISE
 online low-dimensional adaptation
 AEGIS safety filters / runtime assurance
 ```
-
-Exact source title/locator promotion still requires the actual registry entry or independent source verification; the roadmap alone is not a locator authority.
-
-## Archived Library snapshots
-
-Historical entries `SRC-001..SRC-087` remain preserved under `library_snapshots/`:
-
-```text
-AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v1.json
-AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v1.md
-AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v2(1).json
-AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v2(1).md
-```
-
-The v5 GitHub retrieval index extends this historical lineage.
 
 ## Unresolved internal identities
 
