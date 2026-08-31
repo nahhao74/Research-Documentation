@@ -1,215 +1,393 @@
-# Current Status — 2026-08-29
+# Current Status — 2026-08-31
 
 ## Executive state
 
-The Moving-Mode pipeline remains in **vNext-1 scientific-system closure**. Major transport, timestamp, provenance, bootstrap, Gazebo/world, H1000 and candidate-mechanism defects are closed. The latest fresh randomized pilot still stopped **before `FIRST_SCIENTIFIC_T_D`**, so no scientific block, treatment exposure or manifest slot was consumed.
+The AURA–WISE–World Model–AEGIS vNext pipeline has completed its structural cleanup and roadmap normalization. The repository is no longer blocked by package ownership, duplicate WM1 semantics, compatibility adapters, or artifact-path ambiguity.
 
-Current blocking state:
-
-```text
-ROOT_VALIDITY_CLASS=INVALID_INFRASTRUCTURE_PRE_SCIENCE
-FAILURE_BOUNDARY=PRE_SCIENCE_C1_VALID_OFFER_FRONTIER_TIMEOUT
-C1_FRONTIER_DEEP_ROOT_CAUSE=UNRESOLVED
-```
-
-This is an integration/runtime blocker, not a scientific failure and not evidence that P1/P2 lack physical effect.
-
-## What is already closed
-
-### Candidate mechanism
-
-The bounded incremental candidate path is live-qualified on top of the active FAST/T1/C1 baseline:
+Current state:
 
 ```text
-B = PX4 + AURA + FAST/T1/C1
-u_total_requested = u_baseline + u_candidate
+STRUCTURAL_CLEANUP=CLOSED_WITH_MINIMAL_PROVENANCE_FACADE
+PHASE_0A_MECHANISM=CLOSED
+ROADMAP=ESTABLISHED
+CURRENT_BLOCKER=GUST_P1_AURA_REFERENCE_TRANSITION_ONSET_SUPPRESSION
+0B.1_GUST_P1_SEMANTIC_FORENSIC=READY
+FRESH_NOSCIENCE_PARITY=BLOCKED
+FRESH_SCIENCE=BLOCKED
+SEALED_STATE=LOCKED_PRE_EVALUATION
+production_authority=false
 ```
 
-No-candidate parity, ZERO parity, nonzero incremental path, stale fail-to-baseline, reset handling and H1000 regression all passed. Physical superposition is not assumed.
+The active blocker is now a scientific/semantic boundary, not repository structure or callback infrastructure.
 
-### Source transport and provenance
+## Current architecture
 
-- uXRCE cross-topic hot-path logging head-of-line blocking was removed.
-- Native SensorCombined source continuity is qualified with explicit source counters.
-- `SensorCombinedStampedV1` carries atomic native source identity plus sender mapping provenance.
-- Historical malformed wrapper SHA-256 was proven to be a ledger transcription error; the canonical current digest is:
+### Fast path
 
 ```text
-5cb31c66d07c9c2bdaa9a4a7c243f10e4e9e70423b28957dee87b10862a59d06
+PX4 / sensors / reference
+-> AURA
+-> AEGIS FAST / T1 / C1
+-> PX4
 ```
 
-### Dual-domain time authority
+PX4 inner loops remain authoritative. The World Model does not block first response.
+
+### Predictive path
 
 ```text
-source continuity -> native PX4 source time + generation
-clock alignment    -> separate causal mapping/provenance predicate
+PX4 / sensors / reference
+-> StateBank always warm
+-> predictive / World Model
+-> bounded candidate refinement
+-> AEGIS
+-> PX4
 ```
 
-Mapped-time discontinuity is not treated as native source loss. A live clock-mapping transition during science remains fail-closed unless separately qualified.
-
-### Gazebo/world startup
-
-A pre-science `gz_bridge` model-spawn timeout was traced to a service-discovery race. The startup path now waits for the exact world-scoped create service before invoking the bridge.
-
-The scientific world is now owner-frozen as the deterministic plugin-bearing world:
+Canonical predictive ownership now includes:
 
 ```text
-WORLD_NAME=sim_world_a
-CANONICAL_WORLD_SHA256=8b26be57f07380455071fe8f4f81797e8ca3b946bf407158ff91f0ac110f3b91
+predictive_core/predictive/statebank/core.py
+predictive_core/predictive/nominal.py
+predictive_core/predictive/artifact_registry.py
+predictive_core/predictive/artifact_registry.v1.json
 ```
 
-`NativeDisturbanceSystem` is present in both CALM and GUST_E contexts. CALM uses zero/no disturbance command; GUST_E uses the frozen +E scientific stimulus contract. The final generated world is hashed after preparation and before runtime launch.
+### WM1 causal/experiment path
 
-A fresh non-scientific CALM requalification passed Gazebo/PX4/topics/source attestation/StateBank bootstrap, observed zero native disturbance events, stayed within the 35 m radius and cleaned up successfully.
-
-### StateBank/bootstrap and H1000
-
-StateBank session bootstrap requires all seven source-bound streams:
+Canonical shared WM1 semantics now live under `experiments/wm1/`:
 
 ```text
-aura, imu, attitude, local_state, reference, controller, actuator
+transaction
+lifecycle
+observations
+contexts
+H1000
+serialization
 ```
 
-The AURA bootstrap race and specialized `bootstrap_only=True` call-site defect are closed.
-
-The later H1000 timeout was traced to a lifecycle bug: a baseline bootstrap-only status was incorrectly seeded as a candidate-release anchor. The repaired probe leaves `_last_release=None` after session-start bootstrap and only applies candidate-only H1000 after an actual candidate release. `REFRACTORY_US=1_000_000` and candidate-only semantics were unchanged.
-
-## Latest randomized-pilot attempt
-
-Latest root:
+The experiment flow is:
 
 ```text
-/media/nahhao74/KINGSTON/
-wm1_v2r1_within_run_randomized_action_20260829_native_disturbance_world_freeze_01
+context
+-> observations
+-> transaction
+-> accepted exposure
+-> release
+-> H1000
+-> accounting / thin runner
 ```
 
-Pre-science gates that passed:
+Historical AURA import-only compatibility adapters have been retired; internal compatibility adapters are now zero.
+
+## WISE role
+
+WISE is retained as an AS-IS diagnostic/reproduction sidecar, not a mandatory vNext control hop.
 
 ```text
-WORLD_IDENTITY_GATE=PASS
-GZ_SERVICE_READY=PASS
-PX4_STARTUP=PASS
-REQUIRED_RUNTIME_TOPICS=PASS
-SOURCE_ATTESTATION=PASS
-SOURCE_CONTINUITY=PASS_PRE_SCIENCE_ATTESTATION
-CLOCK_ALIGNMENT=PASS_PRE_SCIENCE_ATTESTATION
-ATOMIC_PROVENANCE=PASS_PRE_SCIENCE_ATTESTATION
-STATEBANK_REQUIRED_STREAMS_PRESENT=7/7
-BOOTSTRAP_SNAPSHOT_ACK=VALID_ACCEPTED
-BLOCK1_SNAPSHOT_ACK=VALID_ACCEPTED
+wise_shadow = active diagnostic sidecar
+HGDO = active diagnostic baseline
+UIO = active diagnostic baseline
+WISE_VNEXT_REQUIRED_HOP=false
 ```
 
-The failure occurred after the first block snapshot while waiting for a valid C1 offer frontier:
+Nominal predictive dynamics are no longer owned by WISE; the canonical implementation is in `predictive_core`.
+
+## Structural cleanup closure
+
+The physical ownership migration and repository cleanup are closed with a minimal provenance facade.
+
+Closed work includes:
 
 ```text
-PRE_SCIENCE_C1_VALID_OFFER_FRONTIER_TIMEOUT
-C1 callbacks continued
-continuous-C1 records continued
-published/canonical C1 source frontier remained 0
-candidate offers = 0
-candidate publishes = 0
-E8 candidate transactions = 0
-FIRST_SCIENTIFIC_T_D=NOT_REACHED
-MANIFEST_SLOTS_CONSUMED=0
+StateBank canonical ownership
+nominal predictive canonical ownership
+WM1 shared behavior extraction
+accepted-status duplicate removal
+historical report dependency decoupling
+5 internal compatibility adapters retired
+versioned artifact registry/resolver v1
+_DELETE_STAGING accounting closure
+canonical roadmap/document workflow restoration
 ```
 
-Three isolated diagnostics also reported:
+The final artifact-call migration classified the remaining direct World Model artifact references. Migratable references use the fail-closed artifact registry; exact historical paths are retained only where provenance or compatibility requires them.
+
+`4_WORLD_MODEL/artifacts/` remains intentionally present as a path-bound provenance facade. It is not treated as an active source tree or a general runtime-data store.
+
+Root `.runtime_*` symlinks and the retained WISE diagnostic paths likewise remain only because current callers, entrypoints, tests, or path-bound lineage still require them.
+
+## Validation baseline after structural closure
+
+Latest reported regression state:
 
 ```text
-unexpected_domain expected=epoch received=boot
+AURA=717 PASS
+WISE=115 PASS
+AEGIS=247 PASS
+PREDICTIVE_CORE=5 PASS
+WORLD_MODEL=264 PASS
+ROOT=22 PASS
+WM1_FOCUSED=78 PASS
+py_compile=PASS
+git diff --check=PASS
+Codegraph=FRESH
 ```
 
-This is a strong timestamp-domain/binding hypothesis, but it is **not yet promoted to the deep root cause**.
-
-## Immediate next task
-
-Do **not** run another randomized pilot yet.
-
-The next task is:
+No live/scientific campaign was run to obtain these maintenance results.
 
 ```text
-C1_VALID_OFFER_FRONTIER_ROOT_CAUSE
-+
-FULL_PRE_SCIENCE_CORRIDOR_CLOSURE
+SCIENTIFIC_EXECUTION=NOT_RUN
+IMMUTABLE_KINGSTON_EVIDENCE_MUTATION=NONE
+GUST_P1_SEMANTICS_CHANGED=false
+H1000_SEMANTICS_CHANGED=false
+CONTROL_MATHEMATICS_CHANGED=false
 ```
 
-The exact current pilot path must be exercised through:
+## Phase 0A mechanism state
+
+The causal/runtime mechanism work preceding scientific identification is closed.
 
 ```text
-startup
--> source attestation
--> StateBank 7/7
--> session bootstrap_only
--> first-block snapshot
--> C1 valid-offer frontier
--> pre-offer source/clock/provenance checks
--> INTENTIONAL STOP immediately before FIRST_SCIENTIFIC_T_D
+runtime/source/clock/provenance=CLOSED
+StateBank causal bootstrap=CLOSED
+C1/E8 exact accepted-action path=CLOSED
+T_D -> T_A timing contract=CLOSED
+exact treatment continuation=CLOSED
+H1000 refractory semantics=CLOSED
+CALM/GUST repeated-decision mechanism=CLOSED
 ```
 
-This corridor must use the real pilot runner/probe and must not enter candidate publication, E8 treatment, accepted exposure or manifest consumption.
+Do not reopen these gates without new evidence of an actual regression.
 
-The process rule going forward is:
+## Live nonscientific parity state
+
+Current parity evidence remains:
 
 ```text
-repair
--> deterministic regression
--> component qualification
--> FULL INTEGRATED PRE-SCIENCE CORRIDOR
--> only then randomized scientific root
+DETERMINISTIC_PARITY=6/6_PASS
+LIVE_NOSCIENCE_PARITY=5/6
 ```
 
-The randomized pilot must no longer serve as an integration test.
+Observed live outcomes:
 
-## Scientific campaign still pending
+```text
+CALM ZERO=VALID
+CALM P1=VALID
+CALM P2=VALID
+GUST ZERO=VALID
+GUST P2=VALID
+GUST P1=BLOCKED
+```
 
-The frozen campaign remains unchanged:
+The remaining GUST P1 failure is not callback starvation and is not a DDS-loss conclusion.
+
+## Current scientific blocker
+
+The exact blocker is:
+
+```text
+GUST_P1_AURA_REFERENCE_TRANSITION_ONSET_SUPPRESSION
+```
+
+Known behavior:
+
+```text
+native GUST event exists
+-> AURA enters REFERENCE_TRANSITION
+-> AURA emits reason=reference_transition_not_disturbance
+-> no qualified DISTURBANCE_ONSET is produced
+-> GUST P1 cannot satisfy the current event-qualified treatment gate
+```
+
+This is a semantic/timing interaction at the AURA/reference-transition/event-qualification boundary.
+
+Changing any of the following would be a scientific/semantic decision and therefore requires owner review:
+
+```text
+AURA event/reference-transition meaning
+GUST treatment eligibility/timing
+native external-event vs AURA qualification binding
+validity criteria
+```
+
+## Immediate next gate — 0B.1
+
+The roadmap-authorized next task is:
+
+```text
+0B.1 GUST P1 semantic forensic
+```
+
+Goal:
+
+```text
+identify the first causal divergence unique to GUST P1
+compare GUST ZERO / P1 / P2 native-source chronology
+trace reference transition vs native GUST onset
+classify the root as:
+- intended AURA semantics
+- implementation contradiction to frozen semantics
+- timing/design interaction
+- insufficient evidence
+```
+
+The expected output is an owner semantic decision package. No semantic implementation is authorized by this gate.
+
+Candidate resolution families to compare include:
+
+```text
+A. change AURA event/reference-transition semantics
+B. keep AURA semantics and change GUST arm/treatment timing
+C. separate native external-event identity from AURA disturbance qualification
+D. another source-grounded alternative
+```
+
+Each option must be evaluated for impact on:
+
+```text
+G_action
+P1/P2
+baseline B
+randomization
+pre-treatment conditioning
+AURA semantics
+FAST/T1/C1
+H1000
+validity criteria
+```
+
+## Gates after 0B.1
+
+No later gate is READY yet.
+
+Dependency order is:
+
+```text
+0B.1 semantic forensic
+-> 0B.2 owner semantic decision
+-> 0B.3 approved implementation
+-> 0B.4 deterministic regression
+-> 0B.5 fresh bounded nonscientific 6-case parity
+-> 0B.6 scientific pilot owner review
+-> 0B.7 fresh randomized scientific pilot
+-> 0B.8 scientific analysis
+-> 0B.9 causal dataset acceptance
+```
+
+Fresh nonscientific parity must reach:
+
+```text
+6/6 VALID
+```
+
+before a new scientific pilot is reviewed.
+
+## Scientific campaign remains pending
+
+The intended action-conditioned experiment remains conceptually:
 
 ```text
 worker A
 8 sessions = 4 CALM + 4 GUST_E
-12 scientific blocks/session
+12 blocks/session
 96 blocks total
 ZERO=48
 P1=24
 P2=24
 ```
 
-No accepted root has completed this campaign, therefore there is still no accepted P1/P2 treatment-SNR result and no authorization to train the action-conditioned World Model.
-
-## Long-term direction
-
-The current future implementation roadmap is documented in:
+The scientific estimand remains:
 
 ```text
-docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md
+G_action(X,U,h)
+=
+Y(B+U,h) - Y(B+ZERO,h)
+
+B = active PX4 + AURA + FAST/T1/C1 baseline
 ```
 
-The intended order after scientific closure is:
+Future FAST/PX4 reaction after the candidate is part of the closed-loop treatment response, not automatically a confounder.
+
+A technically valid campaign does not automatically imply `CAUSAL_DATASET_ACCEPTED`.
+
+Scientific analysis must distinguish:
 
 ```text
-valid G_action identification
--> end-to-end latency decomposition
--> T_D -> T_A delay/state baseline
--> AURA detector shadow bake-off
--> F_B + G_action model ladder
--> history ablation
--> uncertainty calibration
--> WISE-0 bounded candidate enumeration
--> event-triggered WISE
--> TinyMPC / Koopman / RTI only if justified
--> AEGIS safety-envelope specification
--> low-dimensional adaptation
--> formal safety projection
+CLEAR
+WEAK
+NOT_RESOLVED
 ```
+
+and `NO_IMPROVEMENT` must not be interpreted as proof of no physical action effect.
+
+## World Model roadmap after causal closure
+
+World Model development remains dependency-gated behind causal data acceptance.
+
+The intended decomposition is:
+
+```text
+Stage A:
+T_D -> X_hat_A
+
+F_nominal:
+X -> nominal future response
+
+G_action:
+(X,U) -> incremental closed-loop response
+```
+
+Development order:
+
+```text
+causal dataset acceptance
+-> Stage A / F_nominal / G_action baselines
+-> model qualification
+-> read-only latency characterization / later optimization where allowed
+-> predictive shadow integration
+-> ActivePlan monitor / invalidate / replan
+-> safety and control-margin qualification
+-> separate authority gate
+```
+
+World Model must never own first response, event detection, safety authority, or PX4 inner-loop authority.
+
+## Storage and provenance
+
+Significant runtime/capture/dataset/training/intermediate artifacts remain under:
+
+```text
+/media/nahhao74/KINGSTON
+```
+
+`/home` is for source, tests, small deterministic fixtures, configuration and canonical documentation.
+
+Immutable/path-bound evidence is not moved merely for cosmetic cleanup.
 
 ## Authority boundaries
 
 ```text
 SEALED_ACCESS_BOUNDARY=LOCKED_PRE_EVALUATION
 SEALED_PAYLOAD_OPENED=false
-MODEL_TRAINING=NOT_AUTHORIZED_YET
-R1=NOT_AUTHORIZED_YET
+FRESH_SCIENCE=BLOCKED
+MODEL_TRAINING_ACTION_RESPONSE=BLOCKED_PENDING_CAUSAL_DATA_ACCEPTANCE
 production_authority=false
 ```
 
-Historical failed roots remain immutable. Large runtime/capture/dataset artifacts remain under `/media/nahhao74/KINGSTON` rather than this repository.
+Historical failed scientific roots remain immutable.
+
+## Current direction
+
+The project is back on the main scientific roadmap. Structural cleanup is no longer the active workstream.
+
+The immediate sequence is:
+
+```text
+GUST P1 semantic forensic
+-> owner semantic decision
+-> smallest approved implementation
+-> deterministic regression
+-> fresh 6-case nonscientific parity
+-> only then scientific pilot review
+```
