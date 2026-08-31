@@ -2,7 +2,7 @@
 
 ## Executive state
 
-The project is in **Phase 0B.2**. Structural/mechanism work is closed, the GUST-P1 causal forensic is closed, and the remaining blocker is a numeric pre-treatment eligibility/scheduling decision for Option B.
+The project remains in **Phase 0B.2**. Structural/mechanism work and the GUST-P1 causal forensic are closed. Historical offline characterization reached its evidence limit; the immediate next gate is the owner-authorized bounded Q1 no-launch characterization.
 
 ```text
 STRUCTURAL_CLEANUP=CLOSED
@@ -18,8 +18,7 @@ IMPLEMENTATION_AUTHORIZED=false
 REFERENCE_STABILITY_PREDICATE=
 GUST_PREOFFER_REFERENCE_STABILITY_V1
 
-AUTHORITATIVE_TIME_DOMAIN=
-PX4_BOOT_US
+AUTHORITATIVE_TIME_DOMAIN=PX4_BOOT_US
 # selected/proposed source-time authority
 # still inside owner freeze boundary
 
@@ -63,7 +62,7 @@ ROUND_Z_AUTHORITY=0
 production_authority=false
 ```
 
-The current blocker is **not** a World-Model problem and is no longer the historical C1-frontier timeout. The active workstream remains Phase-0 causal-data qualification.
+The active workstream remains Phase-0 causal-data qualification. This is not a World-Model blocker and is not the historical C1-frontier timeout.
 
 ## Canonical architecture
 
@@ -89,56 +88,29 @@ PX4 / sensors / reference
 -> PX4
 ```
 
-The World Model is not yet the active development gate and must never block first response.
+The World Model is not the current development gate and must never block first response.
 
 ## 0B.1 closure — exact causal conclusion
-
-The GUST-P1 failure is classified as:
 
 ```text
 C_TIMING_DESIGN_INTERACTION_BETWEEN_FROZEN_REFERENCE_TRANSITION_PRECEDENCE
 AND_THE_PREOFFER_NATIVE_EVENT_WINDOW
 ```
 
-Canonical chronology:
+GUST ZERO and P2 regain qualified Moving evidence after the reference transition clears. GUST P1 loses Moving detector active evidence while the transition is still active, then never obtains a qualified `DISTURBANCE_ONSET`.
 
-```text
-GUST ZERO
--> reference transition clears
--> qualified Moving evidence returns
--> DISTURBANCE_ONSET minted
-
-GUST P2
--> reference transition clears
--> qualified Moving evidence returns
--> DISTURBANCE_ONSET minted
-
-GUST P1
--> Moving evidence disappears while REFERENCE_TRANSITION is still active
--> transition clears later
--> qualifying Moving evidence does not recover
--> no DISTURBANCE_ONSET
--> NO_ONSET_CANDIDATE
--> no offer
--> no T_D
--> no ACK
--> no accepted candidate exposure
-```
-
-Therefore P1 treatment cannot be the cause of the failure because treatment was never offered or accepted.
+P1 never reaches candidate offer, scientific `T_D`, ACK, or accepted exposure. The failure is therefore not a P1 treatment effect.
 
 ## Completed 0B.2 offline characterization
 
-The read-only characterization of the existing immutable GUST evidence reached a hard evidence limit:
+The existing immutable GUST evidence supports only:
 
 ```text
 COUNTERFACTUAL_IDENTIFIABILITY=REFERENCE_ONLY
 POST_NATIVE_EVENT_CONTAMINATION_AUDIT=LIMITED
 ```
 
-Reference-side stable windows are observable for GUST ZERO/P1/P2 across the tested characterization grid through `1,000,000 us`, but the historical native GUST had already occurred before the proposed delayed-launch waiting trajectory.
-
-Consequently post-event AURA/C1/reset state cannot be silently reused as the no-GUST delayed-launch counterfactual.
+Reference-side stable chronology can be derived, but historical GUST already occurred before the proposed delayed-launch waiting trajectory. Post-event AURA/C1/reset state cannot stand in for the no-GUST counterfactual.
 
 ```text
 FULL_PREDICATE PASS=0
@@ -146,9 +118,7 @@ FULL_PREDICATE FAIL=0
 FULL_PREDICATE UNKNOWN=3
 ```
 
-The available historical evidence also lacks an exact `nominal_requested_launch_source_us` in `PX4_BOOT_US`, so a valid source-domain wait distribution and `W_MAX_US` coverage envelope cannot yet be computed.
-
-Therefore:
+Historical evidence also lacks an exact `nominal_requested_launch_source_us` in `PX4_BOOT_US`. Therefore no valid source-domain wait distribution or `W_MAX_US` offline coverage envelope can yet be computed.
 
 ```text
 M_STABLE_US=UNFROZEN
@@ -156,28 +126,26 @@ W_MAX_US=UNFROZEN
 W_MAX_RUNTIME_FEASIBILITY=UNPROVEN
 ```
 
-No numeric value, including the existing 500 ms reference-change exclusion constant, is promoted to an Option-B margin merely because it already exists in the system.
+The existing 500 ms reference-change exclusion constant is not promoted into Option B merely because it exists.
 
 ## Current next gate — Q1
-
-The next bounded evidence gate is:
 
 ```text
 Q1 — BOUNDED NON-SCIENTIFIC NO-LAUNCH SHADOW QUALIFICATION
 ```
 
-The Q1 contract is prepared but runtime is not authorized or executed.
+Q1 contract is prepared but runtime is not authorized or executed.
 
-Q1 must create a true unexposed waiting trajectory:
+For GUST_E, Q1 must create a true unexposed waiting trajectory:
 
 ```text
 session/block ready
--> identify nominal GUST launch opportunity
+-> identify predeclared nominal GUST launch opportunity
 -> record nominal_requested_launch_source_us in PX4_BOOT_US
--> suppress native GUST for the bounded observation window
--> observe reference/AURA/C1/session/reset/continuity/provenance
+-> suppress native GUST for the entire bounded observation window
+-> observe reference / AURA / C1 / session-reset / continuity / provenance
 -> evaluate GUST_PREOFFER_REFERENCE_STABILITY_V1 in SHADOW ONLY
--> terminate without GUST launch, treatment, T_D, or scientific accounting
+-> terminate without GUST launch, treatment, scientific T_D or manifest accounting
 ```
 
 Critical invariant:
@@ -186,9 +154,21 @@ Critical invariant:
 NO_NATIVE_GUST_AFTER_NOMINAL_OPPORTUNITY
 ```
 
-Q1 may establish full-predicate offline timing/support and a candidate `W_MAX_US` **offline coverage** envelope. It still cannot establish actual delayed-launch runtime feasibility because it does not execute the downstream launch/offer/ACK/H1000 chain.
+CALM remains a negative/control context for observability/support. It must not be turned into a synthetic GUST case.
 
-The next owner action is therefore authorization of the bounded Q1 nonscientific runtime, not approval of Option-B implementation and not scientific-pilot authorization.
+Q1 no-launch mode is observational/fail-safe: predicate `PASS`, `FAIL` or `UNKNOWN` must never release the suppressed GUST. Normal scheduling behavior must remain unchanged when Q1 mode is disabled.
+
+Successful Q1 can create evidence for:
+
+```text
+nominal_requested_launch_source_us
+first_full_predicate_eligible_source_us
+full_counterfactual_wait_us
+M_STABLE_US sensitivity
+candidate W_MAX full-predicate offline coverage
+```
+
+It still cannot establish actual delayed-launch runtime feasibility because it does not execute delayed native launch, AURA onset binding, `T_D`, offer, ACK/exposure, release and H1000.
 
 ## Phase-0 dependency ladder
 
@@ -208,7 +188,7 @@ The next owner action is therefore authorization of the bounded Q1 nonscientific
 0B.9 causal dataset acceptance                            BLOCKED
 ```
 
-No additional scientific smoke/corridor should be invented between these gates unless a concrete unresolved validity condition requires one.
+No extra scientific smoke/corridor should be invented between these gates unless a concrete unresolved validity condition requires it.
 
 ## Scientific target remains unchanged
 
@@ -219,76 +199,97 @@ B = active PX4 + AURA + FAST/T1/C1 baseline
 
 Post-treatment FAST/PX4 reactions remain part of the realized closed-loop treatment response.
 
-The frozen randomized campaign remains conceptually:
+Action-conditioned World-Model training remains blocked pending causal dataset acceptance.
+
+## Active roadmap — v4 CTEE formalization
+
+The active roadmap revision is:
 
 ```text
-worker A
-8 sessions = 4 CALM + 4 GUST_E
-12 blocks/session
-96 blocks total
-ZERO=48
-P1=24
-P2=24
+AURA_WISE_WM_AEGIS_FUTURE_IMPLEMENTATION_ROADMAP_v4_CTEE_20260831.md
 ```
 
-A technically valid 96/96 campaign does not automatically imply `CAUSAL_DATASET_ACCEPTED`; scientific analysis and acceptance gates remain separate.
+The exact full artifact is maintained in the Detect and Response Project/File Library. GitHub uses `docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md` as the stable pointer and a v4 retrieval/index view.
 
-## World Model status
-
-Action-conditioned World-Model training is still blocked pending causal dataset acceptance.
-
-The intended future decomposition remains:
+The key v4 change is that **after Q1 evidence and explicit owner Option-B freeze**, implementation becomes evidence-gated:
 
 ```text
-Y_future = F_nominal(X,h) + G_action(X,U,h)
+Q1 observed no-GUST waiting trajectory
+-> owner freezes M_STABLE_US / W_MAX_US / scheduling / source-time policy
+-> static dependency graph extraction
+-> Tarjan SCC preflight
+-> CTEE benchmark / eligibility qualification
+   - PASS / FAIL / UNKNOWN
+   - source-bound max-plus T_eligible
+   - readiness/blocker diagnostic
+   - atomic generation-safe recheck
+-> bounded delayed-launch nonscience qualification
 ```
 
-with later delay-aware handling of `T_D -> T_A`, history ablation, uncertainty, WISE planning and AEGIS safety/runtime assurance.
-
-Current order:
+CTEE is not active now and is not automatically promoted:
 
 ```text
-Q1 no-launch evidence
--> owner M_STABLE / W_MAX / scheduling freeze
--> Option-B implementation
--> deterministic regression
--> delayed-launch nonscience qualification
--> scientific pilot + analysis
--> causal dataset acceptance
--> latency / FFT-FRF characterization
--> AURA challenger work
--> World Model v1
--> WISE
--> online adaptation
--> formal AEGIS safety layer
+CTEE_NAME=PROJECT_PROPOSAL
+CTEE_PUBLICATION_NOVELTY=NOT_PROVEN
+CTEE_PRIOR_ART_COMPONENTS=STRONG
 ```
+
+It must be compared against the current/ad-hoc state machine and a conventional timed FSM/timed-guard implementation. If the simpler implementation is equivalent, use it and retire CTEE.
+
+Algorithm responsibilities remain distinct:
+
+```text
+Tarjan SCC = static structural/dependency validation
+CTEE       = candidate live temporal/causal eligibility
+Sweep Line = offline scientific timeline/interval validation
+MCMF       = future conditional allocation only
+```
+
+None of these algorithms may choose the scientific contract.
 
 ## Source Registry
 
 Current research authority:
 
 ```text
-AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v7
-UPDATED=2026-08-29
-SOURCES=141
-RESOLVED=138
+AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v8
+UPDATED=2026-08-31
+SOURCES=149
+RESOLVED=146
 UNRESOLVED=3
 UNRESOLVED_IDS=SRC-024,SRC-040,SRC-053
 ```
 
-Do not invent an unverified v7 JSON path or SHA256.
+v8 adds `SRC-142..SRC-149` for Tarjan SCC, max-plus timing, three-valued runtime verification, sweep-line interval validation and conditional network-flow allocation.
 
-## Latest read-only validation associated with the 0B.2 characterization
+Research references remain methodological inputs. They do not freeze Option B, select `M_STABLE_US/W_MAX_US`, authorize 0B.3, change AURA/FAST/T1/C1/E8/H1000/T_D/T_A, change PX4 authority, open SEALED or grant production authority.
+
+Do not invent an unverified v8 JSON path or SHA256.
+
+## Long-term roadmap
+
+After Phase-0 causal dataset acceptance:
 
 ```text
-FOCUSED_TESTS=31 PASS
-PYTHON_COMPILE=639 files PASS
-MARKDOWN_LINKS=PASS
-git diff --check=PASS
-Codegraph=UP_TO_DATE
+end-to-end latency + FFT/FRF characterization
+-> AURA detector shadow bake-off
+-> World Model v1 model ladder
+-> StateBank history ablation
+-> T_D -> T_A delay-aware prediction
+-> uncertainty-aware prediction
+-> WISE-0 candidate enumeration
+-> event-triggered WISE
+-> TinyMPC / Koopman / RTI only if justified
+-> low-dimensional online adaptation
+-> formal AEGIS safety/runtime assurance
 ```
 
-No live runtime or scientific root was executed for that characterization.
+Primary design rules:
+
+```text
+minimum complexity that produces demonstrable closed-loop benefit
+better causal data > larger model
+```
 
 ## Storage and authority boundaries
 
@@ -308,20 +309,3 @@ production_authority=false
 ```
 
 Failed scientific roots remain immutable.
-
-## Current roadmap
-
-The active roadmap is the 2026-08-31 v2 roadmap under `docs/04_research/`, with the immediate sequence:
-
-```text
-Q1 NO-LAUNCH SHADOW
--> owner M_STABLE / W_MAX / policy freeze
--> delayed-launch nonscience qualification
--> fresh randomized G_action identification
--> latency / FFT-FRF baseline
--> AURA challengers
--> World Model v1
--> WISE
--> bounded adaptation
--> formal AEGIS runtime assurance
-```
