@@ -13,10 +13,11 @@ This repository is intentionally **architecture-first**. It is not a dump of run
 5. [`docs/01_architecture/WORLD_MODEL_WISE.md`](docs/01_architecture/WORLD_MODEL_WISE.md) — F_nominal / G_action decomposition and predictive planning role.
 6. [`docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md`](docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md) — randomized-identification contract and causal-data gate.
 7. [`docs/03_evidence/MILESTONE_SUMMARY.md`](docs/03_evidence/MILESTONE_SUMMARY.md) — compact audit trail of major closures and failed-root causes.
-8. [`docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md`](docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md) — stable pointer to the active future roadmap.
-9. [`docs/04_research/AURA_WISE_WM_AEGIS_FUTURE_IMPLEMENTATION_ROADMAP_v2_20260831.md`](docs/04_research/AURA_WISE_WM_AEGIS_FUTURE_IMPLEMENTATION_ROADMAP_v2_20260831.md) — full active v2 roadmap snapshot.
+8. [`docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md`](docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md) — stable pointer to the active v4 CTEE roadmap.
+9. [`docs/04_research/AURA_WISE_WM_AEGIS_FUTURE_IMPLEMENTATION_ROADMAP_v4_CTEE_GITHUB_INDEX_20260831.md`](docs/04_research/AURA_WISE_WM_AEGIS_FUTURE_IMPLEMENTATION_ROADMAP_v4_CTEE_GITHUB_INDEX_20260831.md) — GitHub retrieval/index view of the active roadmap; exact full v4 artifact remains in the Detect and Response Library.
 10. [`docs/04_research/RESEARCH_USAGE_GUIDE.md`](docs/04_research/RESEARCH_USAGE_GUIDE.md) — how to use literature and source classes when debugging or extending the pipeline.
-11. [`docs/02_source_registry/README.md`](docs/02_source_registry/README.md) — Source Registry policy; current research authority is v7.
+11. [`docs/02_source_registry/README.md`](docs/02_source_registry/README.md) — Source Registry policy; current research authority is v8.
+12. [`docs/02_source_registry/CURRENT_REGISTRY_V8.md`](docs/02_source_registry/CURRENT_REGISTRY_V8.md) — v8 retrieval index through `SRC-149`.
 
 ## Canonical pipeline
 
@@ -50,11 +51,11 @@ The candidate is a bounded incremental treatment applied on top of the active ba
 
 ## Current status — Phase 0B.2
 
-Structural cleanup, Phase 0A mechanism closure and the GUST-P1 0B.1 forensic are complete.
-
-The current state is:
-
 ```text
+STRUCTURAL_CLEANUP=CLOSED
+PHASE_0A_MECHANISM=CLOSED
+PHASE_0B1=CLOSED
+
 PHASE_0B2=OWNER_MARGIN_DECISION_REQUIRED
 OPTION_B_DIRECTION=PREFERRED
 OPTION_B_CONTRACT_READY=false
@@ -70,6 +71,7 @@ W_MAX_US=UNFROZEN
 COUNTERFACTUAL_IDENTIFIABILITY=REFERENCE_ONLY
 POST_NATIVE_EVENT_CONTAMINATION_AUDIT=LIMITED
 FULL_PREDICATE_COUNTERFACTUAL_SUPPORT=NOT_IDENTIFIABLE
+W_MAX_FULL_PREDICATE_OFFLINE_SUPPORT=UNRESOLVED
 W_MAX_RUNTIME_FEASIBILITY=UNPROVEN
 
 Q1_NOSCIENCE_NO_LAUNCH_CONTRACT=PREPARED
@@ -78,6 +80,8 @@ Q1_RUNTIME_EXECUTED=false
 
 FRESH_SCIENCE=BLOCKED
 SEALED=LOCKED_PRE_EVALUATION
+MANIFEST_SLOTS_CONSUMED=0
+SCIENTIFIC_EXECUTION=NOT_RUN
 production_authority=false
 ```
 
@@ -90,11 +94,28 @@ C_TIMING_DESIGN_INTERACTION_BETWEEN_FROZEN_REFERENCE_TRANSITION_PRECEDENCE
 AND_THE_PREOFFER_NATIVE_EVENT_WINDOW
 ```
 
-Historical traces allow only **reference-side** delayed-scheduling characterization. They cannot identify the full no-GUST delayed-launch counterfactual because the native GUST had already occurred, and they do not contain an exact nominal launch timestamp in `PX4_BOOT_US`.
+Historical GUST traces identify only reference-side delayed-scheduling chronology. They cannot identify the full no-GUST delayed-launch predicate because the native GUST already occurred and they lack an exact nominal launch timestamp in `PX4_BOOT_US`.
 
-The next evidence gate is therefore a bounded **non-scientific Q1 no-launch shadow qualification**. Its contract is prepared, but runtime is not yet authorized or executed. Q1 records the nominal launch opportunity in `PX4_BOOT_US`, suppresses native GUST for the bounded observation window, and evaluates the full reference-stability predicate in shadow only.
+The next evidence gate is therefore a bounded **non-scientific Q1 no-launch shadow qualification**. Its contract is prepared, but runtime is not authorized or executed.
 
-Q1 does not authorize Option-B implementation, science, treatment, SEALED access or `W_MAX` runtime-feasibility claims.
+Q1 must:
+
+```text
+identify nominal GUST launch opportunity
+-> record nominal_requested_launch_source_us in PX4_BOOT_US
+-> suppress native GUST for the bounded observation window
+-> observe reference / AURA / C1 / session-reset / continuity / provenance
+-> evaluate GUST_PREOFFER_REFERENCE_STABILITY_V1 in SHADOW ONLY
+-> terminate without GUST launch, treatment, scientific T_D or manifest consumption
+```
+
+Critical invariant:
+
+```text
+NO_NATIVE_GUST_AFTER_NOMINAL_OPPORTUNITY
+```
+
+Q1 can create evidence for full-predicate offline timing and a candidate `W_MAX_US` offline coverage envelope. It cannot establish delayed-launch runtime feasibility.
 
 ## Phase-0 ladder
 
@@ -119,50 +140,75 @@ World-Model action-response training remains blocked until causal dataset accept
 ## Current research registry
 
 ```text
-AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v7
-UPDATED=2026-08-29
-SOURCES=141
-RESOLVED=138
+AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v8
+UPDATED=2026-08-31
+SOURCES=149
+RESOLVED=146
 UNRESOLVED=3
 UNRESOLVED_IDS=SRC-024,SRC-040,SRC-053
 ```
 
-No unverified v7 JSON path or SHA should be inferred.
+v8 adds methodological references for Tarjan SCC, max-plus temporal reasoning, three-valued runtime monitoring, sweep-line scientific timeline validation and conditional network-flow allocation. These sources do not authorize changes to the frozen scientific/control contract.
 
-## Future roadmap
+No unverified v8 JSON path or SHA should be inferred.
 
-The active v2 roadmap is evidence-driven and orders work approximately as:
+## Active roadmap — v4 CTEE formalization
+
+The active roadmap keeps Q1 and owner freeze ahead of implementation. After explicit Option-B freeze, the candidate implementation sequence becomes:
 
 ```text
-Q1 no-launch characterization
--> owner M_STABLE / W_MAX / scheduling freeze
--> delayed-launch nonscience qualification
--> fresh randomized G_action identification
+Q1 observed no-GUST waiting trajectory
+-> owner freezes M_STABLE_US / W_MAX_US / scheduling / source-time policy
+-> static dependency graph extraction
+-> Tarjan SCC preflight
+-> CTEE benchmark / eligibility qualification
+   - three-valued predicates
+   - source-bound max-plus frontier
+   - readiness potential
+   - atomic recheck
+-> bounded delayed-launch nonscience qualification
+-> fresh randomized G_action science
+```
+
+CTEE is a **project proposal**, not a flight-control law:
+
+```text
+CTEE_NAME=PROJECT_PROPOSAL
+CTEE_PUBLICATION_NOVELTY=NOT_PROVEN
+CTEE_PRIOR_ART_COMPONENTS=STRONG
+```
+
+It must be benchmarked against the current/ad-hoc state machine and a conventional timed FSM/timed-guard implementation. If no material correctness, tail-latency/jitter or engineering-complexity benefit is demonstrated, use the simpler implementation and retire CTEE.
+
+Algorithm roles remain separated:
+
+```text
+Tarjan SCC = static dependency validation
+CTEE       = candidate live temporal/causal eligibility
+Sweep Line = offline scientific timeline validation
+MCMF       = future conditional resource allocation
+```
+
+Long-term progression remains evidence-driven:
+
+```text
+causal dataset acceptance
 -> end-to-end latency + FFT/FRF characterization
 -> AURA detector challengers
 -> World Model v1 model ladder
--> history and T_D->T_A delay ablations
--> uncertainty
+-> history / T_D->T_A delay ablations
+-> uncertainty-aware prediction
 -> WISE candidate enumeration / event-triggered planning
 -> TinyMPC / Koopman / RTI only if justified
 -> low-dimensional online adaptation
--> formal AEGIS Lyapunov / CLF / CBF runtime assurance
+-> formal AEGIS safety/runtime assurance
 ```
 
-The design principle is the **minimum complexity that produces a demonstrable closed-loop benefit**.
+The design principle is the **minimum complexity that produces a demonstrable closed-loop benefit** and **better causal data > larger model**.
 
 ## Repository policy
 
-This repository stores:
-
-- canonical architecture and contracts;
-- current readiness state;
-- compact milestone/root-cause summaries;
-- future implementation roadmap;
-- Source Registry and research guidance;
-- stable hashes/identities only when needed to understand a frozen contract.
-
-It does **not** store large telemetry, capture bundles, replay roots, training datasets, scientific runtime roots or high-volume intermediate artifacts. Those remain under:
+This repository stores canonical architecture/contracts, current readiness state, compact milestone/root-cause summaries, roadmap, Source Registry and research guidance. It does **not** store large telemetry, capture bundles, replay roots, training datasets, scientific runtime roots or high-volume intermediate artifacts. Those remain under:
 
 ```text
 /media/nahhao74/KINGSTON
