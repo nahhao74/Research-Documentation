@@ -5,21 +5,30 @@
 The current project research registry is:
 
 ```text
-AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v7
-sources=141
-resolved=138
+AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v8
+UPDATED=2026-08-31
+sources=149
+resolved=146
 unresolved=3
-LIBRARY_ARTIFACT=AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v7.md
-LIBRARY_FILE_ID=file_000000001ea082118dccd3b98f68b166
+LIBRARY_ARTIFACT=AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v8.md
+```
+
+Unresolved internal identities remain:
+
+```text
+SRC-024
+SRC-040
+SRC-053
 ```
 
 GitHub retrieval index:
 
-- [`CURRENT_REGISTRY_V7.md`](CURRENT_REGISTRY_V7.md) — current v7 retrieval view, including exact v6/v7 additions through `SRC-141`.
-- [`CURRENT_REGISTRY_V5.md`](CURRENT_REGISTRY_V5.md) — historical retrieval index covering post-v2 additions through `SRC-123`.
+- [`CURRENT_REGISTRY_V8.md`](CURRENT_REGISTRY_V8.md) — current v8 retrieval/index view, including `SRC-142..SRC-149` and evidence-gated algorithm adoption policy.
+- [`CURRENT_REGISTRY_V7.md`](CURRENT_REGISTRY_V7.md) — historical v7 retrieval view through `SRC-141`.
+- [`CURRENT_REGISTRY_V5.md`](CURRENT_REGISTRY_V5.md) — historical retrieval index through `SRC-123`.
 - `library_snapshots/` — historical v1/v2 snapshots.
 
-The exact v7 Markdown artifact exists in the project/File Library and is the authority for v7 registry content. A v7 machine-readable JSON artifact/hash has not been promoted into this GitHub repository, so no JSON/hash identity is inferred here.
+The exact v8 Markdown artifact exists in the Detect and Response Project/File Library and is the current research authority. A v8 machine-readable JSON artifact/path/hash has not been promoted into this repository, so none is inferred here.
 
 ## Registry lineage
 
@@ -31,38 +40,52 @@ v4  SRC-095..SRC-103: PX4/Gazebo + uncertainty/planning/residual research
 v5  SRC-104..SRC-123: latency, scheduling, embedded predictive control, World Model research
 v6  SRC-124..SRC-127: learned residual MPC, online dynamics, latency-aware control, safety filter
 v7  SRC-128..SRC-141: DDS/ROS 2 latency, change detection, learned/adaptive disturbance modeling, runtime assurance
+v8  SRC-142..SRC-149: dependency correctness, causal temporal eligibility, three-valued monitoring, interval validation, conditional network-flow allocation
 ```
 
-No existing source ID was deleted or renumbered in v7.
+No existing source ID was deleted or renumbered in v8.
 
-## Current research directions
+## v8 algorithmic-infrastructure direction
 
-The v7 set informs work on:
+The v8 set adds methodological support for:
 
 ```text
-closed-loop randomized identification
-PX4/uXRCE/ROS end-to-end latency
-executor and scheduling determinism
-AURA change-detection challengers
-learned/adaptive disturbance estimation
-structured residual / temporal World Models
-T_D -> T_A delay-aware prediction
-uncertainty-aware predictive control
-bounded candidate enumeration
-TinyMPC / RTI / event-triggered WISE
-online low-dimensional adaptation
-AEGIS safety filters / runtime assurance
+Tarjan SCC
+  -> static/preflight dependency-cycle detection
+
+three-valued monitoring
+  -> PASS / FAIL / UNKNOWN preservation
+
+max-plus temporal reasoning
+  -> source-bound earliest eligibility frontier
+
+Sweep Line
+  -> offline scientific interval/exposure validation
+
+MCMF / network flow
+  -> future constrained allocation only when a real allocation problem exists
 ```
 
-## Unresolved internal identities
+Roadmap v4 groups the live temporal/causal eligibility proposal under **CTEE — Causal Temporal Eligibility Engine**. CTEE is a project proposal, not a new flight-control law and not an authorized production component.
 
 ```text
-SRC-024
-SRC-040
-SRC-053
+CTEE_NAME=PROJECT_PROPOSAL
+CTEE_PUBLICATION_NOVELTY=NOT_PROVEN
+CTEE_PRIOR_ART_COMPONENTS=STRONG
 ```
 
-No similar file should be silently substituted for these unresolved identities.
+CTEE remains benchmark-gated against simpler timed-state-machine/timed-guard baselines.
+
+## Evidence-gated adoption rule
+
+```text
+candidate algorithm
+-> named project bottleneck / failure class
+-> measurable KPI
+-> simplest baseline comparison
+-> shadow / offline / preflight evidence
+-> retain only if benefit is demonstrated
+```
 
 ## Retrieval / authority rule
 
@@ -71,6 +94,7 @@ Prefer:
 ```text
 exact local source/build identity
 + captured raw telemetry/counters
+> explicitly frozen project contract
 > version-matched official source/docs
 > primary scholarly source / DOI
 > institutional source
@@ -78,6 +102,4 @@ exact local source/build identity
 > issue/forum hypothesis
 ```
 
-Issue/forum evidence is hypothesis-generation only unless exact local source/timing evidence matches. Project-internal Markdown is context/evidence and becomes normative only when explicitly frozen/promoted by project governance.
-
-Research references do not authorize changes to frozen scientific/control semantics, safety limits, treatment design or production authority.
+Issue/forum evidence is hypothesis-generation only unless exact local source/timing evidence matches. Research references do not authorize changes to frozen scientific/control semantics, safety limits, treatment design, acceptance criteria, SEALED, or production authority.
