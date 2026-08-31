@@ -5,19 +5,22 @@ This folder stores the source registry used to research, audit and extend the AU
 ## Current registry identity
 
 ```text
-AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v5
-sources=123
-resolved=120
+AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v7
+sources=141
+resolved=138
 unresolved=3
-LOCAL_CANONICAL_JSON_SHA256=acc056ca6c475fb00c6173b54b7a4f779446c21588134bdb5ee23571fc1d16a2
-LOCAL_CANONICAL_MD_SHA256=5d8221715ce87f61c089ed53e4c0666851551b4a1591c20d4fd2fc40d71df6b7
+LIBRARY_ARTIFACT=AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v7.md
+LIBRARY_FILE_ID=file_000000001ea082118dccd3b98f68b166
 ```
 
 Use:
 
 - [`SOURCE_REGISTRY_CURRENT.md`](SOURCE_REGISTRY_CURRENT.md) for the current authority/pointer policy.
-- [`CURRENT_REGISTRY_V5.md`](CURRENT_REGISTRY_V5.md) for the compact searchable v5 retrieval index and exact post-v2 locators.
+- [`CURRENT_REGISTRY_V7.md`](CURRENT_REGISTRY_V7.md) for the current v7 retrieval index and exact v6/v7 additions through `SRC-141`.
+- [`CURRENT_REGISTRY_V5.md`](CURRENT_REGISTRY_V5.md) for the historical post-v2 retrieval index through `SRC-123`.
 - `library_snapshots/` for historical v1/v2 registry states.
+
+The exact v7 Markdown artifact is held in the project/File Library. A v7 machine-readable JSON artifact/hash has not been promoted into this repository; do not invent one.
 
 ## Registry lineage
 
@@ -39,21 +42,30 @@ Added PX4/Gazebo startup sources plus vetted research on uncertainty-aware MPC, 
 
 ### v5
 
-Adds the latency/performance and low-compute predictive-control research layer (`SRC-104..SRC-123`):
+Added the latency/performance and low-compute predictive-control layer (`SRC-104..SRC-123`): PX4 latency/uORB, ROS/Linux scheduling, acados/RTI/TinyMPC/explicit MPC, MPPI/event-triggered MPC, TD-MPC2, temporal/residual/sparse/Koopman dynamics, quickest-change detection and real-time quadrotor MPC.
+
+### v6
+
+Added `SRC-124..SRC-127`: uncertainty-aware learned residual MPC, online dynamics learning for aerial robots, latency-aware quadrotor control and a unified safety-filter/runtime-assurance review.
+
+### v7
+
+Added `SRC-128..SRC-141` for:
 
 ```text
-PX4 latency / uORB / work-queue scheduling
-ROS 2 callback-chain response-time analysis
-Linux PREEMPT_RT / cyclictest
-acados / RTI-NMPC / TinyMPC / explicit MPC
-MPPI / event-triggered robust MPC
-TD-MPC2
-PI-TCN quadrotor temporal dynamics
-residual dynamics / sparse GP-MPC
-SINDY-MPC / Koopman LMPC
-quickest-change detection
-real-time hierarchical quadrotor MPC
+DDS/UAV latency measurement and synchronization
+ROS 2 chain-aware scheduling and executor semantics
+deterministic ROS 2 callback execution
+online multivariate change detection
+multi-stream quickest change detection
+learned INDI / L1 augmentation
+Neural-Fly and online residual adaptation
+neural-ODE + disturbance-observer MPC
+adaptive disturbance observation
+quadrotor runtime assurance
 ```
+
+The v7 dedup audit reports zero exact duplicate resolved locators, zero exact duplicate normalized titles and zero confirmed same-work duplicate IDs. Existing IDs were not renumbered.
 
 ## Retrieval policy
 
@@ -78,6 +90,7 @@ runtime_timing
 real_time_scheduling
 uav_control
 disturbance_observer
+change_detection
 closed_loop_identification
 micro_randomized_trials
 small_sample_cluster_inference
@@ -85,7 +98,9 @@ world_model_ml
 model_predictive_control
 embedded_optimization
 residual_dynamics
+online_adaptation
 uncertainty_aware_control
+runtime_assurance
 ```
 
 Use [`../04_research/RESEARCH_USAGE_GUIDE.md`](../04_research/RESEARCH_USAGE_GUIDE.md) for problem-to-source-family guidance.
