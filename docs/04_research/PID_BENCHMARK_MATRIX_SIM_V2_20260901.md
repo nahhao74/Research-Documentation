@@ -1,4 +1,4 @@
-# PID Benchmark Matrix — Simulation v2 — 2026-09-01
+# PID Benchmark Matrix — Simulation v3 — 2026-09-01
 
 Companion to `PID_BENCHMARK_BRANCH_20260901.md` and `PID_BENCHMARK_SIMULATION_SCOPE_20260901.md` on branch `research/pid-benchmark-20260901`.
 
@@ -25,56 +25,140 @@ Mandatory ablation:
 P0 → P1 → P2 → P3 → P4
 ```
 
-## 2. Active scheduling state
+## 2. Coordinate and mission contract
+
+All benchmark models, controller quantities, logs, metrics and disturbance vectors use NED:
+
+```text
+x = North
+ y = East
+ z = Down
+```
+
+Fixed velocity setpoint:
+
+```text
+v_N_sp = +3.0 m/s
+v_E_sp = +2.5 m/s
+v_D_sp = +0.8 m/s
+```
+
+`v_D_sp=+0.8 m/s` is downward in NED.
+
+Yaw contract:
+
+```text
+YAW_OBJECTIVE=false
+YAW_MODEL_FEATURE=false
+YAW_SCHEDULING_VARIABLE=false
+```
+
+Yaw may be used only as part of a required body→NED coordinate transform. Yaw-independence must pass a dedicated invariance audit before yaw is declared irrelevant.
+
+## 3. Active scheduling state
 
 Start:
 
 \[
-\rho_0=[v_x,v_y,|v|]
+\rho_0=[v_N,v_E,\sqrt{v_N^2+v_E^2}]
 \]
 
 Promote only when held-out evidence requires it:
 
 ```text
-acceleration / desired acceleration
-tilt / attitude
+NED acceleration / desired acceleration
+tilt magnitude
 motor/control-allocation headroom
 control-effectiveness estimate
 ```
 
-Current simulation rule:
+Current simulation rules:
 
 ```text
 BATTERY_SCHEDULING_VARIABLE=false
+YAW_SCHEDULING_VARIABLE=false
 ```
 
-## 3. Scenario groups
+## 4. Wind-force contract
 
-### S0 Nominal
+Wind/external disturbance is represented in NED:
+
+\[
+F_w^{NED}=[F_N,F_E,F_D]^T
+\]
+
+Primary campaign:
 
 ```text
-hover
-constant velocities
-N/E/diagonal motion
+0 N <= ||F_w,NE|| <= 15 N
+F_D = 0
+```
+
+Reference physical limit:
+
+```text
+MEASURED_NO_DRIFT_REFERENCE_LIMIT = 20 N
+ACTIVE_BENCHMARK_MAX = 15 N
+REFERENCE_FORCE_MARGIN = 5 N
+REFERENCE_FORCE_MARGIN_FRACTION = 25 percent
+```
+
+Recommended force levels:
+
+```text
+0, 3, 6, 9, 12, 15 N
+```
+
+Directions:
+
+```text
++N
+-N
++E
+-E
+NE
+NW
+SE
+SW
+headwind relative to commanded horizontal NED path
+tailwind relative to commanded horizontal NED path
+left/right crosswind relative to commanded horizontal NED path
+```
+
+The 20 N measurement is a reference ceiling, not a tuning point and not an authorization to test beyond the declared 15 N benchmark envelope.
+
+## 5. Scenario groups
+
+### S0 Nominal NED tracking
+
+```text
+hold [3.0, 2.5, 0.8] m/s NED
+path tracking at that commanded NED velocity
+steady-state tracking
+entry to the commanded velocity
+recovery to the commanded velocity
 ```
 
 ### S1 Reference transients
 
 ```text
-steps
-reversals
-ramps
-sine
-chirp
+bounded entry trajectory toward [3.0, 2.5, 0.8] m/s
+bounded recovery after disturbance
+ramps / sine / chirp used only where required for identification/FRF
 ```
 
 ### S2 Disturbance
 
 ```text
+horizontal NED force 0–15 N
 GUST ±N/±E
+diagonal gusts
+headwind
+tailwind
+crosswind
 continuous wind
 wind onset/change/clear
-crosswind during reference transition
+wind during reference transition
 ```
 
 ### S3 Model uncertainty
@@ -104,16 +188,38 @@ source-age variation
 saturation
 motor/control-allocation headroom reduction
 tilt-limit approach
-aggressive reversal
+15 N wind recovery
 ```
 
-## 4. Metrics
+### S6 Yaw-invariance audit
 
-### Accuracy
+Run equivalent NED setpoint/disturbance cases under multiple yaw headings while preserving the same NED physical objective.
+
+Require:
 
 ```text
-velocity_RMSE
-position_RMSE
+same NED command semantics
+same NED force semantics
+no material yaw-dependent shift in identified NED dynamics
+no material yaw-dependent shift in NED tracking metrics
+no unexplained residual correlation with yaw
+```
+
+If this gate fails, do not hide the effect by omitting yaw; audit coordinate conversion, vehicle/aerodynamic anisotropy and actuator coupling first.
+
+## 6. Metrics
+
+### NED tracking accuracy
+
+```text
+velocity_RMSE_N
+velocity_RMSE_E
+velocity_RMSE_D
+position_RMSE_N
+position_RMSE_E
+position_RMSE_D
+horizontal_cross_track_error
+along_track_velocity_error
 IAE
 ITAE
 peak_error
@@ -126,7 +232,8 @@ endpoint_error
 
 ```text
 onset_to_peak_deviation
-peak_deviation
+peak_cross_track_deviation
+peak_velocity_error_NED
 onset_to_recovery
 post_event_residual
 integrated_disturbance_error
@@ -141,6 +248,7 @@ jerk
 saturation_count
 saturation_duration
 headroom_min
+peak_tilt
 ```
 
 ### Latency
@@ -188,14 +296,15 @@ failure modes
 forensic/debug time
 ```
 
-## 5. Fairness invariants
+## 7. Fairness invariants
 
 ```text
+same NED coordinate semantics
 same vehicle/model
 same PX4 base identity
 same initial-condition distribution
-same trajectory
-same disturbance realization
+same NED velocity target [3.0, 2.5, 0.8] m/s
+same NED wind-force realization
 same sensor data availability
 same control constraints
 same timing source
@@ -205,7 +314,7 @@ same safety envelope
 
 No arm may receive future/native disturbance truth unavailable to its comparator.
 
-## 6. Tuning partition
+## 8. Tuning partition
 
 ```text
 IDENTIFICATION
@@ -216,7 +325,9 @@ FINAL_BENCHMARK
 
 No tuning on FINAL_BENCHMARK data.
 
-## 7. Model validation gate
+Wind-force levels/directions must be partitioned so the final benchmark contains held-out combinations, not only repetitions of the exact GA-development cases.
+
+## 9. Model validation gate
 
 Before GA tuning require:
 
@@ -225,13 +336,15 @@ held-out prediction/residual check
 closed-loop identification audit
 source/action timing audit
 N/E coupling assessment
+D-axis assessment
 delay estimate
 actuator-dynamics assessment
+yaw-invariance audit or explicit pending status
 ```
 
 If local SISO is inadequate, promote to MIMO instead of compensating with aggressive PID gains.
 
-## 8. PID implementation gate
+## 10. PID implementation gate
 
 ```text
 2-DOF weighting frozen
@@ -243,16 +356,17 @@ integrator behavior verified
 bumpless gain transition PASS
 gain-rate limits PASS
 no dynamic allocation in update loop
+NED command sign/unit audit PASS
 ```
 
-## 9. GA acceptance
+## 11. GA acceptance
 
 Require:
 
 ```text
 stable across plant ensemble
-held-out trajectory PASS
-held-out disturbance PASS
+held-out NED trajectory PASS
+held-out 0–15 N disturbance PASS
 constraint/saturation PASS
 no pathological gain discontinuity
 repeatable optimization and retained seed provenance
@@ -268,9 +382,12 @@ actuator dynamics
 drag
 delay
 sensor/filter variation
+N/E coupling
 ```
 
-## 10. Scheduler acceptance
+GA must not be rewarded for violating force/tilt/thrust/headroom constraints to reduce tracking error.
+
+## 12. Scheduler acceptance
 
 ```text
 GS0 lookup
@@ -281,23 +398,24 @@ GS0 lookup
 
 ANN/RBF only after evidence that GS0–GS3 are insufficient.
 
-## 11. INDI acceptance
+## 13. INDI acceptance
 
-P4 is retained over P3 only if disturbance rejection improves materially without unacceptable penalties in:
+P4 is retained over P3 only if disturbance rejection improves materially over the 0–15 N NED force envelope without unacceptable penalties in:
 
 ```text
 noise sensitivity
 control effort
 latency
 headroom
+peak tilt
 complexity
 ```
 
-## 12. DOB acceptance
+## 14. DOB acceptance
 
 P5 is allowed only if P4 leaves a repeatable residual disturbance mode.
 
-## 13. ANN acceptance
+## 15. ANN acceptance
 
 P6 must beat simple scheduling on held-out operating regions and pass:
 
@@ -310,7 +428,7 @@ stability/constraint behavior
 material gain-map approximation benefit
 ```
 
-## 14. Current-pipeline decision
+## 16. Current-pipeline decision
 
 Let `P*` be the simplest PID arm on the Pareto frontier.
 
@@ -320,10 +438,11 @@ Require:
 
 ```text
 P* accuracy >= C_FAST
-P* disturbance rejection >= C_FAST over declared simulation envelope
+P* disturbance rejection >= C_FAST over declared 0–15 N NED envelope
 P* p99 T_accept < C_FAST
 P* engineering/runtime complexity materially lower
 no authority/safety regression
+yaw-invariance gate PASS
 ```
 
 ### PID_MISSION_SPECIFIC_ALTERNATIVE
@@ -334,7 +453,7 @@ Use if P* strongly wins latency/complexity but loses a robustness dimension outs
 
 Use if the current pipeline materially wins disturbance/OOD behavior.
 
-## 15. Expected champion hypothesis
+## 17. Expected champion hypothesis
 
 ```text
 EXPECTED_CHAMPION_BEFORE_DATA=P4_RGS_2DOF_PID_INDI
@@ -342,12 +461,17 @@ EXPECTED_CHAMPION_BEFORE_DATA=P4_RGS_2DOF_PID_INDI
 
 Hypothesis only.
 
-## 16. Authority
+## 18. Authority
 
 ```text
 BENCHMARK_BRANCH_ONLY=true
 SIMULATION_SCOPE=true
+COORDINATE_FRAME=NED
+VELOCITY_SETPOINT_NED=[3.0,2.5,0.8]_mps
+WIND_FORCE_RANGE_NED_HORIZONTAL=0_TO_15_N
+MEASURED_NO_DRIFT_REFERENCE_LIMIT=20_N
 BATTERY_MODELING_REQUIRED=false
+YAW_MODEL_FEATURE=false
 CANONICAL_PIPELINE_REPLACEMENT=false
 PRODUCTION_AUTHORITY=false
 CURRENT_PHASE0_GATE_UNCHANGED=true
