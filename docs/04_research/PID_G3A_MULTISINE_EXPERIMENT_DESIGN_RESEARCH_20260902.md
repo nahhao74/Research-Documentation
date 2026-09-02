@@ -246,4 +246,53 @@ G3_A_RUNTIME=NOT_AUTHORIZED
 G3_A_EXCITATION_DESIGN=FULL_HARMONIC_ORTHOGONAL_PAIR_PREFERRED
 G3_PRIMARY_FRF_TIMING=TIMESTAMP_NATIVE_CAUSAL_ACCEPTED_ACTION_ZOH
 G3_MODEL_TRAINING_CREDIT=0_UNTIL_FRESH_G3A
+
+## 14. Downstream G3-A center contract freeze (2026-09-02)
+
+The PID project has completed the authorized BAND-Q review and resolved the
+conditional items above for the next, still owner-authorized, contract. This
+amendment records the scientific design facts; it does not authorize runtime
+or grant data/model credit.
+
+The ten-session center campaign must use one exact matched operating point:
+
+```text
+OPERATING_POINT_N/E=[0,0]
+D_TARGET=-3.0 m (local NED down)
+```
+
+The D target is identical across all five orthogonal A/B pairs and across all
+ten sessions. Comparable D-settle eligibility is required before admission;
+the two BAND-Q roots with different D targets remain qualification-only and
+are not quantitative FRF replicates. No offline compensation for D-target
+mismatch is permitted.
+
+The final candidate scientific grid is the complete exact-harmonic grid
+
+```text
+T0=8.0 s
+f={0.125,0.250,0.375,0.500,0.625,0.750,0.875,1.000,
+   1.125,1.250,1.375,1.500,1.625,1.750,1.875,2.000} Hz
+```
+
+This is the densest exact-harmonic grid selected within the prospectively
+qualified 2.0 Hz probe ceiling. BAND-Q does not promote every intermediate
+line: every line must independently pass the fresh accepted-input,
+timestamp, uncertainty and repeatability rules in the G3-A contract. The
+grid is fixed before runtime and cannot be reduced or reweighted from
+observed G3-A response.
+
+The five realization pairs remain indivisible by split:
+
+```text
+R1/R2/R3 -> TRAIN
+R4        -> DEV
+R5        -> HELD_OUT
+```
+
+Within each pair, only the E polarity changes under the full-harmonic
+Hadamard design. The project-owned frozen manifest and contract remain the
+execution artifacts; this research amendment records their matched-D and
+full-grid scientific prerequisites. Q0-Q3, BAND-Q and G2 retain zero
+G3-A/model-training credit.
 ```
