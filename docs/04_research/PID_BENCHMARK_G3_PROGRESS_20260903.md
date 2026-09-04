@@ -1,22 +1,26 @@
-# PID Benchmark — G3 Progress Snapshot — 2026-09-03
+# PID Benchmark — G3 Progress Snapshot — updated 2026-09-04
 
 ## Current state
 
 ```text
-G3_CURRENT_STATE=CONTEXT_DEV_EXTRAPOLATION_BLOCKS_CONCLUSION
+G3_CURRENT_STATE=G3_MULTIPLE_STRUCTURAL_MECHANISMS_REMAIN_MIXED_UNRESOLVED
 FRF_PROMOTED_BAND=0.125-0.500_HZ
 TMD_TRAJECTORY_DEPENDENCE=SUPPORTED
 TMD_SESSION_DRIFT=SUPPORTED
 TMD_OPERATING_REGIME=SCREENING_SIGNAL
 TMD_AMPLITUDE=SCREENING_SIGNAL
 M0_M1_GENERALIZATION=INSUFFICIENT
-M2_M3_CONTEXT_RESULT=NUMERICALLY_IMPROVED_BUT_EXTRAPOLATION_BLOCKED
+LOCKED_PARENT_STRUCTURAL_ADEQUACY=INSUFFICIENT
 SELECTED_MODEL=NONE
+MODEL_PROMOTION=NOT_RUN
+R4_RESPONSE_USED=false
 R5_RESPONSE_OPENED=false
-NEXT_GATE=EXISTING_DATA_CONTEXT_SUPPORT_EXPANSION_AUDIT
+NEW_RUNTIME=NOT_RUN
+NEW_DATA=false
+NEXT_GATE=READY_FOR_TARGETED_STRUCTURAL_DISCRIMINATION_DESIGN_OWNER_REVIEW
 ```
 
-This is a progress snapshot for the PID benchmark G3 identification/modeling branch. It does not change the frozen architecture or authorize controller/runtime work.
+This file supersedes the earlier 2026-09-03 progress state `CONTEXT_DEV_EXTRAPOLATION_BLOCKS_CONCLUSION` as the current G3 snapshot for the PID benchmark branch. It remains research/identification state only and does not authorize controller/runtime work.
 
 ## G3 scientific boundary
 
@@ -26,32 +30,99 @@ The estimand remains:
 u(t)=U^{accepted}_{NE}(t),\qquad y(t)=[v_N(t),v_E(t)]^T
 \]
 
-Input timing is the PX4 `PositionControllerPublicationAudit` accepted/read boundary with causal accepted-action ZOH. PX4 N/E position/velocity feedback is bypassed, D control and PX4 attitude/rate/allocation remain active, and AURA/FAST/WM/WISE/AEGIS are inactive in the G3 arm. R5 remains sealed.
+Input timing remains the PX4 `PositionControllerPublicationAudit` accepted/read boundary with source-time causal accepted-action ZOH. PX4 N/E position/velocity feedback is bypassed; D control plus PX4 attitude/rate/allocation remain active; AURA/FAST/WM/WISE/AEGIS are inactive in the G3 identification arm.
 
-## Acquisition and FRF
-
-G3-A completed 10/10 valid sessions and 5/5 valid H2 pairs. TRAIN is R1-R3, DEV is R4, HELD_OUT is R5. The promoted contiguous MIMO FRF band is 0.125, 0.250, 0.375 and 0.500 Hz. Higher 0.625-2.000 Hz lines remain diagnostic-only.
-
-The frequency-domain plant is therefore observed and promoted. The unresolved problem is deterministic parametric-model generalization, especially R4-B.
-
-## Parametric-model history
-
-VARX/predictor, stable latent state-space, explicit timing, direct PEM/Box-Jenkins and initial-state variants did not earn deterministic plant promotion. TRAIN fit, one-step prediction and noise separation could improve while R4-B remained poor. Blind order search was therefore stopped.
-
-## TMD mechanism-discrimination result
-
-The fresh TMD campaign completed:
+The promoted contiguous MIMO FRF band remains:
 
 ```text
-SESSIONS_VALID=12
-PAIRS_VALID=6
-ANCHORS_VALID=3
-SESSION_SCIENTIFIC_CREDIT=12
+0.125, 0.250, 0.375, 0.500 Hz
 ```
 
-A cross-root timing issue was closed by using `HOST_MONOTONIC_NS` only as the campaign/drift interpolation coordinate; within-root plant timing remains PX4 accepted/read-boundary source time.
+Higher lines remain diagnostic only.
 
-Final TMD mechanism outcomes:
+## What changed after the earlier context-support blocker
+
+The previous G3 state established that:
+
+```text
+stationary global model               -> insufficient
+trajectory-conditioned model          -> insufficient
+locked plant + causal constant context -> numerically promising but support-limited
+trajectory + causal constant context   -> numerically promising but support-limited
+```
+
+Subsequent observable-state, initial-state, reverse-peeling and locked-parent forensic work moved the blocker deeper.
+
+The current conclusion is no longer merely that R4-B lies outside the context support envelope. The current conclusion is:
+
+```text
+A single locked stationary low-order parent is structurally inadequate,
+but the structural mechanism responsible for the inadequacy is not yet separated.
+```
+
+## Locked-parent forensic result
+
+The latest forensic used exactly the authorized six G3A R1/R2/R3 A/B TRAIN response sequences for fixed-parent replay and did not fit or promote a replacement model.
+
+Key protection state:
+
+```text
+NEW_RUNTIME=NOT_RUN
+NEW_DATA=false
+PLANT_REFIT=NOT_RUN
+PLANT_ORDER_CHANGED=false
+NOISE_MODEL_CHANGED=false
+NEW_MODEL_FAMILY=false
+NEW_CONTEXT_FEATURES=false
+R4_RESPONSE_USED=false
+R5_RESPONSE_OPENED=false
+TMD_RESPONSE_RESCORING=false
+SELECTED_MODEL=NONE
+MODEL_PROMOTION=NOT_RUN
+STAGE2_RUNTIME=NOT_AUTHORIZED
+```
+
+The principal forensic signature is:
+
+```text
+one-step prediction can be very good
+while deterministic free-run prediction remains poor
+and residual structure persists over physical lags.
+```
+
+This favors accumulated state-transition / structural mismatch over a pure white-measurement-noise explanation, but it does not identify one exclusive cause and does not justify blind order increase.
+
+## Current structural hypothesis ledger
+
+```text
+H1 — memory / modal-timescale inadequacy
+     HIGH_PRIORITY_UNRESOLVED
+
+H2 — trajectory / polarity-dependent dynamics
+     SUPPORTED mechanism evidence
+     but not a complete locked-parent explanation
+
+H3 — session / operating-regime-dependent dynamics
+     HIGH_PRIORITY_UNRESOLVED
+
+H4 — nonlinear / amplitude-regime effect
+     UNRESOLVED_EXISTING_DATA_INSUFFICIENT
+
+H5 — plant / noise separation inadequacy
+     HIGH_PRIORITY_UNRESOLVED
+
+H6 — cross-axis / MIMO structural inadequacy
+     UNRESOLVED_EXISTING_DATA_INSUFFICIENT
+
+H7 — hidden non-retained runtime state / history
+     HIGH_PRIORITY_UNRESOLVED
+```
+
+`SUPPORTED` means compatible mechanism evidence, not exclusive causal proof. `PEELED` means removed from the next candidate set under current evidence, not proven false.
+
+## TMD interpretation retained
+
+The inherited TMD outcomes remain:
 
 ```text
 TRAJECTORY_DEPENDENCE=SUPPORTED
@@ -60,140 +131,208 @@ OPERATING_REGIME_DEPENDENCE=SCREENING_SIGNAL
 AMPLITUDE_DEPENDENCE=SCREENING_SIGNAL
 ```
 
-Thus a stationary global plant is not the only supported representation, but state/amplitude evidence is not strong enough to mandate LPV or nonlinear scheduling.
+These findings support the statement that one simple stationary global representation is inadequate. They do **not** establish that a specific measurable scheduling state `z` already exists or that LPV scheduling is currently qualified.
 
-## M0/M1 trajectory-conditioned execution
+## Consequence for LPV / scheduled PID
 
-Frozen models:
-
-```text
-M0 = stationary G0
-M1 = G0 + sigma*DeltaG
-sigma=-1 for member A
-sigma=+1 for member B
-```
-
-DEV result:
-
-| model | DEV mean plant NRMSE | worst-session mean NRMSE |
-|---|---:|---:|
-| M0 | 1.21698 | 1.65282 |
-| M1 | 1.19452 | 1.65954 |
-
-M1 improved R4-A but slightly worsened R4-B. Both failed the inherited no-session-catastrophe gate `max per-session mean NRMSE < 1.0`.
-
-Conclusion:
+The correct downstream distinction is now:
 
 ```text
-TRAJECTORY_CONDITIONING_ALONE=INSUFFICIENT
+supported:
+    plant dynamics vary / one stationary parent is inadequate
+
+not yet supported:
+    plant dynamics vary as a known deployable function G(s; z)
 ```
 
-Trajectory dependence remains scientifically supported; it is simply not sufficient to recover deterministic DEV generalization.
+LPV / gain scheduling therefore remains a downstream controller hypothesis.
 
-## Causal drift context
-
-The original `final 2 s before P1` context proposal was rejected because P0 already contains the scientific waveform, making that feature treatment-mediated.
-
-The causal context is now frozen as:
+Before promoting an LPV identification target, the next work must establish a candidate scheduling state `z` that is:
 
 ```text
-window=[QUALIFY-2s, QUALIFY)
-accepted action=ZERO
-waveform inactive
-c=[1,s_preQ_N,s_preQ_E]
+measurable before the relevant action
+causal / response-independent
+available online
+repeat-supported
+inside a defensible support envelope
+not merely a session label or proxy
+not a post-treatment consequence
 ```
 
-G3-A TRAIN alone had weak/near-saturated context support. Six valid TMD CENTER/A0 anchors (P01/P04/P06 A/B) were then admitted only as `AUXILIARY_TRAIN_CONTEXT_IDENTIFICATION`, producing 12 total context sessions.
+If such a state is supported, the identification target may move from
 
-Augmented feature support:
+\[
+G_{NE}(s)
+\]
+
+toward
+
+\[
+G_{NE}(s;z)
+\]
+
+or an LPV state-space family.
+
+If no adequate `z` is found, the branch must retain a robust fixed-controller path rather than force unsupported scheduling.
+
+## INDI status
+
+INDI is not part of the current G3 identification arm and does not close the G3 structural question.
+
+It remains the strongest fast-augmentation hypothesis after a qualified nominal fixed or scheduled PID exists.
+
+Preferred benchmark logic is now:
 
 ```text
-context design rank=3
-max grouped fit leverage=0.7817507
-minimum residual DOF/output=7
-max held-out prediction leverage=1.1021881
+nominal robust PID
+    vs
+nominal robust PID + INDI
+    vs
+nominal robust PID + AURA/FAST
 ```
 
-The campaigns overlap in feature space and are not exactly affinely separable. TMD anchors are not plant/noise TRAIN and are no longer independent confirmatory evidence for the context map.
+Only if INDI and AURA/FAST show repeat-supported complementary benefit should a combined fast-augmentation arm be opened.
 
-## M2/M3 locked-plant context execution
-
-The context experiment kept the fitted plants/noise locked:
+The preferred INDI development order is:
 
 ```text
-M2 = locked M0 + B_d c_r
-M3 = locked M1 + B_d c_r
+INDI0 — classical measured-response INDI
+INDI1 — delay-synchronized / filtered INDI
+INDI2 — actuator-dynamics-aware INDI
+INDI3 — bounded control-effectiveness-adaptive INDI
 ```
 
-TMD anchor responses were allowed to estimate only the shared session-level `B_d` map. They did not update G0, DeltaG, poles, modes, H1 noise, FRF objectives or model order.
+No variant is retained without ablation evidence.
 
-DEV result:
+## Latency objective
 
-| model | DEV mean plant NRMSE | worst-session mean NRMSE |
-|---|---:|---:|
-| M0 | 1.21698 | 1.65282 |
-| M1 | 1.19452 | 1.65954 |
-| M2 | 1.11524 | 1.42236 |
-| M3 | 1.09181 | 1.42883 |
+The PID branch objective is not minimum arithmetic time alone.
 
-M2/M3 numerically improve the worst DEV session by about 0.23 mean NRMSE, but both remain above the `<1.0` gate.
-
-The decisive blocker is context support:
+Freeze and compare:
 
 ```text
-TRAIN held-out context leverage envelope=1.1021881
-R4-A context leverage=0.317244
-R4-B context leverage=1.309137
-CONTEXT_DEV_EXTRAPOLATION=true
+T_compute — source sample -> controller output
+T_accept  — source sample -> PX4 accepted-action boundary
+T_effect  — physical event -> first useful corrective physical action
+T_recover — physical event -> defined recovery threshold
 ```
 
-R4-B is outside the context-training envelope. Context/plant leakage checks passed and M2/M3 preserve the locked plant FRF exactly, but the numerical improvement cannot receive drift-separation or model-promotion credit.
-
-## Current interpretation
-
-Evidence currently supports:
+For each report:
 
 ```text
-stationary global model               -> insufficient
-trajectory-conditioned model          -> insufficient
-locked plant + causal constant context -> promising but extrapolative
-trajectory + causal constant context   -> promising but extrapolative
+p50
+p95
+p99
+max
+jitter
 ```
 
-Session/context variation remains the strongest unresolved modeling hypothesis. The current result neither proves nor disproves drift separation; it is support-limited.
+Champion selection should prioritize `T_effect` and `T_recover` over `T_compute` alone.
 
-## Next gate
+For INDI / fast-path candidates also retain:
 
-Before new runtime, perform a response-blind existing-data context-support expansion audit:
+```text
+measurement source age
+acceleration / derivative estimate age
+filter group delay
+relative command/measurement-path delay
+actuator response / model delay
+control-effectiveness freshness
+PX4 accepted-action latency
+synchronization mismatch
+```
 
-1. inventory historical scientifically reusable CENTER/A0 G3/TMD roots;
-2. apply factor/source/validator eligibility without using response performance;
-3. extract the same pre-QUALIFY zero-action context feature;
-4. test whether R4-B becomes covered by defensible context feature support;
-5. do not refit M2/M3 during this eligibility audit.
+## Causal-model role
 
-If existing evidence is insufficient, design a small dedicated CENTER/A0 context-support acquisition. Do not repeat the full G3/TMD campaign and do not resume blind plant-model order search.
+Causal reasoning remains an identification/supervisory function, not a large first-response runtime controller.
+
+It should preserve distinctions between:
+
+```text
+pre-treatment state/context
+requested action
+accepted action
+actual application time
+post-action response
+```
+
+A candidate scheduling variable must be available before the relevant response and cannot be selected solely because it correlates with downstream outcome.
+
+This keeps the PID branch compatible with the broader CALE research direction without making CALE a current PID runtime dependency.
+
+## Updated downstream architecture hypothesis
+
+Current strongest benchmark hypothesis before controller evidence:
+
+```text
+CAUSALLY_QUALIFIED_RGS_2DOF_PID
++
+SYNCHRONIZED_ACTUATOR_AWARE_INDI
+```
+
+Functional split:
+
+```text
+RGS / LPV PID:
+    nominal tracking + operating-envelope variation
+
+INDI:
+    fast measured-response incremental correction
+
+causal / system-identification layer:
+    determine valid model family + valid scheduling variables
+```
+
+This is a falsifiable benchmark hypothesis, not a promotion decision.
+
+## Current next gate
+
+```text
+READY_FOR_TARGETED_STRUCTURAL_DISCRIMINATION_DESIGN_OWNER_REVIEW
+```
+
+The next task should maximize separation among the remaining structural hypotheses rather than simply collect more sessions.
+
+Conceptual discrimination axes include:
+
+```text
+same operating state / different trajectory history
+    -> trajectory / memory discrimination
+
+same trajectory family / different operating regime
+    -> regime dependence
+
+same trajectory and regime / controlled amplitude contrast
+    -> amplitude nonlinearity
+
+same physical experiment / richer source-state retention
+    -> hidden runtime-state testability
+
+qualified longer-timescale / low-frequency excitation
+    -> memory / modal-timescale discrimination
+```
+
+Exact experiment design, source instrumentation, amplitude, duration, response access and runtime authority remain owner-review items.
+
+## Branch documentation update
+
+The expanded downstream architecture/research rationale is recorded in:
+
+```text
+docs/04_research/PID_BENCHMARK_RESEARCH_DIRECTION_UPDATE_20260904.md
+```
+
+The original branch design remains useful as historical architecture context, but this snapshot and the 2026-09-04 direction update control the current G3/downstream interpretation.
 
 ## Protection
 
 ```text
 SELECTED_MODEL=NONE
+SELECTED_CONTROLLER=NONE
 R5_RESPONSE_OPENED=false
 PRODUCTION_MODEL_AUTHORITY=false
-NEW_RUNTIME_FROM_THIS_SNAPSHOT=NOT_AUTHORIZED
+IMPLEMENTATION_AUTHORIZED=false
+NEW_RUNTIME_AUTHORIZED=false
 ```
 
-Large runtime/capture artifacts remain under `/media/nahhao74/KINGSTON/PID_Benchmark_Track` and are not committed to this documentation repository.
-
-Key local evidence includes:
-
-```text
-PID_Benchmark_Track/reports/G3_TMD_12_SESSION_EXECUTION_AND_MECHANISM_SCREENING.md
-PID_Benchmark_Track/reports/G3_TMD_CROSS_ROOT_CAMPAIGN_TIME_COORDINATE_CLOSURE.md
-PID_Benchmark_Track/reports/G3_TMD_CONTRAST_COORDINATE_AMENDMENT_AND_MECHANISM_ANALYSIS.md
-PID_Benchmark_Track/reports/G3_MIXED_MECHANISM_MODELING_CONTRACT.md
-PID_Benchmark_Track/reports/G3_MIXED_MODEL_PREQUALIFY_CONTEXT_CAUSAL_CLOSURE.md
-PID_Benchmark_Track/reports/G3_M0_M1_TRAJECTORY_CONDITIONED_MODEL_EXECUTION.md
-PID_Benchmark_Track/reports/G3_TMD_ANCHOR_CONTEXT_AUGMENTATION_AUDIT.md
-PID_Benchmark_Track/reports/G3_M2_M3_LOCKED_PLANT_CONTEXT_EXECUTION.md
-```
+Large runtime/capture/identification artifacts remain under `/media/nahhao74/KINGSTON/PID_Benchmark_Track` and are not committed to this documentation repository.
