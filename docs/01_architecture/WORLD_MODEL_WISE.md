@@ -1,20 +1,27 @@
-# World Model and WISE Design
+# World Model and WISE Architecture
 
-## 1. Role in the vNext pipeline
+## 1. Role
 
-The World Model / WISE layer is a **predictive refinement path** layered on top of the active PX4 + AURA + FAST/T1/C1 controller. It is not a replacement for immediate disturbance rejection and must never become a prerequisite for first response.
+The World Model / WISE path is a **predictive refinement layer** on top of the active PX4 + AURA + FAST/T1/C1 closed loop.
+
+It does not replace immediate disturbance rejection and must never become a prerequisite for first response.
 
 ```text
-FAST path       = handle disturbance now
-World Model     = predict what happens next
-WISE            = choose bounded predictive refinement
-AEGIS           = enforce bounded execution
-PX4             = authoritative flight control
+FAST path   = handle disturbance now
+World Model = predict controlled future response
+WISE        = select bounded predictive refinement
+AEGIS       = enforce bounded execution
+PX4         = authoritative flight control
 ```
 
-## 2. Current model decomposition
+Current runtime/scientific state is defined only by:
 
-The canonical target is:
+```text
+../00_overview/CURRENT_STATUS.md
+../00_overview/CURRENT_EXECUTION_LADDER_WM_20260905.md
+```
+
+## 2. Canonical model decomposition
 
 ```text
 Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
@@ -22,152 +29,135 @@ Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
 
 ### F_nominal
 
-`F_nominal(X,h)` models future behavior under the existing active baseline:
+```text
+F_nominal(X,h)
+= future evolution under the active closed-loop baseline B
+```
+
+with:
 
 ```text
 B = PX4 + AURA + FAST/T1/C1
 ```
 
-It represents the controlled closed-loop system, not an isolated open-loop airframe.
+This is a model of the **controlled system**, not an isolated open-loop airframe.
 
 ### G_action
-
-`G_action(X,U_plan,h)` models the incremental effect of a bounded candidate action relative to ZERO candidate under the **same** baseline:
 
 ```text
 G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
 ```
 
-This is why action-conditioned data must be acquired with the frozen baseline active.
+`G_action` models the incremental closed-loop effect of a bounded candidate relative to ZERO under the **same** baseline.
 
 ## 3. Baseline dependency
 
-`G_action` is conditional on the active controller baseline. A material FAST change therefore changes the controlled system being identified.
+The action-response model is conditional on the active baseline.
 
-Conceptually:
+If:
 
 ```text
 B0 = PX4 + AURA + FAST0/T1/C1
 B1 = PX4 + AURA + FAST1/T1/C1
 ```
 
-In general, do not assume:
+then do not assume:
 
 ```text
 G_action^(B0) == G_action^(B1)
 ```
 
-without evidence.
+without direct evidence.
 
-Consequences:
+Therefore:
 
-1. The current Phase-0 randomized campaign must keep current FAST/T1/C1 semantics frozen.
-2. Separate FAST shadow research may proceed without changing the scientific baseline.
-3. If a future FAST challenger is materially promoted, the production action-conditioned model must be re-evaluated under the newly frozen baseline.
-4. Current Phase-0 remains valuable even if FAST later changes because it qualifies the causal acquisition/admission machinery; it does not automatically make a model trained on one baseline valid for another.
+```text
+current Phase-0 science freezes the active FAST/T1/C1 baseline
+FAST research runs separately in shadow/replay
+material FAST promotion requires a versioned baseline review
+production action-conditioned data/model must be valid for the final frozen baseline
+```
 
 ## 4. Why randomized action data is required
 
-Ordinary baseline flight data can train useful controlled dynamics, but it does not by itself isolate the incremental causal effect of a small candidate followed by PX4/FAST closed-loop reactions.
+Ordinary closed-loop flight data can support baseline dynamics modeling but does not by itself isolate the incremental causal effect of a small candidate followed by controller reactions.
 
-The action-conditioned branch therefore uses predeclared randomized ZERO/P1/P2 interventions in a continuous canonical runtime. Randomization supplies the variation needed to estimate the incremental closed-loop treatment effect.
+Randomized ZERO/P1/P2 interventions provide treatment variation while the baseline remains active.
 
-The current pilot is a mechanism/SNR/carryover calibration experiment, not a final efficacy trial.
+Post-treatment FAST/PX4 reactions caused by a candidate belong to the realized treatment path; they must not be removed as if they were pre-treatment confounders.
 
 ## 5. State representation
 
-World Model input state `X` is assembled from StateBank using causal records available at `T_D` only.
+World Model input `X` is assembled from StateBank using only causal records available at the decision frontier `T_D`.
 
-Relevant state classes include:
+Relevant classes include:
 
 ```text
 local position / velocity
 reference and tracking error
 attitude / motion state
 AURA disturbance state and validity
-current FAST/T1/C1 context
+FAST/T1/C1 context
 recent candidate history
 controller / actuator context
 source/session/reset identity
 native timing and clock-alignment provenance
 ```
 
-The exact training representation may evolve, but future samples or post-assignment variables must not leak into the decision-state representation.
-
-No online adaptive vehicle-context mechanism is part of the current canonical WM structure.
+The representation may evolve, but future samples and post-assignment variables must never leak into `X(T_D)`.
 
 ## 6. Action representation
 
-A point action can be insufficient because the candidate is held over multiple accepted controller cycles.
-
-Preferred serving representation:
+The candidate can persist over multiple accepted cycles, so the preferred serving representation is temporal:
 
 ```text
 U_plan = bounded short temporal action sequence
 ```
 
-The current frozen pilot uses simple fixed-duration plans to determine whether action-response signal exists before richer candidate sequences are considered.
+A point action is used only when it faithfully represents the actual accepted exposure contract.
 
-## 7. Stage A / Stage B temporal structure
+## 7. Decision-to-acceptance timing
 
-Current causal logic distinguishes:
+The causal structure distinguishes:
 
 ```text
 T_D = decision frontier
 T_A = actual accepted-action frontier
 ```
 
-### Stage A
+A useful two-stage prediction structure is:
 
-Predict the accepted-frontier state from information available at `T_D` plus a causal application-latency estimate:
+### Stage A
 
 ```text
 X(T_D) -> X_hat(T_A)
 ```
 
-The actual future `X(T_A)` is training/audit supervision, not online decision input.
+using only information available at `T_D` plus a causal application-latency estimate.
 
 ### Stage B
-
-Predict future state/outcome from the accepted-frontier state plus candidate plan:
 
 ```text
 X_hat(T_A), U_plan -> Y(T_A+h)
 ```
 
-This structure avoids giving the online model access to the true future state at action acceptance.
+The real future `X(T_A)` is supervision/audit evidence, never online decision input.
 
-## 8. Existing corpus interpretation
+## 8. WISE planning role
 
-Earlier action-conditioned datasets remain useful only where their causal contracts are satisfied. Historical target bugs, aliased action representations or infrastructure-invalid roots must not be treated as evidence that candidate action has no physical effect.
-
-A model failing to improve DEV can mean:
-
-```text
-treatment signal too small relative to noise
-representation misses the action effect
-target construction is weak
-training is underpowered
-true incremental effect is negligible
-```
-
-Only a valid randomized identification experiment can distinguish these possibilities with appropriate evidence.
-
-## 9. WISE planning role
-
-WISE consumes causal state and model predictions to choose a bounded future correction:
+WISE consumes causal state and WM rollouts:
 
 ```text
 1. read causal StateBank state
 2. generate bounded U_plan candidates
 3. roll out F_nominal + G_action
-4. score candidate trajectories
+4. score future trajectories
 5. reject stale / uncertain / infeasible plans
-6. select bounded acceptable plan
-7. hand plan to AEGIS
+6. select an acceptable bounded plan
+7. hand the plan to AEGIS
 ```
 
-Potential scoring terms include:
+Candidate scoring may include:
 
 ```text
 trajectory / cross-track error
@@ -178,11 +168,11 @@ constraint margin
 candidate switching / smoothness
 ```
 
-WISE is model-predictive in function. It does not require a large nonlinear online optimizer if a smaller enumerated/library/search policy meets latency and accuracy requirements.
+WISE is model-predictive in function. It does not require a large nonlinear optimizer if a smaller bounded candidate library/search satisfies the measured requirement.
 
-## 10. Serving safety and fallback
+## 9. Serving contract and fallback
 
-WM/WISE output must carry:
+WM/WISE output must carry at least:
 
 ```text
 plan identity
@@ -193,118 +183,81 @@ applicable horizon
 candidate bounds
 ```
 
-If any serving contract fails:
+If serving validity fails:
 
 ```text
 candidate -> ZERO / unavailable
 baseline -> continues
 ```
 
-The predictive path never holds the fast controller hostage to a stale or unsupported prediction.
+The predictive path must never block FAST.
 
-## 11. Current training gate — fresh_35 state
+## 10. Training gate
 
-Action-conditioned WM training remains blocked.
-
-The latest randomized root, `fresh_35`, stopped in its first CALM row before any scientific block was admitted:
-
-```text
-sessions attempted/valid=1/0 of 8
-blocks attempted/valid=1/0 of 96
-native GUST=0
-candidate/T_D/ACK/exposure=0/0/0/0
-manifest slots=0
-G_ACTION_PILOT_RESULT=NOT_EVALUATED
-CAUSAL_DATASET_ACCEPTANCE=BLOCKED
-```
-
-The current failure is infrastructure-only:
-
-```text
-PRIMARY_BOUNDARY=ACCEPTED_CYCLE_STATUS_SUCCESSOR_UNAVAILABLE_TO_PROBE
-```
-
-It is not evidence about WM quality, treatment effect or FAST efficacy.
-
-## 12. Required training sequence
-
-No action-conditioned training begins until:
+Action-conditioned training requires this sequence:
 
 ```text
 complete valid randomized root
-→ canonical reverse/Tarjan/peeling validity
+→ canonical causal-validity audit
 → separate causal-dataset admission
 → treatment SNR / carryover / constraint review
 → G_action identification authorization
-→ model training authorization
+→ model-training authorization
 ```
 
-A valid but weak action signal leads to experiment-design review, not automatic amplitude escalation.
+Incomplete or infrastructure-invalid roots never authorize action-conditioned training.
 
-## 13. Relationship to FAST research
+A valid but weak action signal leads to experiment-design review rather than automatic treatment escalation.
 
-FAST optimization is currently a separate simulator shadow/replay research track.
+## 11. Minimal model ladder
 
-Current scientific baseline remains frozen:
+For an accepted final baseline, model capacity should increase only when simpler models fail held-out requirements:
 
 ```text
-B = PX4 + AURA + current FAST/T1/C1
+WM0 — persistence / simple closed-loop predictor
+WM1 — linear / ridge action-conditioned model
+WM2 — compact structured dynamics model
+WM3 — small nonlinear model only if residual structure requires it
 ```
 
-No FAST replacement algorithm is selected. The earlier residual-PI proposal is not current main-pipeline direction.
+## 12. Evaluation layers
 
-The practical sequencing rule is:
+Evaluate separately:
 
 ```text
-close current causal acquisition infrastructure
-+
-research FAST challengers separately
-→ after Phase-0, review which FAST baseline should be carried forward
-→ train/validate production WM against the final frozen baseline
+prediction quality
+incremental G_action quality
+planning utility
+latency/deadline behavior
+uncertainty/fail-closed behavior
+incremental value over the best FAST baseline
 ```
 
-This avoids both changing the current estimand mid-campaign and over-investing in a final WM before the baseline controller is settled.
+Do not collapse all layers into one scalar score.
 
-## 14. Evaluation philosophy
+## 13. Runtime deployment decision
 
-Future WM evaluation must separate:
+World Model / WISE is not automatically required in the final production loop.
 
-1. **prediction quality** — forecast accuracy of the controlled state;
-2. **incremental action quality** — whether `G_action` predicts randomized action response beyond ZERO;
-3. **planning utility** — whether model-guided action improves closed-loop trajectory behavior;
-4. **latency/deadline behavior** — whether serving meets realtime requirements without blocking FAST;
-5. **uncertainty/fail-closed behavior** — whether unsupported plans are rejected safely;
-6. **incremental value over best FAST baseline** — whether WM/WISE adds enough benefit to justify complexity.
-
-These layers must not be collapsed into one scalar metric.
-
-## 15. Deployment decision principle
-
-World Model is not automatically required in the final production loop merely because it exists in the research architecture.
-
-After a best FAST baseline is established, compare:
+After the best FAST baseline is established, compare:
 
 ```text
 C0 = best qualified FAST baseline
 C1 = C0 + WM/WISE predictive refinement
 ```
 
-Retain WM/WISE in runtime only if repeat-supported incremental benefit justifies its latency, compute, uncertainty and engineering complexity.
+Retain WM/WISE at runtime only if repeat-supported incremental benefit justifies its latency, compute, uncertainty and engineering complexity.
 
-This is a future benchmark rule, not a current Phase-0 decision.
+## 14. Authority boundaries
 
-## 16. Research references
-
-Use the source registry categories:
+World Model / WISE does not own:
 
 ```text
-world_model_ml
-closed_loop_identification
-micro_randomized_trials
-small_sample_cluster_inference
-uav_control
-disturbance_observer
-stability_robust_control
+first disturbance response
+PX4 inner-loop authority
+raw thrust / motor command
+scientific treatment validity
+AEGIS safety authority
 ```
 
-Closed-loop identification and randomized-design sources govern the causal experiment. PX4 source/docs govern runtime control semantics.
+The active research sequence is defined by `../04_research/FUTURE_IMPLEMENTATION_ROADMAP.md`; the source registry is methodological reference only.
