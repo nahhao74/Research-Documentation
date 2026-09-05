@@ -1,8 +1,28 @@
 # WM1 Randomized Identification Contract
 
+## 0. Authority and current pilot identity
+
+This file is the canonical scientific contract for the current WM1 randomized `G_action` pilot.
+
+Current authoritative manifest identity:
+
+```text
+MANIFEST_ID=WM1_V2R1_FINAL_RANDOMIZED_SCIENTIFIC_PILOT_V1_1
+SHA256=361ff557e1b6f2fb9d6e94803ec0cf77e98f4381b0f05499a2bfeadf08027354
+```
+
+Earlier schedule digests retained in historical documents are provenance only and are not current execution authority unless explicitly restored by the owner.
+
+Current runtime status and next allowed task are not defined here; use:
+
+```text
+../00_overview/CURRENT_STATUS.md
+../00_overview/CURRENT_EXECUTION_LADDER_WM_20260905.md
+```
+
 ## 1. Scientific estimand
 
-The current experiment estimates the incremental closed-loop action effect under the active controller baseline:
+The experiment estimates the incremental closed-loop action effect under the active controller baseline:
 
 ```text
 G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
@@ -16,22 +36,13 @@ B = active PX4 + AURA + FAST/T1/C1 baseline
 
 This is not an open-loop plant-identification experiment.
 
-## 2. Why baseline remains active
+## 2. Why the baseline remains active
 
-The scientific question is whether a bounded candidate adds useful predictive/control effect **inside the deployed closed loop**. Disabling FAST/T1/C1 would change the system being identified and would no longer estimate the intended `G_action`.
+The scientific question is whether a bounded candidate adds useful predictive/control effect **inside the deployed closed loop**. Disabling FAST/T1/C1 changes the system being identified and no longer estimates the intended `G_action`.
 
-Randomization provides the treatment variation while the baseline controller remains active. Post-treatment FAST/PX4 reactions caused by the candidate are part of the realized closed-loop treatment response.
+Randomization supplies treatment variation while the baseline remains active. FAST/PX4 reactions caused after treatment are part of the realized closed-loop treatment path.
 
 ## 3. Frozen pilot design
-
-Manifest identity:
-
-```text
-wm1_v2r1_within_run_randomized_pilot_schedule_v1.json
-SHA256=253b847d77e8675ce21d8199c17832c5f50a62c3738201cb0cf8339343d90bf7
-```
-
-Campaign:
 
 ```text
 worker A
@@ -58,25 +69,27 @@ Directions:
 +N
 ```
 
+No adaptive arm rebalancing, replacement, resampling or post-hoc relabeling is allowed.
+
 ## 4. Canonical scientific world
 
-All contexts use the same deterministic plugin-bearing generated world.
+All contexts use the same deterministic plugin-bearing generated world:
 
 ```text
 WORLD_NAME=sim_world_a
 CANONICAL_WORLD_SHA256=8b26be57f07380455071fe8f4f81797e8ca3b946bf407158ff91f0ac110f3b91
 ```
 
-`NativeDisturbanceSystem` is loaded in both contexts:
+`NativeDisturbanceSystem` is present in both contexts:
 
 ```text
-CALM   = plugin present; no nonzero disturbance command
+CALM   = plugin present; zero/no nonzero disturbance command
 GUST_E = identical world/plugin bytes; frozen predeclared +E stimulus
 ```
 
-Context labels alone are not scientific evidence. GUST_E requires native-truth evidence that the physical disturbance was actually applied.
+Context labels alone are not scientific evidence. `GUST_E` requires native-truth evidence that the physical disturbance was actually applied.
 
-The final generated world must be prepared, SHA-256 format-validated, hashed and matched **before** PX4/Gazebo runtime launch.
+The generated world must be prepared, format-validated, hashed and matched before PX4/Gazebo runtime launch.
 
 ## 5. Exact exposure arms
 
@@ -86,16 +99,18 @@ P1   = 0.008 m/s^2 x exactly 5 accepted cycles
 P2   = 0.012 m/s^2 x exactly 7 accepted cycles
 ```
 
-Treatment is defined by accepted candidate contribution at the qualified correction boundary.
+Treatment is defined at the qualified accepted candidate boundary.
 
 Forbidden:
 
-- extra compensation cycles;
-- re-dose after partial exposure;
-- post-hoc arm relabeling;
-- excluding inconvenient blocks after assignment;
-- adaptive amplitude change;
-- replacing failed P1/P2 with another treatment.
+```text
+extra compensation cycles
+re-dose after partial exposure
+post-hoc arm relabeling
+excluding inconvenient assigned blocks
+adaptive amplitude change
+replacing failed P1/P2 with another treatment
+```
 
 ## 6. Session bootstrap
 
@@ -129,62 +144,57 @@ controller
 actuator
 ```
 
-The bootstrap transaction is excluded from scientific exposure and does not consume a manifest slot.
+Bootstrap consumes no scientific manifest slot and does not seed candidate-only H1000.
 
-A session-start bootstrap-only status is **not** a candidate release and must not seed H1000. Candidate-only H1000 begins only after an actual candidate release.
+## 7. Mandatory pre-science integration corridor
 
-## 7. Mandatory full pre-science corridor
+A randomized pilot must not be the first integration test of a newly repaired path.
 
-A randomized pilot must not be used as the first integration test of a newly repaired path.
-
-Before authorizing the next scientific root, the exact real pilot runner/probe must pass a bounded non-scientific corridor:
-
-```text
-runtime/startup
--> generated-world identity gate
--> source attestation
--> StateBank 7/7
--> session bootstrap_only
--> first-block snapshot
--> C1 valid-offer frontier
--> pre-offer native-source / clock / provenance validity
--> intentional stop immediately before FIRST_SCIENTIFIC_T_D
-```
-
-The corridor must satisfy:
-
-```text
-FIRST_SCIENTIFIC_T_D=NOT_REACHED
-CANDIDATE_OFFER_COUNT=0
-CANDIDATE_PUBLISH_COUNT=0
-E8_CANDIDATE_TRANSACTION_COUNT=0
-SCIENTIFIC_BLOCKS=0
-MANIFEST_SLOTS_CONSUMED=0
-```
-
-Mocking or bypassing the live C1/source path is not sufficient.
-
-Process invariant:
+The governing pattern is:
 
 ```text
 repair
--> deterministic regression
--> component qualification
--> FULL INTEGRATED PRE-SCIENCE CORRIDOR
--> randomized scientific root
+→ deterministic regression
+→ component qualification
+→ bounded integrated non-scientific qualification/corridor
+→ owner review
+→ randomized scientific root
 ```
 
-## 8. Scientific start boundary
-
-The root becomes scientifically active at:
+The exact corridor evolves with the current blocker, but it must exercise the repaired path without treatment-effect scientific credit and preserve:
 
 ```text
-FIRST_SCIENTIFIC_T_D
+SCIENTIFIC_BLOCKS=0
+SCIENTIFIC_ACTIONS=0
+MANIFEST_SLOTS_CONSUMED=0
+SEALED_ACCESS=0
+production_authority=false
 ```
 
-Before that boundary, failures are classified as pre-science infrastructure failures.
+Current execution-specific qualification requirements are defined in the latest execution ladder, not duplicated here.
 
-After that boundary, the first scientific/certification invalidation stops the entire root.
+## 8. Scientific authority boundary and diagnostic markers
+
+`T_D` is the causal decision frontier defined by this contract. However, raw instrumentation may contain diagnostic markers whose names include strings such as:
+
+```text
+first_scientific_t_d_committed
+```
+
+A diagnostic marker alone does **not** grant scientific block admission or treatment authority.
+
+Authoritative scientific admission requires the complete frozen transaction/block contract to succeed and be recorded by the canonical scientific accounting path.
+
+Therefore:
+
+```text
+raw diagnostic T_D marker
+!= accepted scientific block
+!= treatment-effect credit
+!= manifest consumption
+```
+
+This distinction is required when auditing infrastructure-invalid roots such as `fresh_33`.
 
 ## 9. Timing and causal validity
 
@@ -199,11 +209,11 @@ T_D native causal frontier valid
 T_A native accepted frontier valid
 ```
 
-Source continuity uses native PX4 timestamp + generation. Cross-domain clock alignment is separate.
+Source continuity uses native PX4 source identity. Cross-domain clock alignment is separate.
 
-Native PX4 source frontier is not required to be represented as host/agent epoch time. A domain mismatch must fail explicitly rather than silently coercing native source time.
+A host-only or Gazebo-only diagnostic must not be assigned a fabricated PX4 source timestamp.
 
-Mapping-epoch transition during science currently fails closed unless an explicitly qualified live transition-certification path is later approved.
+Mapping-epoch transition during science fails closed unless an explicitly qualified live transition-certification path is later approved.
 
 ## 10. T_D, T_A and outcomes
 
@@ -220,7 +230,14 @@ Y_h = first valid future local_state at native time >= T_A + h
 
 No interpolation or future leakage.
 
-Core pilot analysis focuses on H40/H80 treatment response while preserving the broader causal timing contract.
+Horizon terminology is standardized as:
+
+```text
+DATASET / CAUSAL-COMPLETENESS HORIZONS = H0, H20, H40, H80
+PRIMARY PILOT TREATMENT CONTRASTS       = H40, H80
+```
+
+Availability at H0/H20 supports complete causal record construction and diagnostics; primary treatment-response interpretation remains focused on H40/H80 unless a later frozen analysis contract changes that explicitly.
 
 ## 11. H1000
 
@@ -232,13 +249,13 @@ H1000 = 1,000,000 native source us
 
 H1000 is candidate-only. FAST/T1/C1 baseline activity is not candidate exposure.
 
-Session-start `bootstrap_only` does not create an H1000 release anchor. H1000 applies only after an explicit candidate release or a separately qualified candidate bootstrap.
+Session bootstrap does not create a release anchor. H1000 begins only after an explicit candidate release or separately qualified candidate bootstrap.
 
-H1000 is not interpreted as proof that all physical carryover has vanished; carryover is assessed separately.
+H1000 is not proof that all physical carryover has vanished; carryover is assessed separately.
 
 ## 12. E8 / identity / release
 
-Candidate action must remain bound to exact:
+Candidate action remains bound to exact:
 
 ```text
 generation
@@ -251,7 +268,32 @@ accepted status
 
 A pending valid candidate waiting for ACK cannot be superseded by unrelated baseline publication. Explicit release closes the nonzero treatment window.
 
-## 13. Complete-root requirement
+Current E8 source-causal infrastructure also preserves:
+
+```text
+newest received positive-source nonfuture AURA record
+→ existing exact reset/session/health/freshness/provenance gates
+```
+
+No future AURA sample, cross-reset carryover or older-favorable fallback is allowed.
+
+## 13. Native-event lifecycle requirement
+
+A scientific GUST block must have valid native-truth onset/clear identity.
+
+A new native event must not overlap an earlier event when the canonical event owner still reports the previous event active.
+
+Current implementation work is addressing the infrastructure invariant:
+
+```text
+previous exact native event ACTIVE
+→ matching canonical CLEAR / retirement
+→ only then next native-event arm eligibility
+```
+
+This is an inter-block readiness requirement. It must not silently alter frozen within-block GUST profile, `M_STABLE_US`, `W_MAX_US`, `T_D`, `T_A`, H1000, assignment or treatment semantics.
+
+## 14. Complete-root requirement
 
 Scientific statistics are computed only if:
 
@@ -260,11 +302,16 @@ SESSIONS_VALID=8/8
 BLOCKS_VALID=96/96
 ```
 
-A truncated or invalid root must not produce treatment efficacy inference.
+A truncated or infrastructure-invalid root must not produce treatment-effect inference.
 
 No pooling across failed roots.
 
-## 14. Frozen analysis
+```text
+partial valid rows != scientific dataset
+infrastructure-invalid root != negative treatment result
+```
+
+## 15. Frozen analysis
 
 ### E0 — primary randomized contrast
 
@@ -282,7 +329,7 @@ Uses pre-treatment covariates/session effects only. No imputation that introduce
 
 ### Cluster bootstrap
 
-Session is the independent cluster.
+Session is the independent cluster:
 
 ```text
 4 sessions/context
@@ -293,25 +340,27 @@ Blocks and controller cycles are not treated as independent subjects.
 
 ### E2
 
-Optional frozen nominal-residualization diagnostic. It is secondary and must not overwrite E0 interpretation.
+Optional frozen nominal-residualization diagnostic. Secondary only; it must not overwrite E0 interpretation.
 
-## 15. Treatment SNR diagnostics
+## 16. Treatment-SNR diagnostics
 
-P1/P2 identifiability is evaluated in output space, not by comparing candidate acceleration magnitude to baseline command magnitude.
+P1/P2 identifiability is evaluated in output space, not by comparing candidate acceleration magnitude directly with baseline controller-command magnitude.
 
 Required diagnostics include:
 
-- ZERO outcome variability;
-- P1/P2 randomized contrasts at H40/H80;
-- treatment-to-noise ratio within context;
-- session-to-session variability;
-- carryover indicators;
-- lagged FAST-candidate interaction;
-- projection/constraint/saturation activity.
+```text
+ZERO outcome variability
+P1/P2 randomized contrasts at H40/H80
+treatment-to-noise ratio within context
+session-to-session variability
+carryover indicators
+lagged FAST-candidate interaction
+projection/constraint/saturation activity
+```
 
-A Fisher Information Matrix should only be used after specifying a concrete parametric model, likelihood/noise assumptions and sensitivity Jacobian.
+A Fisher Information Matrix is allowed only after a concrete parametric model, likelihood/noise assumptions and sensitivity Jacobian are specified.
 
-## 16. Allowed interpretation
+## 17. Allowed interpretation
 
 Pilot signal labels:
 
@@ -321,27 +370,57 @@ WEAK
 NOT_RESOLVED
 ```
 
-The pilot alone does not authorize the statement:
+The pilot alone does not authorize:
 
 ```text
 ACTION_RESPONSE_IDENTIFIED
 ```
 
-A valid but weak pilot goes to experiment-design review. It does not automatically trigger larger candidate amplitude.
+A valid but weak pilot goes to experiment-design review. It does not automatically authorize larger candidate amplitude.
 
-## 17. Root governance
+## 18. Root governance
 
-After first scientific `T_D`:
+After scientific execution begins, the first invalid scientific/certification event stops the entire root.
 
 ```text
-first invalid scientific/certification event -> STOP root
+no patch-and-continue
+no later-session continuation
+no block deletion
+no relabeling
+no in-root retry / replacement / resampling
 ```
 
-No patch-and-continue. No later-session continuation. No block deletion. No relabeling. Failed roots remain immutable evidence.
+Failed roots remain immutable evidence.
 
-Implementation-preserving repairs may be performed outside the immutable failed root, followed by the mandatory integrated pre-science corridor before another scientific attempt.
+Implementation-preserving repairs occur outside the failed root, followed by deterministic regression and bounded non-scientific qualification before another owner-authorized scientific attempt.
 
-## 18. Authority
+## 19. Causal dataset admission and WM boundary
+
+A complete root still requires a separate causal-dataset audit covering at minimum:
+
+```text
+randomization integrity
+context/arm support
+assigned vs accepted treatment identity
+ZERO/P1/P2 execution
+T_D/T_A ordering
+H1000 completeness
+H0/H20/H40/H80 availability
+source/session/reset continuity
+washout/contamination
+no post-treatment conditioning
+response construction
+```
+
+Output:
+
+```text
+CAUSAL_DATASET_ACCEPTANCE=PASS | FAIL | INSUFFICIENT
+```
+
+Only `PASS` may progress to `G_action` identification. World-Model training still requires separate authorization.
+
+## 20. Authority
 
 ```text
 SEALED_ACCESS_BOUNDARY=LOCKED_PRE_EVALUATION
@@ -349,4 +428,4 @@ SEALED_PAYLOAD_OPENED=false
 production_authority=false
 ```
 
-Training/R1 begins only after a complete valid pilot and subsequent causal-identification review.
+No scientific-contract, authority or model-training promotion is implied by an infrastructure qualification.
