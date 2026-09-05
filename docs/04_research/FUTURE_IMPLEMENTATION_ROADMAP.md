@@ -5,9 +5,9 @@
 **Scope:** Moving Mode only  
 **Research registry:** `AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v9`
 
-This file defines the **active future direction**. It does not grant runtime or scientific authority.
+This file contains **only the active future direction**. Superseded or rejected research is intentionally absent and remains recoverable through Git history.
 
-Current authority:
+Current runtime/scientific authority:
 
 ```text
 ../00_overview/CURRENT_STATUS.md
@@ -16,9 +16,7 @@ Current authority:
 
 ---
 
-# 1. Current project state
-
-Latest randomized root:
+# 1. Current state
 
 ```text
 LATEST_FAILED_SCIENTIFIC_ROOT=fresh_35
@@ -35,17 +33,9 @@ SEALED=LOCKED_PRE_EVALUATION
 production_authority=false
 ```
 
-`fresh_35` passed preflight but stopped in the first CALM row before any GUST, candidate, `T_D`, ACK or exposure.
+`fresh_35` passed frozen preflight but stopped in the first CALM row before any GUST, candidate, `T_D`, ACK or exposure.
 
-A valid same-lineage native status exists inside the current source-match budget. The present evidence does not prove whether the status:
-
-```text
-never reached the observer callback
-was received and later removed from bounded retention
-or remained retained but was not selectable by matcher/indexing logic
-```
-
-The next main-pipeline task is therefore the accepted-cycle callback visibility/retention forensic.
+A valid same-lineage native status exists inside the current source-match budget. The present evidence does not prove whether the status failed to reach the observer callback, was lost from bounded retention after receipt, or remained retained but unselectable by matcher/indexing logic.
 
 ---
 
@@ -89,15 +79,13 @@ G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
 B = active PX4 + AURA + current FAST/T1/C1 baseline
 ```
 
-The current FAST/T1/C1 semantics remain frozen for Phase-0.
+Current FAST/T1/C1 semantics remain frozen during Phase-0.
 
-A material FAST change changes baseline `B`; therefore the action-conditioned model must be re-evaluated under the newly frozen baseline before production use.
+A material FAST change changes baseline `B`; therefore action-conditioned data/model validity must be reviewed under the newly frozen baseline.
 
 ---
 
 # 4. Active research track A — FAST improvement on the current simulator
-
-This is the primary control research track now.
 
 Research question:
 
@@ -113,29 +101,18 @@ F0 = current AURA + FAST(-d_hat) + T1/C1 + PX4
 
 ## 4.2 Research order
 
-Do not choose an algorithm before identifying the measured limitation.
+Do not choose a replacement algorithm before the measured limitation is known.
 
 ```text
-F1 — timing / freshness / source-age alignment
-     preserve the current control law; remove avoidable latency/age first
-
-F2 — bounded static shaping / normalization
-     only if repeated evidence shows systematic under/over-correction
-
-F3 — synchronized incremental / INDI-like challenger
-     only if measured plant-response dynamics remain the dominant limitation
-
-F4 — combined mechanism
-     only if ablation proves complementary benefit
+1. characterize source age and end-to-end latency
+2. separate ONSET / SUSTAINED GUST / CLEAR-RECOVERY failure modes
+3. identify whether the dominant limitation is estimation, timing, scaling or plant response
+4. introduce the smallest credible challenger for that measured limitation
+5. compare against F0 under identical simulator conditions
+6. retain only repeat-supported improvement with no important robustness regression
 ```
 
-No new PI/PID tracking loop is part of the active FAST roadmap.
-
-No online adaptive gain tuning, cross-airframe adaptation or commercial fleet commissioning mechanism is part of the current simulator phase.
-
-## 4.3 FAST instrumentation and metrics
-
-Measure at minimum:
+## 4.3 Required timing instrumentation
 
 ```text
 F0 sensor/source frontier
@@ -164,15 +141,7 @@ command variation / jerk
 projection / saturation / headroom
 ```
 
-Always separate:
-
-```text
-ONSET
-SUSTAINED GUST
-CLEAR / RECOVERY
-```
-
-## 4.4 FAST promotion rule
+## 4.4 Promotion rule
 
 ```text
 if challenger does not clearly beat F0
@@ -180,14 +149,14 @@ if challenger does not clearly beat F0
 
 if challenger clearly beats F0 with no important robustness/latency regression
 → freeze a new versioned FAST baseline after Phase-0
-→ reacquire/revalidate G_action under that baseline before production WM use
+→ revalidate action-conditioned G_action under that baseline before production WM use
 ```
 
 ---
 
 # 5. Active research track B — World Model / WISE
 
-Canonical structure remains:
+Canonical model structure:
 
 ```text
 Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
@@ -200,7 +169,7 @@ F_nominal = future evolution of the active closed-loop baseline
 G_action  = incremental candidate effect relative to ZERO under that same baseline
 ```
 
-Current allowed WM work:
+Current allowed work:
 
 ```text
 StateBank / causal state representation
@@ -228,10 +197,14 @@ production model promotion
 After Phase-0 closes and FAST shadow research is complete:
 
 ```text
+current Phase-0 closure
++
+FAST benchmark result
+        ↓
 BASELINE REVIEW
 ```
 
-### Outcome A — current FAST remains best
+### Current FAST remains best
 
 ```text
 freeze B0
@@ -239,7 +212,7 @@ freeze B0
 → minimal WM identification/training
 ```
 
-### Outcome B — a FAST challenger is materially better
+### A FAST challenger is materially better
 
 ```text
 freeze B1
@@ -260,7 +233,7 @@ without evidence.
 
 # 7. Minimal World Model ladder
 
-Once causal data for the final chosen baseline is accepted, use the smallest auditable model first:
+Once causal data for the final chosen baseline is accepted:
 
 ```text
 WM0 — ZERO / persistence / simple closed-loop predictor
@@ -269,7 +242,7 @@ WM2 — compact structured dynamics model if WM1 is insufficient
 WM3 — small nonlinear model only if measured residual structure requires it
 ```
 
-Model capacity is earned by held-out improvement, not by architecture complexity.
+Model capacity is earned by held-out improvement.
 
 Evaluate separately:
 
@@ -285,9 +258,9 @@ incremental benefit over best FAST baseline
 
 ---
 
-# 8. WISE planning direction
+# 8. WISE direction
 
-WISE remains a bounded predictive candidate selector, not first-response control.
+WISE is a bounded predictive candidate selector, not first-response control.
 
 Preferred first implementation:
 
@@ -300,13 +273,11 @@ causal StateBank state
 → bounded AEGIS execution
 ```
 
-Do not introduce heavier MPC/Koopman/RTI planning unless simple bounded enumeration fails a measured requirement.
+Escalate planning complexity only if the simplest bounded search fails a measured requirement.
 
 ---
 
 # 9. WM/WISE deployment go-no-go
-
-WM/WISE is not automatically required in the final runtime architecture.
 
 After the best FAST baseline is established, compare:
 
@@ -320,51 +291,33 @@ Retain WM/WISE in runtime only if repeat-supported incremental benefit justifies
 ```text
 compute cost
 latency
-uncertainty / OOD risk
+uncertainty risk
 additional failure modes
 engineering complexity
 ```
 
-If C1 does not materially improve the Pareto frontier, WM remains a research/benchmark path rather than production dependency.
+If C1 does not materially improve the Pareto frontier, WM remains a research/benchmark path rather than a production dependency.
 
 ---
 
-# 10. Deferred research
+# 10. Deferred work
 
-These topics are retained only as later research and are **not active implementation work**:
+Later research may be opened only after the core path above exposes a specific need. It must not displace current priorities.
+
+Current priorities are exactly:
 
 ```text
-CALE causal learning-admission formalization
-CTEE-F / AoI / age-at-application gating
-advanced uncertainty calibration
-stronger AEGIS runtime assurance
-AURA detector challengers
+1. close fresh_35 infrastructure boundary
+2. obtain a complete valid causal dataset
+3. benchmark FAST on the current simulator
+4. freeze the best FAST baseline
+5. build the minimum useful WM for that baseline
+6. prove whether WISE adds incremental closed-loop value
 ```
-
-They must not displace the current priorities.
 
 ---
 
-# 11. Explicitly rejected / inactive directions
-
-The following are removed from the active roadmap:
-
-```text
-residual PI / 2-DOF PI as the primary FAST direction
-manual per-airframe PI tuning
-online gain adaptation in the current simulator phase
-cross-airframe adaptive controller / fleet commissioning architecture
-online neural-network control adaptation
-adding algorithms because literature contains them without a measured failure class
-```
-
-Do not reintroduce these as active candidates unless the owner explicitly reopens them after new evidence.
-
-Git history preserves prior discussion.
-
----
-
-# 12. Integrated roadmap
+# 11. Integrated roadmap
 
 ```text
 NOW
@@ -379,7 +332,8 @@ NOW
 └─ PARALLEL SHADOW RESEARCH
    current FAST F0
    → latency/source-age characterization
-   → smallest justified FAST challengers
+   → measured limitation
+   → smallest justified challenger
    → repeat-supported benchmark
 
 AFTER PHASE-0
@@ -400,7 +354,7 @@ retain only components with measurable incremental value
 
 ---
 
-# 13. Go/no-go principle
+# 12. Go/no-go principle
 
 ```text
 measure
@@ -411,11 +365,9 @@ measure
 → retain only if repeat-supported benefit is real
 ```
 
-Do not optimize for algorithm count or novelty.
-
 ---
 
-# 14. Hard authority boundaries
+# 13. Hard authority boundaries
 
 This roadmap does not authorize changes to:
 
@@ -423,7 +375,7 @@ This roadmap does not authorize changes to:
 current G_action estimand
 current randomized manifest
 current AURA/FAST/T1/C1 semantics
-PX4 firmware PID / PX4 authority
+PX4 firmware control semantics / PX4 authority
 Direct Guard
 M_STABLE_US
 W_MAX_US
@@ -433,4 +385,4 @@ SEALED
 production authority
 ```
 
-Any material change requires explicit owner review, versioned control/scientific contract, implementation evidence and qualification.
+Any material change requires explicit owner review, a versioned control/scientific contract, implementation evidence and qualification.
