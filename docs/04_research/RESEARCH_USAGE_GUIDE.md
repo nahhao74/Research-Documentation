@@ -125,11 +125,10 @@ An AI must not reconstruct an old direction from Git history or source-registry 
 
 ## Registry navigation
 
-Use:
+Use only:
 
 ```text
 ../02_source_registry/CURRENT_REGISTRY_V9.md
-../02_source_registry/SOURCE_REGISTRY_CURRENT.md
 ```
 
 The registry is a methodological index, not an active-algorithm list.
