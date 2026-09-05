@@ -2,14 +2,16 @@
 
 ## 1. Scope
 
-This document defines the canonical Moving-Mode architecture for the current AURA–WISE–World Model–AEGIS pipeline. It is the primary structural reference for implementation, debugging and scientific interpretation.
+This document defines the canonical structural architecture of the AURA–WISE–World Model–AEGIS Moving-Mode pipeline.
 
-Current runtime state and next allowed action are defined by `../00_overview/CURRENT_STATUS.md` and the latest execution ladder, not by this architecture file.
+It defines module ownership, data/control flow and invariants. It does **not** define the latest runtime blocker or next executable task.
 
-The design separates two responsibilities:
+Current execution state is defined only by:
 
-1. **Immediate disturbance response** — causal, low-latency and independent of World-Model availability.
-2. **Predictive refinement** — uses causal state history and learned action-conditioned dynamics to improve future trajectory behavior.
+```text
+../00_overview/CURRENT_STATUS.md
+../00_overview/CURRENT_EXECUTION_LADDER_WM_20260905.md
+```
 
 ## 2. End-to-end structure
 
@@ -37,16 +39,16 @@ Sensors / PX4 / Reference ────────────> AURA ───�
                                                                     v
                                                                    UAV
                                                                     │
-                                                                    └──> new sensor/state feedback
+                                                                    └──> sensor/state feedback
 ```
 
-The fast and predictive paths coexist. The predictive path augments the active controller; it does not replace the baseline response stack.
+The fast and predictive paths coexist. The predictive path augments the active controller; it does not replace first-response control.
 
-## 3. Fundamental architectural invariants
+## 3. Fundamental invariants
 
 ### 3.1 World Model cannot block first response
 
-If the World Model is unavailable, stale, uncertain, still warming, misses a deadline or has no acceptable candidate, this path must remain functional:
+The following path must remain functional when WM/WISE is unavailable, stale, uncertain, warming or late:
 
 ```text
 AURA -> AEGIS FAST/T1/C1 -> PX4 -> UAV
@@ -54,75 +56,98 @@ AURA -> AEGIS FAST/T1/C1 -> PX4 -> UAV
 
 ### 3.2 PX4 remains authoritative
 
-AEGIS and WM do not directly command motors, raw thrust, attitude or rate loops. Candidate and FAST corrections enter only through the qualified bounded acceleration-correction path. PX4 retains authority over:
+FAST and candidate corrections enter only through the qualified bounded acceleration-correction path.
+
+PX4 retains authority over:
 
 ```text
-velocity/position control internals
+position/velocity control internals
 acceleration-to-thrust conversion
 attitude/rate control
 control allocation
 actuator limits and motor output
 ```
 
-### 3.3 Candidate is incremental
+No AURA/WM/WISE/AEGIS candidate owns direct motor/raw-thrust authority.
+
+### 3.3 Candidate action is incremental
+
+At the requested composition boundary:
 
 ```text
 u_baseline = FAST/T1/C1 requested contribution
 u_total_requested = u_baseline + u_candidate
 ```
 
-This equality is exact only at the requested composition boundary. The architecture does not assume physical closed-loop linearity:
+This does not imply physical linear superposition:
 
 ```text
 Y(B+U) = Y(B) + Y(U)
 ```
 
+is not assumed.
+
 ### 3.4 StateBank is causal and always warm
 
-StateBank retains native-time causal history so WM/WISE can evaluate current state and recent treatment/controller history without waiting for an event to initialize memory.
+StateBank retains causal native-time history so predictive/scientific consumers do not need to initialize memory after a new event.
 
-## 4. Module responsibilities
+### 3.5 Fail-closed degradation
+
+If a predictive candidate is stale, invalid, uncertain or unavailable:
+
+```text
+u_candidate = ZERO / unavailable
+baseline continues
+```
+
+## 4. Module ownership
 
 ### PX4
 
-PX4 is the final realtime flight-control authority. Runtime/build identity is frozen per scientific root.
+PX4 is the final realtime flight-control authority.
 
-The qualified FAST/candidate correction is applied in the position-control acceleration path before PX4 `_accelerationControl()`; downstream attitude/rate/allocation remain native PX4 behavior.
+FAST/candidate acceleration corrections enter before `_accelerationControl()` in the qualified PositionControl acceleration path. Downstream thrust conversion, attitude/rate control and allocation remain native PX4 behavior.
 
 ### AURA
 
-AURA estimates current external/disturbance-equivalent acceleration and carries validity, freshness, confidence and causal identity.
+AURA produces a causal disturbance-equivalent acceleration estimate plus:
 
 ```text
-low-latency disturbance estimate for FAST
-+
-source-bound state for StateBank / downstream prediction
+validity
+freshness
+confidence
+source/session/reset identity
 ```
 
-The fast observable is onset/change sensitive. Longer continuity behavior is supplied by the retained FAST/T1/C1 baseline rather than assuming the fast estimate alone represents persistent wind indefinitely.
+AURA supports:
 
-### AEGIS FAST/T1/C1
+```text
+low-latency FAST response
++
+source-bound state for StateBank / prediction
+```
+
+### FAST/T1/C1
 
 ```text
 FAST
 = immediate bounded acceleration correction from current AURA state
 
-T1/C1 baseline
-= retained qualified continuation/bridge behavior active during current WM experiments
-
-candidate path
-= bounded incremental predictive contribution accepted only with exact identity/provenance contract
+T1/C1
+= qualified continuation/bridge behavior retained in the active baseline
 ```
 
-Current scientific baseline:
+Current scientific baseline definition:
 
 ```text
 B = active PX4 + AURA + FAST/T1/C1 closed loop
 ```
 
+The exact current FAST semantics are frozen by the active scientific contract during Phase-0.
+
 ### StateBank
 
-StateBank stores source-bound causal state across:
+StateBank stores causal source-bound history for:
 
 ```text
 aura
@@ -134,11 +159,11 @@ controller
 actuator
 ```
 
-It enforces source/session/reset identity and a causal snapshot barrier.
+It enforces source/session/reset identity and an atomic causal snapshot barrier.
 
 ### World Model
 
-Current decomposition:
+Canonical decomposition:
 
 ```text
 Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
@@ -147,45 +172,66 @@ Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
 where:
 
 ```text
-F_nominal
-= future evolution of the active baseline system
-
-G_action
-= incremental closed-loop effect of bounded candidate action
+F_nominal = future evolution under active baseline B
+G_action  = incremental candidate effect relative to ZERO under B
 ```
 
 ### WISE
 
-WISE consumes causal StateBank state plus WM rollouts and evaluates bounded candidate plans against trajectory, uncertainty and control constraints.
+WISE performs bounded predictive candidate selection:
 
 ```text
-causal state/history
-→ generate bounded candidates
+causal StateBank state
+→ bounded candidates
 → WM rollout
-→ score tracking / velocity / cross-track / effort / uncertainty / constraints
-→ select acceptable plan
-→ AEGIS bounded execution path
+→ score future tracking / effort / uncertainty / constraints
+→ choose acceptable plan
+→ AEGIS candidate path
 ```
+
+### AEGIS
+
+AEGIS is the bounded execution/assurance boundary for FAST and predictive candidate contributions.
+
+It owns acceptance/bounds/provenance enforcement at the qualified acceleration-correction interface; it does not replace PX4 inner-loop authority.
 
 ## 5. Fast path vs predictive path
 
 ### Fast path
 
-React immediately to detected disturbance with minimal latency. It remains causal and functional without WM.
+Purpose:
+
+```text
+respond to disturbance now
+minimize first useful correction latency
+remain functional without WM
+```
 
 ### Predictive path
 
-Use recent state/action history to predict future trajectory response and reduce future error. It refines rather than delays the immediate response.
+Purpose:
+
+```text
+predict controlled future response
+anticipate future tracking/constraint consequences
+add bounded refinement only when useful and valid
+```
+
+The predictive path must improve future behavior without delaying the fast path.
 
 ## 6. Scientific interpretation
+
+The current action-conditioned estimand is:
 
 ```text
 G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
 ```
 
-The active baseline is present in both arms. Randomized candidate action may cause additional FAST/PX4 reactions after treatment; those downstream reactions are part of the realized treatment path.
+The active baseline exists in both arms.
 
-A material change to FAST semantics changes baseline `B`. Therefore a future promoted FAST algorithm cannot be assumed to preserve the same `G_action` mapping without a versioned baseline/model review.
+Candidate-induced downstream FAST/PX4 reactions are part of the realized closed-loop treatment response.
+
+A material FAST change changes baseline `B`; action-conditioned data/model validity must therefore be reviewed under the new baseline before production use.
 
 ## 7. Timing and causal identity
 
@@ -194,18 +240,26 @@ T_D = causal decision frontier
 T_A = actual accepted-action frontier
 ```
 
-Source continuity uses native PX4/source identity. Cross-domain clock alignment is separate and must carry explicit provenance.
+Native PX4/source time is the authority for source continuity. Cross-domain clock alignment is a separate provenance problem.
 
-Host time, Gazebo simulation time and PX4 boot/source time must not be silently collapsed into one timestamp domain.
+Never silently collapse:
+
+```text
+PX4 boot/source time
+Gazebo simulation time
+host receipt/monotonic time
+mapped cross-domain time
+```
+
+Detailed rules live in `TIMING_CAUSALITY_STATEBANK.md`.
 
 ## 8. E8 source-causal pairing
 
-E8 uses a bounded immutable AURA callback ledger for decision-authoritative AURA/C1 pairing.
+For a C1 source frontier:
 
 ```text
-for C1 frontier T_C1
-select newest received positive-source AURA with T_AURA <= T_C1
-then apply existing exact session/reset/validity/freshness/provenance/clock gates
+select newest received positive-source nonfuture AURA record
+→ then apply exact session/reset/validity/freshness/provenance/clock gates
 ```
 
 Hard rules:
@@ -213,12 +267,27 @@ Hard rules:
 ```text
 no future AURA sample
 no cross-reset carryover
-no fallback to an older favorable AURA state when the newest causal state fails
+no older-favorable fallback when the newest causal state fails
 ```
 
-## 9. Native-event lifecycle
+## 9. Applied-status observation
 
-The qualified inter-block lifecycle is:
+Observer visibility and runtime application authority are separate contracts.
+
+Canonical `next_status` successor predicate:
+
+```text
+timestamp_us > previous_timestamp_us
+AND controller_session_start_us == expected_session
+AND reset_generation == expected_reset
+AND timestamp_ready
+```
+
+Infrastructure that retains/selects accepted-cycle statuses must preserve exact generation/session/reset/source semantics rather than changing the scientific contract to accommodate storage or callback behavior.
+
+## 10. Native-event lifecycle
+
+Qualified inter-block lifecycle:
 
 ```text
 arm
@@ -230,154 +299,66 @@ arm
 → next block may arm
 ```
 
-This is an inter-block readiness invariant only; it does not alter frozen within-block GUST/treatment timing.
+This is an inter-block readiness invariant, not a change to within-block treatment timing.
 
-## 10. Applied-status mirror and next_status contract
+## 11. Canonical causal-validity engine
 
-The `next_status` observer requires a strict source-forward successor:
-
-```text
-timestamp_us > previous_timestamp_us
-AND controller_session_start_us == expected_session
-AND reset_generation == expected_reset
-AND timestamp_ready
-```
-
-E8 mirror publication occurs before the existing runtime source-health/application-authority gate so observer visibility and runtime application authority remain separate contracts.
-
-The bounded next-status qualification produced 689 strict-future lookups with zero timeout and `PRE_RETRY_VALID_CAUSAL_CORE=true`.
-
-## 11. Accepted-cycle status visibility
-
-`fresh_35` exposed a separate infrastructure boundary earlier than `next_status`.
-
-The accepted-cycle probe requests a same-lineage status within the existing source-match budget. A valid native status existed within that budget, but the probe matcher returned no match and timed out.
-
-Current implementation facts relevant to the forensic are:
-
-```text
-accepted-cycle matcher scans self.statuses[-2000:]
-per-lineage latest slot exists separately
-find_cycle does not use the per-lineage latest slot
-```
-
-The evidence does **not** yet prove whether the contract-valid status:
-
-```text
-never reached the observer callback
-was received and later evicted from bounded retention
-or remained retained but could not be selected by matcher/indexing logic
-```
-
-This is the current implementation forensic boundary. No timeout/QoS/source predicate change is authorized as a substitute for proving it.
-
-## 12. Causal-validity pipeline
-
-The WM validity engine is a canonical offline/preflight/post-run mechanism:
+Offline/preflight/post-run validation uses:
 
 ```text
 reverse validity indexing
-→ canonical source-grounded dependency graph
+→ canonical dependency graph
 → Tarjan SCC / forbidden-cycle validation
 → direct invalid seeds
 → fixed-point peeling
 → VALID_CAUSAL_CORE
 ```
 
-Canonical graph shape is 21 nodes / 34 edges with fail-closed tri-state precedence:
+This machinery is not part of the control hot path.
 
-```text
-FAIL > UNKNOWN > PASS
-```
+See `WM_CAUSAL_VALIDITY_ENGINE.md`.
 
-This machinery must not enter the FAST/control hot path.
+## 12. Failure-isolation layers
 
-## 13. Failure isolation
-
-Failures remain classified by layer:
+Classify failures at the earliest proven layer:
 
 ```text
 source / transport
 clock alignment
-AURA state validity
+AURA validity
 StateBank causality/readiness
 C1 lifecycle/replay
-E8 AURA/C1 pairing
-applied-status mirror / next_status successor
-accepted-cycle callback/retention/matcher visibility
+E8 source-causal pairing
+status observation / retention / matching
 candidate binding / accepted status
 native-event lifecycle
-exact exposure
+exact treatment exposure
 PX4 projection / constraints
-scientific target validity
+scientific validity
 model/statistical adequacy
 ```
 
-Examples:
+Do not equate:
 
 ```text
-producer status exists != probe callback visibility proven
-bounded capacity pressure != eviction proven
-terminal timeout != first causal divergence
-invalid infrastructure root != negative treatment result
-weak treatment signal != infrastructure invalidity
+terminal timeout with root cause
+capacity pressure with proven eviction
+infrastructure failure with scientific negative result
+weak treatment signal with infrastructure invalidity
 ```
 
-## 14. Current integration state
+## 13. Research boundary
 
-Qualified infrastructure retained before `fresh_35` includes:
+FAST improvement and WM/WISE development follow the active roadmap but do not silently modify this canonical architecture.
+
+Any material change to:
 
 ```text
-Option-B / Direct Guard
-AURA_C1_SOURCE_RESET authority
-WM reverse-processing + Tarjan + peeling validity engine
-continuous-C1 replay/recovery qualification
-TRACE_QOS_DEPTH=4096 diagnostic evidence path
-post-reset E8 source-causal AURA/C1 pairing
-post-reset accepted-status handoff
-native-event CLEAR/retirement lifecycle gate
-next_status mirror/successor-frontier repair
-StateBank seven-stream startup barrier
-bootstrap_only session-start path
-canonical plugin-bearing scientific world
+PX4 authority
+FAST/T1/C1 semantics
+candidate insertion boundary
+scientific baseline B
+World-Model treatment semantics
 ```
 
-Latest root `fresh_35` passed preflight and stopped in the first CALM row before scientific admission:
-
-```text
-PRIMARY_BOUNDARY=ACCEPTED_CYCLE_STATUS_SUCCESSOR_UNAVAILABLE_TO_PROBE
-PRODUCER_ABSENCE=NOT_PROVEN
-CAPACITY_CAUSALITY=LIKELY_BUT_NOT_PROVEN
-```
-
-The next executable state is a separate accepted-cycle callback visibility/retention forensic, followed by minimal repair and bounded non-scientific qualification only if a concrete implementation defect is proven.
-
-## 15. FAST research boundary
-
-The current production/scientific FAST baseline is unchanged.
-
-Separate simulator shadow/replay research may benchmark alternative FAST algorithms against the current `-d_hat + T1/C1` path. The purpose is to determine whether immediate wind response, tracking and recovery can be materially improved while keeping PX4 firmware control semantics unchanged.
-
-No replacement algorithm is currently selected. The earlier residual-PI proposal is not current main-pipeline direction.
-
-Any future FAST promotion would change baseline `B` and requires a versioned control/scientific contract after current Phase-0 identification closes.
-
-## 16. Forward architecture path
-
-Current sequence:
-
-```text
-accepted-cycle visibility/retention forensic
-→ implementation-preserving repair if proven
-→ bounded non-scientific qualification
-→ owner review
-→ later fresh randomized root only if separately authorized
-→ complete causal dataset admission
-→ G_action identification
-→ F_nominal + G_action World Model
-→ WISE bounded predictive refinement
-```
-
-FAST shadow research may proceed independently but must not change the current Phase-0 baseline.
-
-World-Model training must not begin from partial or infrastructure-invalid roots.
+requires explicit versioning/review and qualification.
