@@ -6,19 +6,19 @@
 **Resolved locators:** 153  
 **Unresolved:** 3 (`SRC-024`, `SRC-040`, `SRC-053`)
 
-This is the GitHub retrieval/index view for the active registry revision. Existing source IDs are retained; no source was renumbered.
+This file is a retrieval/index view for the current source registry. It is **not** a current project-state or execution-authority document.
 
 ## v9 additions
 
-| ID | Source | Pipeline role |
+| ID | Source | Methodological relevance |
 |---|---|---|
-| SRC-150 | Runtime enforcement of regular timed properties by suppressing and delaying events | Strong timed-runtime-enforcement prior-art baseline for CTEE |
-| SRC-151 | Age of information optimization in cyber–physical systems with stateful packet management techniques | Freshness / age-at-decision and age-at-application |
-| SRC-152 | Network Calculus: A Theory of Deterministic Queuing Systems for the Internet | Candidate deterministic remaining-delay/backlog bounds after local assumptions are measured |
-| SRC-153 | Adaptive Experiment Design for Nonlinear System Identification With Operational Constraints | Post-Phase-0 information-efficient probing / CIBES research |
-| SRC-154 | Safety Beyond the Training Data: Robust Out-of-Distribution MPC via Conformalized System Level Synthesis | Conformal OOD uncertainty for future WM/WISE; includes 12D quadcopter benchmark |
-| SRC-155 | Learning the Uncertainty Sets of Linear Control Systems via Set Membership: A Non-asymptotic Analysis | Set-membership uncertainty learning |
-| SRC-156 | Uncertainty quantification of set-membership estimation in control and perception: Revisiting the minimum enclosing ellipsoid | Tractable ellipsoidal outer approximation of set-membership uncertainty |
+| SRC-150 | Runtime enforcement of regular timed properties by suppressing and delaying events | timed-runtime-enforcement reference |
+| SRC-151 | Age of information optimization in cyber–physical systems with stateful packet management techniques | freshness / age-at-decision / age-at-application reference |
+| SRC-152 | Network Calculus: A Theory of Deterministic Queuing Systems for the Internet | deterministic delay/backlog-bounds reference |
+| SRC-153 | Adaptive Experiment Design for Nonlinear System Identification With Operational Constraints | constrained experiment-design reference |
+| SRC-154 | Safety Beyond the Training Data: Robust Out-of-Distribution MPC via Conformalized System Level Synthesis | conformal/OOD predictive-control reference; includes a quadcopter benchmark |
+| SRC-155 | Learning the Uncertainty Sets of Linear Control Systems via Set Membership: A Non-asymptotic Analysis | set-membership uncertainty reference |
+| SRC-156 | Uncertainty quantification of set-membership estimation in control and perception: Revisiting the minimum enclosing ellipsoid | ellipsoidal outer-approximation reference |
 
 ## Exact locators
 
@@ -32,49 +32,48 @@ SRC-155 https://proceedings.mlr.press/v235/li24ci.html
 SRC-156 https://proceedings.mlr.press/v242/tang24a.html
 ```
 
-## Research tracks supported by v9
+## Usage rule
+
+These sources may support future work in timing/freshness, constrained experiment design, uncertainty or predictive control **only when the active roadmap identifies a measured project need**.
+
+Do not infer that a method is active because its source exists in this registry.
+
+Active research direction is defined by:
 
 ```text
-Timed Automata / Runtime Enforcement
-    → stronger baseline against which CTEE must earn its place
+../04_research/FUTURE_IMPLEMENTATION_ROADMAP.md
+```
 
-CTEE-F
-    → CTEE + Age of Information + justified remaining-delay envelope
+Current runtime/scientific state is defined by:
 
-CIBES
-    → future causal information-budgeted excitation after current Phase-0 science
-
-World-Model uncertainty ladder
-    → residual quantiles / ensembles / conformal / set-membership / tractable outer sets
+```text
+../00_overview/CURRENT_STATUS.md
+../00_overview/CURRENT_EXECUTION_LADDER_WM_20260905.md
 ```
 
 ## Authority boundary
 
-These sources are methodological inputs only. They do not authorize:
+Registry entries do not authorize:
 
 ```text
-Q1 runtime
-Option-B implementation
-M_STABLE_US or W_MAX_US selection
-fresh randomized science
-scientific manifest changes
-AURA / FAST/T1/C1 / H1000 semantic changes
+scientific execution
+manifest or estimand changes
+AURA / FAST/T1/C1 semantic changes
 PX4 authority changes
+World-Model training
 SEALED access
 production authority
 ```
 
-The exact next runtime gate remains owner authorization for the bounded Q1 no-launch nonscientific characterization.
-
 ## Adoption rule
 
 ```text
-source
+measured problem
+→ relevant source
 → project-specific hypothesis
-→ measurable KPI
-→ simplest credible baseline
-→ shadow/offline/preflight test
-→ retain only if benefit is demonstrated
+→ smallest credible baseline/mechanism
+→ bounded shadow/offline/non-scientific test
+→ retain only if repeat-supported benefit is demonstrated
 ```
 
-The complete local v9 artifact has 156 entries and was deduplicated with zero duplicate IDs and zero duplicate resolved locators before this index was produced.
+The complete local v9 artifact contains 156 entries and retains existing source IDs without renumbering.
