@@ -1,48 +1,37 @@
 # WM1 Randomized Identification Contract
 
-## 0. Authority and current pilot identity
+## 0. Authority and identity
 
-This file is the canonical scientific contract for the current WM1 randomized `G_action` pilot.
+This file is the canonical scientific contract for the current randomized `G_action` identification campaign.
 
-Current authoritative manifest identity:
-
-```text
-MANIFEST_ID=WM1_V2R1_FINAL_RANDOMIZED_SCIENTIFIC_PILOT_V1_1
-SHA256=361ff557e1b6f2fb9d6e94803ec0cf77e98f4381b0f05499a2bfeadf08027354
-```
-
-Earlier schedule digests retained in historical documents are provenance only and are not current execution authority unless explicitly restored by the owner.
-
-Current runtime status and next allowed task are not defined here; use:
+Current runtime state and next allowed task are defined elsewhere:
 
 ```text
 ../00_overview/CURRENT_STATUS.md
 ../00_overview/CURRENT_EXECUTION_LADDER_WM_20260905.md
 ```
 
-## 1. Scientific estimand
+Authoritative manifest:
 
-The experiment estimates the incremental closed-loop action effect under the active controller baseline:
+```text
+MANIFEST_ID=WM1_V2R1_FINAL_RANDOMIZED_SCIENTIFIC_PILOT_V1_1
+SHA256=361ff557e1b6f2fb9d6e94803ec0cf77e98f4381b0f05499a2bfeadf08027354
+```
+
+Historical schedule digests are not execution authority unless explicitly restored by the owner.
+
+## 1. Scientific estimand
 
 ```text
 G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
-```
-
-with:
-
-```text
 B = active PX4 + AURA + FAST/T1/C1 baseline
 ```
 
-This is not an open-loop plant-identification experiment.
+This is closed-loop incremental action identification, not open-loop plant identification.
 
-## 2. Why the baseline remains active
+The baseline remains active because the scientific question is the additional effect of a bounded candidate inside the deployed closed loop. Post-treatment FAST/PX4 reactions caused by the candidate are part of the realized treatment path.
 
-The scientific question is whether a bounded candidate adds useful predictive/control effect **inside the deployed closed loop**. Disabling FAST/T1/C1 changes the system being identified and no longer estimates the intended `G_action`.
-
-Randomization supplies treatment variation while the baseline remains active. FAST/PX4 reactions caused after treatment are part of the realized closed-loop treatment path.
-
-## 3. Frozen pilot design
+## 2. Frozen pilot design
 
 ```text
 worker A
@@ -56,9 +45,9 @@ worker A
 Assignment totals:
 
 ```text
-ZERO = 48
-P1   = 24
-P2   = 24
+ZERO=48
+P1=24
+P2=24
 ```
 
 Directions:
@@ -69,11 +58,16 @@ Directions:
 +N
 ```
 
-No adaptive arm rebalancing, replacement, resampling or post-hoc relabeling is allowed.
+Forbidden:
 
-## 4. Canonical scientific world
+```text
+adaptive arm rebalancing
+replacement/resampling
+post-hoc relabeling
+arm-conditioned retry
+```
 
-All contexts use the same deterministic plugin-bearing generated world:
+## 3. Canonical scientific world
 
 ```text
 WORLD_NAME=sim_world_a
@@ -84,14 +78,12 @@ CANONICAL_WORLD_SHA256=8b26be57f07380455071fe8f4f81797e8ca3b946bf407158ff91f0ac1
 
 ```text
 CALM   = plugin present; zero/no nonzero disturbance command
-GUST_E = identical world/plugin bytes; frozen predeclared +E stimulus
+GUST_E = identical world/plugin bytes; frozen predeclared +E disturbance
 ```
 
-Context labels alone are not scientific evidence. `GUST_E` requires native-truth evidence that the physical disturbance was actually applied.
+`GUST_E` requires native-truth evidence that the physical disturbance was actually applied. Context labels alone are not evidence.
 
-The generated world must be prepared, format-validated, hashed and matched before PX4/Gazebo runtime launch.
-
-## 5. Exact exposure arms
+## 4. Exact treatment arms
 
 ```text
 ZERO = exactly 0 accepted nonzero candidate cycles
@@ -106,13 +98,13 @@ Forbidden:
 ```text
 extra compensation cycles
 re-dose after partial exposure
+adaptive amplitude change
 post-hoc arm relabeling
 excluding inconvenient assigned blocks
-adaptive amplitude change
 replacing failed P1/P2 with another treatment
 ```
 
-## 6. Session bootstrap
+## 5. Session bootstrap
 
 Every fresh session begins with a non-scientific source-complete bootstrap:
 
@@ -144,24 +136,25 @@ controller
 actuator
 ```
 
-Bootstrap consumes no scientific manifest slot and does not seed candidate-only H1000.
+Bootstrap consumes no scientific manifest slot and does not seed candidate H1000.
 
-## 7. Mandatory pre-science integration corridor
+## 6. Mandatory pre-science qualification corridor
 
-A randomized pilot must not be the first integration test of a newly repaired path.
+A randomized scientific root must never be the first integration test of a newly repaired path.
 
-The governing pattern is:
+Required pattern:
 
 ```text
-repair
+forensic / root-cause proof
+→ minimal implementation-preserving repair
 → deterministic regression
-→ component qualification
-→ bounded integrated non-scientific qualification/corridor
+→ bounded integrated non-scientific qualification
+→ canonical validity audit
 → owner review
-→ randomized scientific root
+→ separate scientific authorization
 ```
 
-The exact corridor evolves with the current blocker, but it must exercise the repaired path without treatment-effect scientific credit and preserve:
+The non-scientific corridor must preserve:
 
 ```text
 SCIENTIFIC_BLOCKS=0
@@ -171,32 +164,31 @@ SEALED_ACCESS=0
 production_authority=false
 ```
 
-Current execution-specific qualification requirements and their closure state are defined in the latest execution ladder, not duplicated here.
+The exact currently required corridor is defined by the latest execution ladder.
 
-## 8. Scientific authority boundary and diagnostic markers
+## 7. Scientific admission vs diagnostics
 
-`T_D` is the causal decision frontier defined by this contract. However, raw instrumentation may contain diagnostic markers whose names include strings such as:
+Raw instrumentation markers are not scientific admission.
+
+For example:
 
 ```text
 first_scientific_t_d_committed
 ```
 
-A diagnostic marker alone does **not** grant scientific block admission or treatment authority.
-
-Authoritative scientific admission requires the complete frozen transaction/block contract to succeed and be recorded by the canonical scientific accounting path.
-
-Therefore:
+by itself does not imply:
 
 ```text
-raw diagnostic T_D marker
-!= accepted scientific block
-!= treatment-effect credit
-!= manifest consumption
+accepted scientific block
+treatment-effect credit
+manifest consumption
 ```
 
-This distinction is required when auditing infrastructure-invalid roots such as historical `fresh_33` and `fresh_34`.
+Authoritative admission requires the complete frozen transaction/block contract to succeed and be recorded by the canonical accounting path.
 
-## 9. Timing and causal validity
+This rule applies to all infrastructure-invalid roots, including `fresh_33`, `fresh_34`, `fresh_35` and later failures.
+
+## 8. Timing and causal validity
 
 Every scientific transaction requires:
 
@@ -211,51 +203,62 @@ T_A native accepted frontier valid
 
 Source continuity uses native PX4 source identity. Cross-domain clock alignment is separate.
 
-A host-only or Gazebo-only diagnostic must not be assigned a fabricated PX4 source timestamp.
+Do not fabricate a PX4 source timestamp for a host-only or Gazebo-only diagnostic.
 
-Mapping-epoch transition during science fails closed unless an explicitly qualified live transition-certification path is later approved.
+A mapping epoch/generation transition during science fails closed unless a separately qualified transition-certification path is explicitly approved.
 
-## 10. T_D, T_A and outcomes
+Forbidden repairs:
 
 ```text
-T_D = native decision frontier
+future Timesync lookup
+retrospective future-informed remapping
+interpolation across mapping epochs
+silently skipping invalid samples
+extending/re-dosing treatment to compensate
+```
+
+## 9. T_D, T_A and outcomes
+
+```text
+T_D = native causal decision frontier
 T_A = native accepted candidate frontier
 ```
 
-Outcome targets are aligned to actual accepted treatment:
+Outcome target for horizon `h`:
 
 ```text
 Y_h = first valid future local_state at native time >= T_A + h
 ```
 
-No interpolation or future leakage.
+No interpolation and no future leakage.
 
-Horizon terminology is standardized as:
+Horizon terminology:
 
 ```text
 DATASET / CAUSAL-COMPLETENESS HORIZONS = H0, H20, H40, H80
 PRIMARY PILOT TREATMENT CONTRASTS       = H40, H80
 ```
 
-Availability at H0/H20 supports complete causal record construction and diagnostics; primary treatment-response interpretation remains focused on H40/H80 unless a later frozen analysis contract changes that explicitly.
+H0/H20 support complete causal construction and diagnostics. Primary treatment-response interpretation remains H40/H80 unless a future frozen analysis contract changes it.
 
-## 11. H1000
-
-Candidate-history closure uses:
+## 10. H1000
 
 ```text
 H1000 = 1,000,000 native source us
 ```
 
-H1000 is candidate-only. FAST/T1/C1 baseline activity is not candidate exposure.
+H1000 is candidate-history/refractory semantics only.
 
-Session bootstrap does not create a release anchor. H1000 begins only after an explicit candidate release or separately qualified candidate bootstrap.
+```text
+FAST/T1/C1 baseline activity != candidate exposure
+session bootstrap != candidate release
+```
 
-H1000 is not proof that all physical carryover has vanished; carryover is assessed separately.
+H1000 does not prove all physical carryover has disappeared. Carryover is assessed separately from pre-treatment state and randomized outcomes.
 
-## 12. E8 / identity / release
+## 11. E8, accepted action and release identity
 
-Candidate action remains bound to exact:
+Candidate action is bound to exact:
 
 ```text
 generation
@@ -268,16 +271,20 @@ accepted status
 
 A pending valid candidate waiting for ACK cannot be superseded by unrelated baseline publication. Explicit release closes the nonzero treatment window.
 
-Current E8 source-causal infrastructure preserves:
+E8 source-causal pairing preserves:
 
 ```text
 newest received positive-source nonfuture AURA record
-→ existing exact reset/session/health/freshness/provenance gates
+→ exact reset/session/health/freshness/provenance gates
 ```
 
 No future AURA sample, cross-reset carryover or older-favorable fallback is allowed.
 
-Applied-status observer visibility is separate from runtime application authority. The canonical `next_status` successor predicate is:
+## 12. Observer visibility vs runtime authority
+
+Applied-status observer visibility and runtime application authority are separate contracts.
+
+Canonical `next_status` successor predicate:
 
 ```text
 timestamp_us > previous_timestamp_us
@@ -286,15 +293,15 @@ AND reset_generation == expected_reset
 AND timestamp_ready
 ```
 
-The mirror must not hide a contract-valid successor merely because additional runtime health/authority fields fail; those application gates retain their own canonical role after mirror publication.
+The mirror must not hide a contract-valid successor merely because additional runtime health/authority fields fail; those application gates retain their role after observer publication.
 
-## 13. Native-event lifecycle requirement
+Accepted-cycle callback/retention infrastructure may be repaired only in an implementation-preserving way. Such a repair must not loosen generation/session/reset/source matching, treatment identity or accepted-action semantics.
 
-A scientific GUST block must have valid native-truth onset/clear identity.
+## 13. Native-event lifecycle
 
-A new native event must not overlap an earlier event when the canonical event owner still reports the previous event active.
+A GUST block requires valid native-truth onset/CLEAR identity.
 
-The qualified implementation invariant is:
+Qualified inter-block invariant:
 
 ```text
 arm
@@ -306,9 +313,7 @@ arm
 → only then next native-event arm eligibility
 ```
 
-This is an inter-block readiness requirement. It does not alter frozen within-block GUST profile, `M_STABLE_US`, `W_MAX_US`, `T_D`, `T_A`, H1000, assignment or treatment semantics.
-
-The bounded non-scientific qualification demonstrated three consecutive GUST events with zero `PREVIOUS_EVENT_STILL_ACTIVE` rejection and zero overlap. Current status/authority remains defined by the execution ladder.
+This is an inter-block readiness rule. It does not change frozen within-block GUST timing, `M_STABLE_US`, `W_MAX_US`, `T_D`, `T_A`, H1000, assignment or treatment semantics.
 
 ## 14. Complete-root requirement
 
@@ -319,30 +324,30 @@ SESSIONS_VALID=8/8
 BLOCKS_VALID=96/96
 ```
 
-A truncated or infrastructure-invalid root must not produce treatment-effect inference.
-
-No pooling across failed roots.
+Hard rule:
 
 ```text
 partial valid rows != scientific dataset
 infrastructure-invalid root != negative treatment result
 ```
 
+No pooling across failed roots.
+
 ## 15. Frozen analysis
 
 ### E0 — primary randomized contrast
 
-Assigned-arm / ITT-style contrast under the randomized schedule.
+Assigned-arm / ITT-style contrast under the frozen schedule.
 
-### E1 — secondary context-adjusted model
+### E1 — context-adjusted model
 
 Frozen context-specific ridge model:
 
 ```text
-lambda = 1e-3
+lambda=1e-3
 ```
 
-Uses pre-treatment covariates/session effects only. No imputation that introduces post-treatment or future information.
+Use pre-treatment covariates/session effects only. No post-treatment/future-informed imputation.
 
 ### Cluster bootstrap
 
@@ -353,17 +358,17 @@ Session is the independent cluster:
 10,000 bootstrap repetitions
 ```
 
-Blocks and controller cycles are not treated as independent subjects.
+Blocks and controller cycles are not independent subjects.
 
 ### E2
 
 Optional frozen nominal-residualization diagnostic. Secondary only; it must not overwrite E0 interpretation.
 
-## 16. Treatment-SNR diagnostics
+## 16. Treatment-SNR and identifiability diagnostics
 
-P1/P2 identifiability is evaluated in output space, not by comparing candidate acceleration magnitude directly with baseline controller-command magnitude.
+Evaluate P1/P2 in output space, not by comparing candidate command magnitude directly with baseline controller-command magnitude.
 
-Required diagnostics include:
+Required diagnostics:
 
 ```text
 ZERO outcome variability
@@ -375,9 +380,9 @@ lagged FAST-candidate interaction
 projection/constraint/saturation activity
 ```
 
-A Fisher Information Matrix is allowed only after a concrete parametric model, likelihood/noise assumptions and sensitivity Jacobian are specified.
+A Fisher Information Matrix is meaningful only after a concrete parametric model, likelihood/noise assumptions and sensitivity Jacobian are specified.
 
-## 17. Allowed interpretation
+## 17. Allowed pilot interpretation
 
 Pilot signal labels:
 
@@ -393,7 +398,7 @@ The pilot alone does not authorize:
 ACTION_RESPONSE_IDENTIFIED
 ```
 
-A valid but weak pilot goes to experiment-design review. It does not automatically authorize larger candidate amplitude.
+A valid but weak pilot goes to experiment-design review. It does not automatically authorize larger treatment amplitude.
 
 ## 18. Root governance
 
@@ -407,25 +412,41 @@ no relabeling
 no in-root retry / replacement / resampling
 ```
 
-Failed-root classifications remain immutable historical conclusions. Raw failed roots may later be deleted by explicit owner storage cleanup; deletion never changes the classification or permits pooling/reconstruction as science.
+Failed-root classifications are immutable historical conclusions.
 
-Implementation-preserving repairs occur outside the failed root, followed by deterministic regression and bounded non-scientific qualification before another owner-authorized scientific attempt.
+Implementation-preserving repairs occur outside the failed root, followed by deterministic regression, bounded non-scientific qualification, canonical validity audit and separate owner review.
 
-## 19. Causal dataset admission and WM boundary
+## 19. Canonical causal-validity pipeline
+
+Where applicable, qualification/scientific roots must reuse:
+
+```text
+reverse validity indexing
+→ canonical causal dependency graph
+→ Tarjan SCC / forbidden-cycle validation
+→ direct invalid seeds
+→ fixed-point peeling
+```
+
+Do not create task-local replacement validity semantics.
+
+## 20. Causal dataset admission and WM boundary
 
 A complete root still requires a separate causal-dataset audit covering at minimum:
 
 ```text
 randomization integrity
-context/arm support
-assigned vs accepted treatment identity
-ZERO/P1/P2 execution
+CALM/GUST and ZERO/P1/P2 support
+assigned vs requested vs accepted treatment identity
 T_D/T_A ordering
+exact treatment exposure
 H1000 completeness
-H0/H20/H40/H80 availability
+native-event lifecycle
 source/session/reset continuity
-washout/contamination
-no post-treatment conditioning
+H0/H20/H40/H80 availability
+washout/carryover
+projection/constraint/saturation
+no prohibited post-treatment conditioning
 response construction
 ```
 
@@ -437,7 +458,15 @@ CAUSAL_DATASET_ACCEPTANCE=PASS | FAIL | INSUFFICIENT
 
 Only `PASS` may progress to `G_action` identification. World-Model training still requires separate authorization.
 
-## 20. Authority
+## 21. FAST baseline boundary
+
+The current contract identifies `G_action` under the current FAST/T1/C1 baseline.
+
+FAST shadow/replay research is outside this frozen contract. Any future material FAST promotion changes baseline `B` and therefore requires a new versioned control/scientific review before production action-conditioned data/model use.
+
+No particular future FAST challenger is authorized by this contract.
+
+## 22. Final authority boundaries
 
 ```text
 SEALED_ACCESS_BOUNDARY=LOCKED_PRE_EVALUATION
@@ -445,6 +474,4 @@ SEALED_PAYLOAD_OPENED=false
 production_authority=false
 ```
 
-No scientific-contract, authority or model-training promotion is implied by an infrastructure qualification.
-
-Future FASTv2/PID/INDI research is outside this frozen contract. Any promotion that changes the active baseline `B` requires a new versioned control/scientific contract after the current Phase-0 identification closes.
+Infrastructure qualification does not imply scientific, model-training, SEALED or production promotion.
