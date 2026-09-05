@@ -171,7 +171,7 @@ SEALED_ACCESS=0
 production_authority=false
 ```
 
-Current execution-specific qualification requirements are defined in the latest execution ladder, not duplicated here.
+Current execution-specific qualification requirements and their closure state are defined in the latest execution ladder, not duplicated here.
 
 ## 8. Scientific authority boundary and diagnostic markers
 
@@ -194,7 +194,7 @@ raw diagnostic T_D marker
 != manifest consumption
 ```
 
-This distinction is required when auditing infrastructure-invalid roots such as `fresh_33`.
+This distinction is required when auditing infrastructure-invalid roots such as historical `fresh_33` and `fresh_34`.
 
 ## 9. Timing and causal validity
 
@@ -268,7 +268,7 @@ accepted status
 
 A pending valid candidate waiting for ACK cannot be superseded by unrelated baseline publication. Explicit release closes the nonzero treatment window.
 
-Current E8 source-causal infrastructure also preserves:
+Current E8 source-causal infrastructure preserves:
 
 ```text
 newest received positive-source nonfuture AURA record
@@ -277,21 +277,38 @@ newest received positive-source nonfuture AURA record
 
 No future AURA sample, cross-reset carryover or older-favorable fallback is allowed.
 
+Applied-status observer visibility is separate from runtime application authority. The canonical `next_status` successor predicate is:
+
+```text
+timestamp_us > previous_timestamp_us
+AND controller_session_start_us == expected_session
+AND reset_generation == expected_reset
+AND timestamp_ready
+```
+
+The mirror must not hide a contract-valid successor merely because additional runtime health/authority fields fail; those application gates retain their own canonical role after mirror publication.
+
 ## 13. Native-event lifecycle requirement
 
 A scientific GUST block must have valid native-truth onset/clear identity.
 
 A new native event must not overlap an earlier event when the canonical event owner still reports the previous event active.
 
-Current implementation work is addressing the infrastructure invariant:
+The qualified implementation invariant is:
 
 ```text
-previous exact native event ACTIVE
-→ matching canonical CLEAR / retirement
+arm
+→ consume/onset
+→ exact matching canonical CLEAR
+→ clear
+→ complete
+→ retire
 → only then next native-event arm eligibility
 ```
 
-This is an inter-block readiness requirement. It must not silently alter frozen within-block GUST profile, `M_STABLE_US`, `W_MAX_US`, `T_D`, `T_A`, H1000, assignment or treatment semantics.
+This is an inter-block readiness requirement. It does not alter frozen within-block GUST profile, `M_STABLE_US`, `W_MAX_US`, `T_D`, `T_A`, H1000, assignment or treatment semantics.
+
+The bounded non-scientific qualification demonstrated three consecutive GUST events with zero `PREVIOUS_EVENT_STILL_ACTIVE` rejection and zero overlap. Current status/authority remains defined by the execution ladder.
 
 ## 14. Complete-root requirement
 
@@ -390,7 +407,7 @@ no relabeling
 no in-root retry / replacement / resampling
 ```
 
-Failed roots remain immutable evidence.
+Failed-root classifications remain immutable historical conclusions. Raw failed roots may later be deleted by explicit owner storage cleanup; deletion never changes the classification or permits pooling/reconstruction as science.
 
 Implementation-preserving repairs occur outside the failed root, followed by deterministic regression and bounded non-scientific qualification before another owner-authorized scientific attempt.
 
@@ -429,3 +446,5 @@ production_authority=false
 ```
 
 No scientific-contract, authority or model-training promotion is implied by an infrastructure qualification.
+
+Future FASTv2/PID/INDI research is outside this frozen contract. Any promotion that changes the active baseline `B` requires a new versioned control/scientific contract after the current Phase-0 identification closes.
