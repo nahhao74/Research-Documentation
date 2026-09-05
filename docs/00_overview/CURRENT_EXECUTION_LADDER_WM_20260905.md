@@ -226,7 +226,7 @@ accepting an older favorable cross-lineage status
 patching fresh_35
 ```
 
-If a canonical per-lineage index/slot can satisfy the existing matcher semantics without changing the contract, compare it against simple ring enlargement and prefer the smallest bounded deterministic mechanism that directly closes the proven failure.
+If a bounded canonical index/retention mechanism can satisfy the existing matcher semantics without changing the contract, prefer the smallest deterministic mechanism that directly closes the proven failure.
 
 ## Step 4 — Deterministic regression
 
@@ -242,7 +242,7 @@ valid in-budget future status accept
 out-of-budget status reject
 candidate remains selectable under unrelated status volume
 no stale cross-lineage fallback
-ring/index consistency
+retention/index consistency
 reset/session transition cleanup
 ```
 
@@ -326,15 +326,15 @@ The failed root remains immutable infrastructure evidence.
 
 ## FAST research boundary
 
-The current Phase-0 FAST/T1/C1 semantics remain frozen. Separate shadow/replay research may benchmark alternative FAST algorithms on the current simulator, but no challenger is currently selected or authorized for the scientific baseline.
+The current Phase-0 FAST/T1/C1 semantics remain frozen.
 
-The earlier residual-PI proposal is not current main-pipeline direction.
+Separate simulator shadow/replay research may benchmark FAST challengers, but no replacement algorithm is currently selected or authorized for the scientific baseline.
 
-If a future FAST algorithm is promoted, baseline `B` changes and the action-conditioned scientific/model contract must be versioned accordingly.
+If a future FAST algorithm is materially promoted, baseline `B` changes and the action-conditioned scientific/model contract must be versioned accordingly.
 
 ## World Model boundary
 
-Current canonical structure remains:
+Canonical structure:
 
 ```text
 Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
