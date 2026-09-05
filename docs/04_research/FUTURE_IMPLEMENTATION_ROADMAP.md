@@ -1,7 +1,7 @@
 # AURA–WISE–WORLD MODEL–AEGIS vNext
 ## Future Implementation and Research Roadmap
 
-**Canonical active roadmap version:** `v6 — CALE causal-learning formalization / CEORP backend demotion — active direction`  
+**Canonical active roadmap version:** `v7 — Phase-0 fresh-pilot ready / FASTv2 residual-PI direction`  
 **Scope:** Moving Mode only  
 **Research registry:** `AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v9`
 
@@ -22,7 +22,16 @@ Detailed CALE note:
 
 # 1. Current execution boundary
 
-As of 2026-09-05, Phase-0 Option-B and the known status-observer/C1/E8 pairing infrastructure blockers have bounded qualification, but no randomized root has completed the required 96/96 scientific matrix.
+As of 2026-09-05, Phase-0 Option-B and all currently known pre-pilot infrastructure blockers have bounded qualification:
+
+```text
+Option-B / Direct Guard
+continuous-C1 replay/recovery
+post-reset E8 source-causal pairing
+native-event CLEAR/retirement lifecycle
+next-status mirror/successor-frontier contract
+WM reverse/Tarjan/peeling validity engine
+```
 
 Current state:
 
@@ -40,82 +49,85 @@ W_MAX_US=1000000
 AUTHORITATIVE_TIME_DOMAIN=PX4_BOOT_US
 
 WM_CAUSAL_VALIDITY_ENGINE=IMPLEMENTED_AND_TESTED
-STATUS_OBSERVER_SOURCE_FRONTIER_REPAIR=CLOSED_QUALIFIED
 CONTINUOUS_C1_REPLAY_RECOVERY=CLOSED_BOUNDED_QUALIFICATION
 POST_RESET_E8_SOURCE_CAUSAL_PAIRING=QUALIFIED
-POST_RESET_E8_SOURCE_CAUSAL_HANDOFF_QUALIFICATION=VALID_NONSCIENTIFIC
+NATIVE_EVENT_CLEAR_LIFECYCLE_REPAIR=QUALIFIED_IMPLEMENTATION_PRESERVING
+NEXT_STATUS_SOURCE_FRONTIER_REPAIR=QUALIFIED_IMPLEMENTATION_PRESERVING
+NEXT_STATUS_SUCCESSOR_QUALIFICATION=VALID_NONSCIENTIFIC
+PRE_RETRY_VALID_CAUSAL_CORE=true
 
-FRESH_RANDOMIZED_G_ACTION_PILOT=INCOMPLETE_INVALID_INFRASTRUCTURE_ROOT
+LATEST_FAILED_SCIENTIFIC_ROOT=fresh_34
+FRESH34_RESULT=INVALID_INFRASTRUCTURE_NEW_ROOT_IMMUTABLE
 G_ACTION_PILOT_RESULT=NOT_EVALUATED
 CAUSAL_DATASET_ACCEPTANCE=BLOCKED
 SEALED=LOCKED_PRE_EVALUATION
 production_authority=false
+
+OWNER_FRESH_RANDOMIZED_PILOT_AUTHORIZED=true
+NEW_FRESH_RANDOMIZED_PILOT_EXECUTED=false
+NEXT_STATE=OWNER_AUTHORIZED_NEW_FRESH_RANDOMIZED_PILOT_READY_TO_EXECUTE
 ```
 
-Latest root `fresh_33` stopped fail-closed because block 3 tried to arm while block 2's native event was still active.
+`fresh_34` failed in the first CALM row because valid strict-future native applied statuses were filtered out before E8 mirror publication. The canonical mirror now exposes native statuses before the existing health/authority gate, and a separate bounded qualification produced 689 strict-future successor lookups with zero timeout and `PRE_RETRY_VALID_CAUSAL_CORE=true`.
 
-Current next gate:
+The current next executable action is therefore the owner-authorized new immutable 8-session / 96-block randomized pilot, not another infrastructure qualification.
 
-```text
-native-event lifecycle ownership audit
-→ prove inter-block CLEAR wait is implementation-preserving
-→ canonical CLEAR/retirement readiness repair
-→ deterministic regression
-→ bounded non-scientific consecutive-event qualification
-→ reverse processing + peeling
-→ owner review
-→ only then a new complete randomized pilot
-```
-
-No CALE/CTEE-F/CIBES/model-capacity work unblocks this mechanical lifecycle gate.
+No CALE/CTEE-F/CIBES/FASTv2/model-capacity work is permitted to change the frozen baseline during this pilot.
 
 ---
 
 # 2. Phase-0 completion sequence
 
-The remaining Phase-0 sequence is:
+The remaining Phase-0 sequence is now:
 
 ```text
-P0-INFRA
-native-event CLEAR/retirement lifecycle closure
-        ↓
-P0-NOSCIENCE
-bounded consecutive-event qualification
-        ↓
-P0-OWNER
-fresh-pilot authorization
-        ↓
 P0-SCIENCE
-new immutable 8-session / 96-block randomized G_action root
+owner-authorized new immutable 8-session / 96-block randomized G_action root
+        ↓
+P0-VALIDITY
+canonical reverse index → graph → Tarjan → peeling
         ↓
 P0-ADMISSION
-causal dataset acceptance
+separate causal dataset acceptance audit
         ↓
 P0-ID
 G_action identification
 ```
 
-A failed or partial root remains immutable infrastructure/scientific evidence and is never pooled to manufacture a complete dataset.
+If the new root fails before 96/96 validity:
 
-World-Model action-response training remains blocked until causal-dataset acceptance.
+```text
+G_ACTION_PILOT_RESULT=NOT_EVALUATED
+CAUSAL_DATASET_ACCEPTANCE=BLOCKED
+```
+
+No partial root is pooled or analyzed as treatment-effect evidence.
+
+World-Model action-response training remains blocked until causal-dataset acceptance and separate owner authorization.
 
 ---
 
 # 3. Research priority after Phase-0
 
-The research priority is:
+The post-Phase-0 priority becomes:
 
 ```text
-causal estimand and exact treatment identity
+causal estimand + exact treatment identity
+>
+accepted causal dataset
+>
+minimal G_action identification
+>
+FAST/latency/tracking characterization
 >
 causal learning-admission invariants
 >
 minimal numerical backend
 >
-higher model capacity
+higher model/control capacity
 ```
 
-The project should not introduce a more complex predictor before causal data admission is trustworthy.
+The project should not introduce a more complex predictor or controller before a measured problem is identified and simpler baselines are established.
 
 ---
 
@@ -141,7 +153,7 @@ PX4
 = authoritative inner-loop execution
 ```
 
-These mechanisms must remain conceptually separate.
+These mechanisms remain conceptually separate.
 
 ---
 
@@ -178,8 +190,6 @@ T_D
 T_A
 ```
 
-because requested and accepted treatment can differ under rejection, projection, saturation, timing or authority mediation.
-
 CALE remains a research hypothesis until its causal-admission rules and benefit are demonstrated.
 
 ---
@@ -210,8 +220,6 @@ Treatment enters only after the pre-treatment context is fixed.
 
 Initial action-effect modeling should remain linear-in-parameters or otherwise minimal enough to audit.
 
-A generic feature form is:
-
 ```text
 psi(U) = [z_B(T_D), X(T_D), U, interactions]
 G_hat_h = Theta_h^T psi(U)
@@ -229,8 +237,6 @@ The first model should answer whether a compact action-conditioned representatio
 ---
 
 # 8. Causal Learning Admission Gate
-
-A completed transaction is not allowed to update an action-response model merely because its numerical error is large or its feature vector is informative.
 
 Required ordering:
 
@@ -256,13 +262,11 @@ q_causal = 0
 model parameters do not update
 ```
 
-This should become a machine-checkable learning invariant.
-
 ---
 
 # 9. Assignment effect vs accepted-action effect
 
-Future work must preserve two possible targets:
+Future work must preserve:
 
 ```text
 G_Z(X,Z,h)
@@ -272,11 +276,7 @@ G_U(X,U_A,h)
 = response to action actually accepted by the execution boundary
 ```
 
-They are not automatically the same estimand.
-
-Naive conditioning on realized accepted action may destroy randomized identification when acceptance depends on state.
-
-The frozen assigned-arm/ITT-style analysis remains the scientific reference unless a later contract explicitly changes it.
+They are not automatically the same estimand. The frozen assigned-arm/ITT-style analysis remains the scientific reference unless a later contract explicitly changes it.
 
 ---
 
@@ -300,15 +300,11 @@ Research question:
 
 > Can randomized assignment `Z` serve as an instrument for accepted action `U_A` when estimating realized closed-loop action response?
 
-Required assumptions must be explicit, including relevance, exclusion restrictions, context dependence, projection/saturation behavior and any monotonicity/structural assumptions.
-
 No IV estimator is authorized merely because assignment is randomized.
 
 ---
 
 # 11. CALE backend ladder
-
-CALE remains representation-agnostic:
 
 ```text
 CALE-RIDGE
@@ -361,10 +357,8 @@ QCS8550 onboard compute
 Desired engineering condition:
 
 ```text
-predictor compute << transport/scheduling latency
+predictor/controller compute << transport/scheduling latency
 ```
-
-Embedded execution by itself is not a novelty claim.
 
 ---
 
@@ -379,36 +373,6 @@ C — informative-only update
 D — CALE causal-admission + informativeness update
 ```
 
-Scientific-correctness metrics:
-
-```text
-invalid transaction update count
-cross-generation update count
-post-treatment leakage
-wrong-action-label rate
-requested-vs-accepted mismatch
-```
-
-Prediction metrics:
-
-```text
-G_action H20/H40/H80 error
-CALM/GUST generalization
-session generalization
-accepted-action prediction error
-```
-
-Runtime metrics:
-
-```text
-CPU/update
-CPU/prediction
-p50/p95/p99/max
-memory
-allocations
-deadline misses
-```
-
 Retain CALE only if causal admission prevents a real invalid-learning failure class or materially improves robustness/generalization at acceptable runtime cost.
 
 Current research state:
@@ -417,7 +381,6 @@ Current research state:
 CALE_STATUS=RESEARCH_HYPOTHESIS
 CALE_PUBLICATION_NOVELTY=PLAUSIBLE_NOT_PROVEN
 CALE_CURRENT_PHASE0_RUNTIME_DEPENDENCY=false
-CALE_DOES_NOT_UNBLOCK_CURRENT_NATIVE_EVENT_LIFECYCLE_GATE=true
 
 CEORP_STATUS=BACKEND_CANDIDATE
 CEORP_ROLE=CALE_OBF_IMPLEMENTATION_OPTION
@@ -425,7 +388,96 @@ CEORP_ROLE=CALE_OBF_IMPLEMENTATION_OPTION
 
 ---
 
-# 14. Other active research tracks
+# 14. FASTv2 — residual 2-DOF PI research track
+
+The independent PID benchmark branch is a research source, not current main-pipeline authority. Its useful mechanisms should be reused selectively without changing the PX4 firmware PID.
+
+Current strongest execution-feasible FASTv2 hypothesis:
+
+```text
+PX4 firmware PID and inner-loop authority unchanged
++
+AURA disturbance feedforward (-d_hat)
++
+T1/C1 temporal continuation
++
+bounded residual 2-DOF PI at the already qualified acceleration-correction boundary
+```
+
+Conceptually:
+
+```text
+a_FASTv2 = -d_hat + a_T1/C1 + a_residual_2DOF_PI
+```
+
+The residual PI should use current realized tracking residuals, initially horizontal velocity error, and must be tuned against the **residual closed-loop plant with PX4+AURA+FAST/T1/C1 active**, not by copying numerical gains from the independent PID branch.
+
+### Initial implementation ladder
+
+```text
+F0 — current -d_hat + T1/C1 baseline
+F1 — F0 + bounded residual P
+F2 — F0 + bounded residual PI
+F3 — F0 + bounded residual 2-DOF PI
+F4 — F3 + refined anti-windup only if saturation evidence requires it
+F5A — F4 + synchronized actuator-aware INDI challenger
+F5B — F4 + AURA/FAST only comparator
+```
+
+Only open combined INDI+AURA fast augmentation if repeat-supported ablation shows complementary benefit.
+
+### PI tuning direction
+
+Preferred process:
+
+```text
+identify residual accepted-acceleration → velocity plant
+→ 2x2 N/E FRF and coupling audit
+→ low-order FOPDT/IPDT reduction only if defensible
+→ conservative analytic PI seed (for example SIMC-style)
+→ Kp-only sweep
+→ add Ki for sustained residual / low-frequency error
+→ tune 2-DOF setpoint weight beta
+→ anti-windup qualification
+→ robust offline GA/NSGA-II refinement around the seeded region
+→ plant-ensemble and delay/saturation validation
+→ T1/C1/integrator overlap audit
+```
+
+Required safeguards:
+
+```text
+fixed robust gains first
+explicit output bounds
+conditional-integration anti-windup first
+source/session/reset/lifecycle-aware integrator state
+bandwidth below the main PX4 effective tracking loop
+no gain scheduling until a measurable causal scheduling state z is supported
+no ANN/RBF gain scheduler by default
+```
+
+Metrics must include not only tracking RMSE but also:
+
+```text
+T_effect
+T_recover
+peak deviation
+ITAE
+cross-track error
+post-CLEAR overshoot/settling
+control effort
+command TV/jerk
+saturation/headroom
+phase/delay margins
+PI vs FAST interaction
+integral vs T1/C1 overlap
+```
+
+This FASTv2 direction is **post-Phase-0 research only**. Promotion would redefine baseline `B` and therefore requires a new versioned control/scientific contract.
+
+---
+
+# 15. Other active research tracks
 
 ## CTEE
 
@@ -445,11 +497,9 @@ remaining-delay/freshness envelope
 atomic identity recheck
 ```
 
-It is a future shadow/Phase-1+ hypothesis, not a current blocker repair.
-
 ## CIBES
 
-Future constrained information-efficient experiment design after the current frozen Phase-0 science closes. It is not permitted inside the current randomized pilot because adaptive excitation would change the experiment.
+Future constrained information-efficient experiment design after the frozen Phase-0 science closes. Adaptive excitation is not permitted inside the current randomized pilot.
 
 ## World-Model uncertainty ladder
 
@@ -462,11 +512,9 @@ residual quantiles
 → tractable outer approximation if justified
 ```
 
-Retain advanced uncertainty only if it improves calibration/OOD behavior and downstream WISE/AEGIS utility over simpler baselines.
-
 ## AURA detector challengers
 
-Run shadow bake-offs only after core pipeline scientific closure and latency instrumentation are stable enough to compare detector alternatives without changing authority implicitly.
+Run shadow bake-offs only after core pipeline scientific closure and latency instrumentation are stable enough for fair comparison.
 
 ## WISE planning
 
@@ -474,18 +522,26 @@ Start with bounded candidate enumeration/library/search. Escalate to heavier MPC
 
 ## AEGIS runtime assurance
 
-Long-term direction includes explicit safety-envelope specification and potentially Lyapunov/CLF/CBF-style projection or other formal runtime-assurance mechanisms, but only after the action/prediction path is scientifically and operationally justified.
+Long-term direction includes explicit safety-envelope specification and potentially Lyapunov/CLF/CBF-style projection or other formal runtime-assurance mechanisms, after the action/prediction path is scientifically and operationally justified.
 
 ---
 
-# 15. Long-term experiment sequence
+# 16. Long-term experiment sequence
 
 ```text
 P0
-native-event lifecycle closure
-→ complete randomized G_action pilot
+new owner-authorized randomized G_action pilot
 → causal dataset acceptance
 → G_action identification
+
+E0
+fresh F0→F5 end-to-end latency / AoI instrumentation
+
+F0
+FASTv2 residual-plant identification
+→ fixed residual P/PI/2DOF-PI ablation
+→ anti-windup / T1C1 interaction audit
+→ optional INDI challenger
 
 C0
 CALE causal graph + estimand / IV formalization
@@ -532,7 +588,7 @@ low-dimensional adaptation
 
 ---
 
-# 16. Go/no-go principles
+# 17. Go/no-go principles
 
 Every new algorithm should answer a measured problem.
 
@@ -549,7 +605,7 @@ Do not optimize for algorithm count or novelty language.
 
 ---
 
-# 17. Hard authority boundaries
+# 18. Hard authority boundaries
 
 This roadmap does not authorize changes to:
 
@@ -557,7 +613,7 @@ This roadmap does not authorize changes to:
 current G_action estimand
 current randomized manifest
 AURA/FAST/T1/C1 semantics
-PX4 authority
+PX4 firmware PID / PX4 authority
 Direct Guard
 M_STABLE_US
 W_MAX_US
