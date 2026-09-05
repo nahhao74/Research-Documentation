@@ -4,7 +4,7 @@
 
 This file defines how humans and AI agents must read `main` without mixing current authority, architecture, evidence and future research.
 
-The repository should keep **one clear current truth** in `main`. Superseded states and rejected research remain recoverable through Git history rather than being duplicated as competing current documents.
+The repository keeps **one current truth** in `main`. Superseded states and rejected research remain recoverable through Git history rather than existing as competing active documents.
 
 ## Authority order
 
@@ -17,31 +17,28 @@ When documents disagree, use this order:
 4. docs/01_architecture/*
 5. docs/03_evidence/MILESTONE_SUMMARY.md
 6. docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md
-7. source registry / research references
+7. docs/02_source_registry/*
 ```
 
-Do not infer current execution state from research notes, source-registry metadata, old commit messages or historical Git revisions.
+Do not infer current execution state from research references, source-registry metadata, commit history or deleted/superseded documents.
 
-## Canonical entry points for a new AI
-
-Read in this exact order:
+## Required read order for a new AI
 
 ```text
 README.md
-→ docs/00_overview/CURRENT_STATUS.md
-→ docs/00_overview/CURRENT_EXECUTION_LADDER_WM_20260905.md
-→ docs/01_architecture/SYSTEM_ARCHITECTURE.md
-→ docs/01_architecture/CONTROL_ACTION_PATH.md
-→ docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md
-→ docs/01_architecture/WORLD_MODEL_WISE.md
-→ docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md
-→ docs/03_evidence/MILESTONE_SUMMARY.md
-→ docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md
+→ CURRENT_STATUS.md
+→ CURRENT_EXECUTION_LADDER_WM_20260905.md
+→ SYSTEM_ARCHITECTURE.md
+→ CONTROL_ACTION_PATH.md
+→ TIMING_CAUSALITY_STATEBANK.md
+→ WM_CAUSAL_VALIDITY_ENGINE.md
+→ WORLD_MODEL_WISE.md
+→ WM1_RANDOMIZED_IDENTIFICATION.md
+→ MILESTONE_SUMMARY.md
+→ FUTURE_IMPLEMENTATION_ROADMAP.md
 ```
 
-## Current pipeline model
-
-A new AI must preserve this separation:
+## Canonical pipeline model
 
 ```text
 FAST PATH
@@ -84,7 +81,7 @@ A material FAST change changes baseline `B` and therefore requires a versioned r
 
 ## Current execution state
 
-As of 2026-09-05 the latest randomized root is `fresh_35`.
+As of 2026-09-05:
 
 ```text
 LATEST_FAILED_SCIENTIFIC_ROOT=fresh_35
@@ -101,13 +98,11 @@ SEALED=LOCKED_PRE_EVALUATION
 production_authority=false
 ```
 
-The exact next task is the accepted-cycle callback visibility/retention forensic described in the latest execution ladder.
+The exact next task is the accepted-cycle callback visibility/retention forensic defined by the latest execution ladder.
 
 No new randomized root is currently authorized.
 
 ## Evidence semantics
-
-Failed roots remain immutable evidence:
 
 ```text
 infrastructure-invalid root != scientific negative result
@@ -117,19 +112,9 @@ capacity pressure != eviction proof
 native producer evidence != observer receipt proof
 ```
 
-A later repair may explain a historical failure more precisely but never converts that root into scientific data.
+A later repair may explain a historical failure but never converts the failed root into scientific data.
 
 ## Runtime vs research authority
-
-Research documents answer:
-
-```text
-what should be benchmarked later?
-what hypothesis is worth testing?
-what algorithm might solve a measured limitation?
-```
-
-They do **not** authorize runtime/scientific changes.
 
 The active research scope is defined only by:
 
@@ -137,9 +122,9 @@ The active research scope is defined only by:
 docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md
 ```
 
-Rejected or superseded research should not remain as an active alternative in `main`; Git history is the provenance mechanism.
+Research material answers what should be benchmarked later; it does not authorize runtime/scientific changes.
 
-Current active control research is limited to simulator shadow/replay comparison of the current FAST baseline against the smallest justified challengers. No new residual PI/PID loop, cross-airframe adaptive controller or online gain-tuning scheme is an active main-pipeline direction.
+Methods not present in the active roadmap must be treated as background reference only, regardless of whether they appear in the source registry or Git history.
 
 ## Time-domain rule
 
@@ -156,7 +141,7 @@ Never fabricate a PX4 source timestamp for a host-only diagnostic.
 
 ## AI change checklist
 
-Before proposing code, experiment or model changes, an AI must be able to answer:
+Before proposing code, experiment or model changes, an AI must answer:
 
 ```text
 1. What is the current estimand?
@@ -171,4 +156,4 @@ Before proposing code, experiment or model changes, an AI must be able to answer
 10. Which canonical document supports each answer?
 ```
 
-If these cannot be answered consistently, stop and resolve documentation ambiguity before changing runtime or scientific semantics.
+If these answers are inconsistent, resolve documentation/state ambiguity before changing runtime or scientific semantics.
