@@ -1,225 +1,104 @@
-# WM Reverse Processing + Peeling Validity Engine — 2026-09-04
+# WM Reverse Processing + Peeling Validity Engine
 
 ## Status
 
 ```text
-OWNER_SELECTED_DIRECTION=true
-IMPLEMENTATION_STATUS=PENDING
-SCIENTIFIC_CONTRACT_CHANGE=false
+WM_CAUSAL_VALIDITY_ENGINE=IMPLEMENTED_AND_TESTED
+CANONICAL_GRAPH=21_NODES_34_EDGES
+TARJAN_EXPECTATION=NO_FORBIDDEN_CYCLES
 RUNTIME_HOT_PATH_CHANGE=false
+SCIENTIFIC_CONTRACT_CHANGE=false
 ```
 
-This note records the selected use of **reverse processing** and **peeling (remove → update → repeat)** as an offline validity/forensic layer for the main WM randomized `G_action` pipeline.
+This file documents the implemented offline/preflight/post-run validity mechanism used by the WM randomized `G_action` pipeline.
 
-The goal is to accelerate deterministic validation, explain propagation of invalid evidence, and identify the earliest causal divergence behind infrastructure failures. The algorithms do not change the estimand or relax existing contracts.
+It is no longer a pending research proposal.
 
-## Current pipeline position
+## Canonical pipeline
 
 ```text
-PX4
-→ AURA
-→ FAST/T1/C1
-→ Option-B Direct Guard
-→ randomized candidate action
-→ accepted action
-→ release / H1000
-→ response horizons
-→ G_action dataset
-→ World Model
-→ WISE
-→ AEGIS
+raw/source-grounded evidence
+→ reverse validity indexing
+→ canonical source-grounded dependency graph
+→ Tarjan SCC / forbidden-cycle validation
+→ direct invalid seeds
+→ fixed-point peeling
+→ VALID_CAUSAL_CORE
 ```
 
-Current randomized-pilot blocker:
-
-```text
-fresh_25 = C1 mutation / continuous-trace completeness
-fresh_26 = H1000 observer-retention timeout
-fresh_27 = next_status_timeout; C1 child exited 1
-```
-
-No complete valid 96-block scientific root exists.
+The engine accelerates deterministic validation and root-cause explanation. It does not change the estimand, treatment definition, controller semantics or acceptance rules.
 
 ## Reverse processing
 
-### Objective
-
-For each accepted source-time record `t`, precompute the nearest future contract-relevant invalidation boundaries.
-
-Representative fields:
+For each source-ordered record, the validator precomputes relevant future invalidation boundaries such as:
 
 ```text
-next_source_gap
-next_source_reorder
-next_source_invalid
-next_source_stale
-next_reset
-next_session_change
-next_reference_generation_change
-next_reference_transition
-next_AURA_invalid
-next_C1_invalid
-next_candidate_offer
-next_candidate_accept
-next_nonzero_action
-next_release
-next_disturbance_change
-next_disturbance_clear
-next_H1000_invalid_frontier
-next_block_end
-next_session_end
+next source gap/reorder/invalidity
+next reset/session change
+next reference transition
+aura/c1 invalidity
+candidate/action/release boundaries
+disturbance change/clear
+block/session end
 ```
 
-Optional nearest-prior indices may include:
+The resulting `valid_until_source_us` and first invalidator are indexing aids only. They never create a new scientific rule.
+
+Canonical artifact:
 
 ```text
-prev_valid_AURA
-prev_valid_C1
-prev_reset
-prev_disturbance_onset
-prev_accepted_action
-prev_valid_ZERO
+artifacts/reverse_validity_index.jsonl
 ```
 
-### Frontier semantics
+## Causal dependency graph
 
-For an anchor, define the earliest future invalidation frontier only from conditions already forbidden by frozen contracts.
+The graph encodes mandatory causal ownership, not temporal adjacency.
+
+Current canonical shape:
 
 ```text
-T_NEXT_INVALID = min(contract-relevant future boundaries)
+21 nodes
+34 mandatory edges
 ```
 
-A response horizon can survive the temporal-frontier check only if it does not cross the relevant invalidation boundary.
-
-This is an indexing optimization, not a new scientific rule.
-
-### Intended artifact
+Representative scientific path:
 
 ```text
-reverse_validity_index.jsonl
-```
-
-Candidate record:
-
-```text
-source_us
-session_id
-reset_generation
-block_id
-next_reset_source_us
-next_source_gap_us
-next_reference_change_us
-next_AURA_invalid_us
-next_C1_invalid_us
-next_action_change_us
-next_disturbance_change_us
-next_block_end_us
-valid_until_source_us
-first_future_invalidator
-```
-
-## Causal dependency DAG
-
-The validator should build an offline dependency DAG from actual contract ownership.
-
-Candidate nodes:
-
-```text
-SOURCE_SAMPLE
-AURA_STATE
-C1_STATE
-REFERENCE_STABILITY_WINDOW
-NATIVE_EVENT
-AURA_ONSET_BINDING
-T_D
-CANDIDATE_OFFER
-ACK
-ACCEPTED_ACTION
-T_A
-RELEASE
-H1000_ENDPOINT
-RESPONSE_H0
-RESPONSE_H20
-RESPONSE_H40
-RESPONSE_H80
-ZERO_PAIR
-TREATMENT_PAIR
-BLOCK
-SESSION
-```
-
-Representative chain:
-
-```text
-source
-→ AURA valid
-→ C1 valid
-→ reference-stability eligibility
-→ native event
-→ AURA binding
-→ T_D
-→ candidate offer
-→ ACK
-→ accepted action
+source/session/reset
+→ AURA / C1 / reference / event validity
+→ T_D / candidate offer / ACK
+→ accepted action / T_A
 → release / H1000
-→ response horizon
-→ treatment/zero pair
-→ G_action dataset row
+→ H0/H20/H40/H80 response
+→ block/session scientific admissibility
 ```
 
-Temporal adjacency alone must never create a causal edge.
-
-## Peeling
-
-### Initial invalid seeds
-
-Seed only directly observed failures already covered by existing contracts, for example:
+Canonical artifact:
 
 ```text
-source gap / reorder / invalid timestamp
-session mismatch
-reset mismatch
-AURA invalid/stale
-C1 invalid/stale
-reference-stability failure
-native/AURA binding failure
-candidate/ACK mismatch
-accepted-action mismatch
-release invalid
-H1000 failure
-response horizon crossing an existing forbidden frontier
-block lifecycle failure
+artifacts/causal_dependency_graph.json
 ```
 
-### Fixed-point rule
+## Tarjan SCC validation
+
+Tarjan is static/offline graph validation only.
+
+Expected valid structure:
 
 ```text
-S0 = all nodes not directly invalid
-
-S(k+1) = nodes in S(k)
-         whose mandatory dependencies remain admissible in S(k)
-
-stop when S(k+1) == S(k)
+21 singleton SCCs
+0 forbidden self-cycles
+0 forbidden multi-node cycles
+graph_valid=true
 ```
 
-Equivalent operational form:
+Tarjan never runs in AURA/AEGIS/PX4 callbacks.
 
-```text
-remove
-→ update dependents
-→ remove newly unsupported nodes
-→ repeat
-```
+## Fixed-point peeling
 
-Output:
+Direct failures seed invalidity. Mandatory dependents then fail/unknown according to the existing graph until a fixed point is reached.
 
-```text
-VALID_CAUSAL_CORE
-```
-
-### Tri-state semantics
-
-Retain fail-closed evidence semantics:
+Tri-state precedence:
 
 ```text
 FAIL > UNKNOWN > PASS
@@ -228,33 +107,38 @@ FAIL > UNKNOWN > PASS
 Rules:
 
 ```text
-mandatory dependency FAIL
-→ dependent FAIL
-
-mandatory dependency UNKNOWN
-→ dependent UNKNOWN unless another hard FAIL exists
-
-optional diagnostic UNKNOWN
-→ does not automatically invalidate
+mandatory FAIL    → dependent FAIL
+mandatory UNKNOWN → dependent UNKNOWN unless another hard FAIL exists
+optional diagnostic UNKNOWN → does not invalidate parent by itself
 ```
 
-Missing evidence must never be coerced to PASS.
-
-## Explainability requirements
-
-Every peeled node must retain:
+Required properties:
 
 ```text
-node_id
-node_type
-direct_or_propagated
-first_invalid_reason
-upstream_invalid_node
-causal_path
-source_time
-session_id
-reset_generation
-block_id
+idempotent
+monotone under additional hard-invalid seeds
+iteration-order deterministic
+outcome-blind eligibility
+```
+
+Canonical artifacts:
+
+```text
+artifacts/peeling_result.json
+artifacts/invalidity_propagation.jsonl
+```
+
+## Explainability
+
+Every removed node retains:
+
+```text
+node identity/type
+direct vs propagated invalidity
+first reason
+upstream invalid node
+causal path
+source/session/reset/block identity
 ```
 
 The validator must distinguish:
@@ -265,154 +149,67 @@ vs
 DOWNSTREAM_CONSEQUENCE
 ```
 
-This is especially important for failures reported as generic timeouts.
+A terminal timeout is not automatically the root cause.
 
-## Use on current infrastructure failures
+## Current `fresh_35` interpretation
 
-Apply the engine to surviving logs/evidence for the latest failure classes.
-
-### fresh_25
-
-Determine the earliest break behind:
+For the immutable `fresh_35` root:
 
 ```text
-C1 mutation / continuous-trace completeness
+graph=21 nodes / 34 edges
+Tarjan SCC=21 singleton components
+forbidden cycles=0
+graph_valid=true
+reverse compact records=621
+peeling iterations=10
+VALID_CAUSAL_CORE=false
 ```
 
-Classify among source mutation, collector loss, C1 publisher lifecycle, reset, process restart, serialization, consumer retention or validator interpretation.
+The direct infrastructure failure seed is the accepted-cycle/probe visibility failure. Downstream scientific nodes are invalidated by peeling.
 
-### fresh_26
+This does not imply a treatment or `G_action` negative result.
 
-Trace:
+## Current use
+
+Use this engine for:
 
 ```text
-accepted candidate
-→ release
-→ H1000 observer creation
-→ observer retention
-→ source progression
-→ endpoint
+bounded non-scientific qualification readiness
+scientific-root post-run validity
+failed-root causal explanation
+future complete-root causal dataset admission
 ```
 
-Determine whether the observer was never created, retired early, lost binding, starved after process failure, or remained present but unconsumed.
+Do not create task-local replacement graph/peeling implementations when the canonical engine applies.
 
-### fresh_27
+## Hard boundaries
 
-Trace C1 child process lifecycle and classify `next_status_timeout` as root cause or downstream symptom.
-
-If C1 child exit precedes the parent timeout, preserve that causal ordering explicitly.
-
-## Dataset construction use
-
-After a complete randomized root exists, the same engine may qualify the scientific dataset.
-
-Reverse indices accelerate construction of contract-valid horizon and pairing candidates. Peeling propagates upstream invalidity to dependent response rows and treatment/ZERO pairs.
-
-Pair selection itself remains controlled by the frozen randomized dataset contract. Nearest-neighbor indexing must not silently redefine baseline pairing.
-
-## Required tests
-
-At minimum:
-
-```text
-reverse next-reset index
-reverse next-source-gap index
-reverse next-action index
-horizon crossing invalidation
-one-hop peeling
-multi-hop peeling
-fixed-point convergence
-FAIL > UNKNOWN > PASS precedence
-session/reset propagation
-AURA→C1→H1000 propagation
-ZERO/treatment pair invalidation
-outcome independence of eligibility
-iteration-order determinism
-```
-
-Required algebraic properties:
-
-```text
-peeling(peeling(G)) == peeling(G)
-```
-
-and adding new hard-invalid seeds must never enlarge `VALID_CAUSAL_CORE`.
-
-## Performance target
-
-Report:
-
-```text
-rows
-nodes
-edges
-reverse-index runtime
-peeling runtime
-peak RAM
-comparison with current validator where available
-classification equivalence on known-valid roots
-```
-
-The intended benefit is:
-
-```text
-faster validation
-less repeated scanning
-deterministic fixed-point behavior
-better root-cause explainability
-```
-
-not a different scientific acceptance result.
-
-## Hard scientific boundaries
-
-Do not modify:
+The engine must not modify:
 
 ```text
 G_action estimand
 AURA semantics
 FAST/T1/C1 semantics
 Direct Guard
-M_STABLE_US=100000
-W_MAX_US=1000000
-PX4_BOOT_US timing authority
+M_STABLE_US
+W_MAX_US
+PX4_BOOT_US authority
 RESET_AUTHORITY=AURA_C1_SOURCE_RESET
 T_D / T_A
-H1000 scientific semantics
-P1/P2 treatment profiles
-ZERO semantics
+H1000
+ZERO/P1/P2 treatment semantics
 randomization
-CALM/GUST context definitions
+CALM/GUST definitions
 SEALED
 production authority
 ```
 
-## Admission rule before fresh retry
+## Current readiness rule
 
-Before a new full randomized pilot, the repaired infrastructure/preflight trace should satisfy:
+A new scientific root may only be considered after the relevant infrastructure qualification reaches:
 
 ```text
 PRE_RETRY_VALID_CAUSAL_CORE=true
 ```
 
-Only then proceed to one new immutable 96-block root.
-
-Reverse processing answers:
-
-> What contract-relevant invalidating event comes next?
-
-Peeling answers:
-
-> If this evidence is invalid, which downstream scientific evidence becomes unusable?
-
-Together:
-
-```text
-RAW TRACE
-→ REVERSE FRONTIERS
-→ CAUSAL DEPENDENCY DAG
-→ INVALID SEEDS
-→ PEELING FIXED POINT
-→ VALID_CAUSAL_CORE
-→ G_action DATASET
-```
+That condition is necessary but never sufficient for scientific authorization; owner review remains separate.
