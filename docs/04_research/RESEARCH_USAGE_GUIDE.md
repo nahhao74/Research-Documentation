@@ -2,162 +2,142 @@
 
 ## Purpose
 
-The research folder and source registry exist to answer two kinds of questions:
+Research exists to answer a measured project question, not to accumulate algorithms.
 
-1. **Is the scientific design defensible?**
-2. **How should the control / identification / world-model architecture evolve when evidence exposes a new issue?**
+Current use is limited to:
 
-They are references for reasoning and audit, not substitutes for exact local runtime evidence.
+1. support the scientific design and causal-data pipeline;
+2. improve FAST on the current simulator through bounded shadow/replay comparison;
+3. design the minimum useful World Model/WISE path after valid causal data exists;
+4. evaluate later latency/freshness/uncertainty/safety mechanisms only after a measured need appears.
+
+The active research plan is defined only by:
+
+```text
+FUTURE_IMPLEMENTATION_ROADMAP.md
+```
 
 ## Authority hierarchy
 
-When sources disagree, use this order:
+For technical claims:
 
 ```text
-1. exact local source/build identity + raw runtime evidence
-2. official version-matched PX4 / eProsima documentation or source
-3. original scholarly paper / DOI / institutional repository
-4. secondary technical synthesis
-5. issue/forum/blog material for hypothesis generation
+1. exact local source/build + raw runtime evidence
+2. frozen project contract
+3. version-matched PX4/eProsima source or docs
+4. original scholarly paper / DOI / original repository
+5. institutional repository
+6. secondary synthesis
+7. issue/forum/blog hypothesis
 ```
 
-A GitHub issue or forum post may suggest a mechanism, but it does not prove that mechanism occurred in the pinned runtime.
+For current project state and execution permission, research sources have no authority; use `CURRENT_STATUS.md` and the latest execution ladder.
 
-## Source categories and what they are for
+## Current active research questions
+
+### FAST
+
+```text
+Can the current simulated vehicle reject wind faster and more accurately than
+current -d_hat + T1/C1 while PX4 firmware control semantics remain unchanged?
+```
+
+Research order:
+
+```text
+measure latency/source age and response phases
+→ characterize current FAST limitation
+→ smallest justified challenger
+→ repeat-supported shadow/replay benchmark
+→ retain only if materially better
+```
+
+Do not add a second PI/PID tracking loop as an active direction.
+
+Do not introduce cross-airframe adaptation, online gain tuning or commercial fleet adaptation into the current simulator phase.
+
+### World Model / WISE
+
+Canonical structure remains:
+
+```text
+Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
+G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
+B = active PX4 + AURA + current FAST/T1/C1
+```
+
+Current research may improve interfaces, state representation, evaluation and serving design, but final action-conditioned training remains blocked until a complete valid randomized root passes causal-dataset admission.
+
+### Closed-loop identification
+
+Use the literature to preserve these conclusions:
+
+```text
+feedback remaining active is compatible with the current estimand
+post-treatment FAST/PX4 response is part of realized treatment
+H1000 is a candidate-history contract, not proof of physical washout
+treatment SNR is an output-space question
+```
+
+## Source categories
 
 ### `px4_autopilot`
 
-Use for:
+Use for actual controller topology, acceleration-setpoint semantics, PositionControl behavior, allocation, messages and version-specific implementation.
 
-- actual controller topology;
-- acceleration setpoint semantics;
-- PositionControl behavior;
-- allocator behavior;
-- parameters and version-specific interfaces;
-- message/reset semantics.
-
-Prefer exact v1.15/v1.15.4 source or pinned local SHA over PX4 `main` when implementation details matter.
+Prefer pinned release/source over generic PX4 `main` when exact behavior matters.
 
 ### `closed_loop_identification`
 
-Use for:
+Use for randomized/probing identification while the deployed controller remains active, persistent excitation, identifiability and treatment-response interpretation.
 
-- whether identification is valid with feedback active;
-- input design under closed-loop operation;
-- persistent excitation / identifiability questions;
-- experiment design where the deployed controller remains part of the plant-controller system.
+### `micro_randomized_trials` / `small_sample_cluster_inference`
 
-Current project interpretation: the target is the incremental response of the **controlled** system, not an open-loop plant recovered by disabling FAST/PX4.
-
-### `micro_randomized_trials`
-
-Use for:
-
-- randomized repeated treatment decisions;
-- causal excursion effects;
-- treatment moderation by pre-treatment context;
-- distinction between assigned treatment and realized/available treatment;
-- planning sample size / proximal outcomes.
-
-The UAV pilot is not a literal mHealth trial, but the repeated randomized intervention logic is methodologically useful.
-
-### `small_sample_cluster_inference`
-
-Use for:
-
-- few-session uncertainty;
-- cluster bootstrap design;
-- avoiding pseudo-replication from many blocks within only a few sessions;
-- interpreting weak evidence with small independent-cluster count.
-
-Current pilot has only four sessions per context, so large-cluster asymptotics should not be overclaimed.
+Use for repeated randomized decisions, causal excursion logic, assigned-vs-realized treatment, session-level independence and few-cluster uncertainty.
 
 ### `world_model_ml`
 
-Use for:
+Use for temporal/action-conditioned prediction, rollout, bounded planning and uncertainty-aware candidate scoring. These references do not authorize model capacity or training.
 
-- temporal world-action models;
-- action-conditioned rollout structure;
-- receding-horizon prediction;
-- uncertainty-aware candidate scoring;
-- efficient serving architectures.
+### `disturbance_observer` / `uav_control` / `stability_robust_control`
 
-Key conceptual references include FlowPilot, WorldFly and DroneDreamer.
+Use to evaluate FAST challengers or later control mechanisms after a measured failure class exists. Source presence alone is not a reason to implement INDI, MPC, DOB, adaptive control or any other method.
 
-These references inform future design; they do not override frozen project causal/timing contracts.
+## Rejected / inactive directions
 
-### `disturbance_observer`
-
-Use for:
-
-- disturbance estimation architecture;
-- observer bandwidth / separation from feedback control;
-- interaction of disturbance estimates with feedforward or feedback paths.
-
-Useful when reviewing AURA or future AEGIS disturbance-handling changes.
-
-### `uav_control` / `stability_robust_control`
-
-Use for:
-
-- MPC/NMPC;
-- L1 adaptive control;
-- INDI / incremental dynamic inversion;
-- robust/stability concepts;
-- gain scheduling and constrained control.
-
-These sources are design references, not permission to replace the already qualified FAST/T1/C1 path without an explicit semantic redesign.
-
-## Current closed-loop identification conclusions
-
-### Feedback remaining active is not automatically a confounder
-
-The current estimand explicitly conditions the treatment on the active baseline:
+The following are **not active main-pipeline research directions** and should not be reintroduced unless the owner explicitly reopens them after new evidence:
 
 ```text
-G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
+residual PI / 2-DOF PI augmentation as FAST primary direction
+manual per-airframe PI tuning
+online gain adaptation for the current simulator phase
+cross-airframe adaptive controller / commercial commissioning design
+online neural-network controller adaptation
 ```
 
-Randomization identifies the incremental effect under that baseline.
+Git history preserves prior discussion; active documents should not present these as current candidates.
 
-### Post-treatment FAST response is downstream treatment response
+## Research adoption rule
 
-If the candidate changes state and FAST reacts afterward, that reaction is causally downstream of treatment. Removing it as a covariate would change the effect being estimated.
+```text
+measured bottleneck
+→ exact local evidence
+→ targeted literature review
+→ smallest credible mechanism
+→ bounded benchmark
+→ no important latency/robustness regression
+→ only then promotion review
+```
 
-Pre-treatment FAST/AURA/controller state may be used as context/moderation because it exists before assignment.
-
-### H1000 is not proof of physical washout
-
-H1000 defines candidate-history/refractory semantics. Physical carryover still requires empirical diagnostics using pre-treatment state and randomized outcomes.
-
-### Treatment SNR is an output-space question
-
-Do not estimate identifiability by comparing `0.008` or `0.012 m/s^2` candidate amplitude directly to the magnitude of the baseline controller command.
-
-Use randomized outcome contrasts, ZERO variability, session variation, carryover, FAST interaction and constraint activity.
-
-## When to research before changing code
-
-Research is particularly useful when a proposed change would alter:
-
-- scientific estimand;
-- randomization / treatment definition;
-- causal timing semantics;
-- controller authority or safety boundary;
-- World Model representation / planner architecture;
-- statistical inference with few sessions;
-- treatment amplitude or duration.
-
-Pure implementation failures should first be grounded in local source/runtime evidence. Do not launch broad literature searches to explain a mechanical call-site bug.
+If the measured system does not need a mechanism, do not add it for novelty.
 
 ## Registry navigation
 
-The full source lists are under:
+Use:
 
 ```text
-../02_source_registry/
+../02_source_registry/CURRENT_REGISTRY_V9.md
+../02_source_registry/SOURCE_REGISTRY_CURRENT.md
 ```
 
-Historical registry snapshots preserve how locator verification evolved. Use the most recent authoritative registry for lookup, while older versions remain useful for provenance.
-
-The registry records source authority classes so that secondary sources are not silently treated as primary evidence.
+Older registry versions are Git history, not active indexes.
