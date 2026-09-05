@@ -1,10 +1,10 @@
-# Current Status — 2026-09-04
+# Current Status — 2026-09-05
 
 ## Executive state
 
-The main AURA–WISE–WM–AEGIS pipeline is active again. PID-benchmark work is paused and is not an authority source for the main WM scientific contract.
+The main AURA–WISE–WM–AEGIS pipeline remains active. Option-B, status-observer retention, continuous-C1 replay/recovery, and post-reset E8 source-causal AURA/C1 pairing have all reached bounded non-scientific qualification.
 
-Option-B reference-stability scheduling is now closed and live-qualified in bounded non-scientific execution. The current blocker is no longer Option-B. It is infrastructure reliability of the fresh randomized `G_action` pilot: no immutable root has completed the frozen 96-block matrix, so no scientific `G_action` estimate or causal-dataset acceptance exists yet.
+The latest owner-authorized fresh randomized `G_action` pilot (`fresh_33`) passed preflight and advanced farther than the prior infrastructure-invalid roots, but it stopped fail-closed during the first `GUST_E` session because block 3 attempted to arm while block 2's native event was still active. This is an infrastructure lifecycle synchronization failure, not a scientific result.
 
 ```text
 MAIN_PIPELINE=ACTIVE
@@ -22,27 +22,32 @@ OPTION_B_LIVE_RUNTIME_QUALIFIED=true
 OPTION_B_DOWNSTREAM_TRANSACTION_INTEGRATION=QUALIFIED_NOSCIENCE
 
 RESET_AUTHORITY=AURA_C1_SOURCE_RESET
-RESET_PROPAGATION_REPAIR=QUALIFIED
-
 M_STABLE_US=100000
 W_MAX_US=1000000
 EVENT_SCHEDULING_POLICY=DELAY_RESCHEDULE_WITHIN_BLOCK
 FAIL_CLOSED_TIMEOUT=true
 AUTHORITATIVE_TIME_DOMAIN=PX4_BOOT_US
-W_MAX_RUNTIME_FEASIBILITY=SUPPORTED_IN_BOUNDED_NOSCIENCE_QUALIFICATION
 
-FRESH_RANDOMIZED_G_ACTION_PILOT=INCOMPLETE_INVALID_INFRASTRUCTURE_ROOTS
+WM_CAUSAL_VALIDITY_ENGINE=IMPLEMENTED_AND_TESTED
+STATUS_OBSERVER_SOURCE_FRONTIER_REPAIR=CLOSED_QUALIFIED
+CONTINUOUS_C1_REPLAY_RECOVERY=CLOSED_BOUNDED_QUALIFICATION
+POST_RESET_E8_SOURCE_CAUSAL_PAIRING=QUALIFIED
+POST_RESET_E8_SOURCE_CAUSAL_HANDOFF_QUALIFICATION=VALID_NONSCIENTIFIC
+
+PRE_RETRY_VALID_CAUSAL_CORE_BEFORE_FRESH33=true
+
+FRESH_RANDOMIZED_G_ACTION_PILOT=INCOMPLETE_INVALID_INFRASTRUCTURE_ROOT
+FRESH_RANDOMIZED_G_ACTION_PILOT_RESULT=INVALID_INFRASTRUCTURE_NEW_ROOT_IMMUTABLE
 G_ACTION_PILOT_RESULT=NOT_EVALUATED
-SCIENTIFIC_ANALYSIS=NOT_AUTHORIZED_FROM_PARTIAL_ROOT
 CAUSAL_DATASET_ACCEPTANCE=BLOCKED
-FRESH_SCIENCE=BLOCKED
-
 SCIENTIFIC_EXECUTION=NOT_RUN
 MANIFEST_SLOTS_CONSUMED=0
 SEALED=LOCKED_PRE_EVALUATION
 AEGIS_AUTHORITY=0
 ROUND_Z_AUTHORITY=0
 production_authority=false
+
+NEXT_STATE=INFRASTRUCTURE_REPAIR_REQUIRED_BEFORE_FRESH_RANDOMIZED_PILOT
 ```
 
 ## Frozen scientific target
@@ -54,7 +59,7 @@ G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
 B = active PX4 + AURA + FAST/T1/C1 baseline
 ```
 
-The following remain frozen by the current contract:
+The following remain frozen:
 
 ```text
 AURA semantics
@@ -74,171 +79,226 @@ SEALED boundary
 production authority
 ```
 
-## Option-B closure
+## Infrastructure closures reached before fresh_33
 
-The qualified bounded non-scientific 0B.5 evidence established:
+### Reverse processing + peeling
 
-```text
-ZERO_WAIT_PARITY=PASS_3_OF_3
-POSITIVE_WAIT_DELAY_PATH=PASS
-AURA_ONSET_BINDING_AFTER_DELAY=PASS
-EXACTLY_ONCE_NATIVE_COMMIT=PASS
-OPTION_B_ROOT_CAUSE_RESOLUTION=A_OPTION_B_LIVE_DELAY_PATH_SUPPORTED
-```
-
-The reset-lineage authority is frozen as:
-
-```text
-RESET_AUTHORITY=AURA_C1_SOURCE_RESET
-```
-
-The downstream mechanism qualification also passed with one native onset, one exact AURA binding, five accepted P1 +N mechanism cycles, explicit zero release and candidate-only H1000 wait. This remains mechanism evidence only, not a treatment-effect result.
-
-## Current randomized-pilot blocker
-
-The owner-authorized fresh randomized pilot was attempted, but no root completed the required 96-block matrix. Partial roots were not pooled or analyzed as science.
-
-Latest retained failure classes:
-
-```text
-fresh_25 = invalid: C1 mutation / continuous-trace completeness
-fresh_26 = invalid infrastructure: H1000 observer-retention timeout
-fresh_27 = invalid infrastructure: next_status_timeout; C1 child exited 1
-```
-
-The 25 failed/incomplete roots selected for cleanup were deleted operationally; valid Q1/Q1B/Q1C/Q1D and 0B.5 qualification roots were retained. No complete valid scientific root remains.
-
-Therefore:
-
-```text
-NEXT_STATE=OWNER_FRESH_PILOT_RETRY_AFTER_INFRASTRUCTURE_REVIEW
-```
-
-Any future pilot retry must:
-
-```text
-use a new immutable Kingston root
-re-run the complete frozen preflight
-run the complete frozen 96-block matrix from block 1
-stop on the first invalid scientific block
-never retry/replace/resample a failed block inside the same root
-never pool incomplete roots
-never analyze a partial root as science
-```
-
-## Newly selected offline validity acceleration
-
-The owner selected two algorithms for immediate integration into WM scientific-validation infrastructure:
-
-```text
-REVERSE_PROCESSING=SELECTED
-PEELING_FIXED_POINT_VALIDATION=SELECTED
-RUNTIME_HOT_PATH_CHANGE=false
-SCIENTIFIC_CONTRACT_CHANGE=false
-IMPLEMENTATION_STATUS=PENDING
-```
-
-They are to be used only for offline/preflight/post-run validation and forensic acceleration.
-
-### Reverse processing
-
-For every source-time row, build nearest-future invalidation frontiers such as:
-
-```text
-next_source_gap
-next_source_reorder
-next_reset
-next_session_change
-next_reference_generation_change
-next_AURA_invalid
-next_C1_invalid
-next_nonzero_action
-next_disturbance_change
-next_block_end
-```
-
-This permits O(N)-style timeline indexing where possible and avoids repeated forward searches from each candidate/action anchor.
-
-### Peeling
-
-Construct a causal dependency DAG and propagate direct invalid seeds until fixed point:
-
-```text
-raw trace
-→ reverse validity index
-→ causal dependency DAG
-→ direct invalid seeds
-→ iterative remove/update/repeat
-→ VALID_CAUSAL_CORE
-```
-
-Typical dependency chain:
-
-```text
-source
-→ AURA
-→ C1
-→ reference-stability eligibility
-→ native event / AURA binding
-→ T_D
-→ candidate offer
-→ ACK
-→ accepted action
-→ release / H1000
-→ response horizons
-→ ZERO/treatment pair
-→ G_action dataset row
-```
-
-Every removed node must retain an explainable invalidity lineage. Tri-state behavior remains fail-closed:
+The offline `WM_CAUSAL_VALIDITY_ENGINE` is implemented and tested. It builds a reverse validity index, causal dependency graph, and fixed-point peeling result with fail-closed tri-state precedence:
 
 ```text
 FAIL > UNKNOWN > PASS
 ```
 
-This layer must not use outcome information to make treatment eligibility true and must not redefine any frozen scientific rule.
+The engine remains offline/preflight/post-run only; it does not run in the control hot path and does not redefine scientific validity.
 
-Detailed note:
+### Status-observer/source-frontier repair
 
-[`../04_research/WM_REVERSE_PROCESSING_PEELING_VALIDITY_ENGINE_20260904.md`](../04_research/WM_REVERSE_PROCESSING_PEELING_VALIDITY_ENGINE_20260904.md)
+The previous `next_status_timeout` blocker was traced to valid native statuses being published but not retained on the observer path. The canonical E8 mirror now exposes every contract-valid native status without weakening strict source/session/reset lookup semantics.
+
+### Continuous-C1 replay/recovery
+
+The C1 lifecycle forensic and bounded qualification closed the replay-completeness blocker under the qualified diagnostic trace transport:
+
+```text
+TRACE_QOS_DEPTH=4096
+TRACE_QOS_RELIABILITY=RELIABLE
+TRACE_QOS_DURABILITY=VOLATILE
+TRACE_QOS_ROLE=DIAGNOSTIC_EVIDENCE_ONLY
+```
+
+### Post-reset E8 source-causal pairing
+
+E8 no longer uses a mutable latest-AURA callback as the decision-authoritative pairing source. It keeps a bounded immutable AURA callback ledger (`maxlen=4096`), selects the newest received positive-source nonfuture AURA record, then applies the existing exact reset/session/source-health/freshness/provenance/clock gates.
+
+Critical invariant:
+
+```text
+newer invalid/reset-mismatched AURA
+must not be skipped for an older favorable AURA record
+```
+
+The bounded qualification demonstrated a real reset transition, exact post-reset AURA/C1 pairing, accepted status success, source-forward successor, zero accepted-status timeout, complete C1 replay, and:
+
+```text
+PRE_RETRY_VALID_CAUSAL_CORE=true
+```
+
+## Latest immutable scientific-root attempt — fresh_33
+
+Root:
+
+```text
+/media/nahhao74/KINGSTON/wm1_v2r1_within_run_randomized_action_20260905_fresh_33
+```
+
+Provenance:
+
+```text
+Git HEAD=a6cebe4d8f1e99a941ab7886efdd7d6a446143c3
+Manifest SHA256=361ff557e1b6f2fb9d6e94803ec0cf77e98f4381b0f05499a2bfeadf08027354
+Task=FRESH_COMPLETE_RANDOMIZED_G_ACTION_PILOT_20260905_TRACE4096
+TRACE_QOS=4096_RELIABLE_VOLATILE_DIAGNOSTIC_ONLY
+```
+
+Preflight passed, including:
+
+```text
+PRE_RETRY_VALID_CAUSAL_CORE=true
+E8 ledger capacity=4096
+measured qualification envelope=101 positive AURA records / 500 ms
+ledger margin=3995
+post-reset E8 handoff qualification=PASS
+```
+
+Execution reached:
+
+```text
+expected sessions=8
+expected blocks=96
+session rows attempted=5
+valid CALM rows=4
+first GUST_E row attempted=1
+```
+
+Each of the four CALM rows completed the frozen `6 ZERO / 3 P1 / 3 P2` schedule, but these rows are not scientific dataset credit because the complete root failed before 96/96 validity.
+
+## Exact fresh_33 infrastructure failure
+
+The first invalid component was:
+
+```text
+GUST_EVENT_ARM_REJECTED_PREVIOUS_EVENT_STILL_ACTIVE
+```
+
+Observed chain:
+
+```text
+GUST block 2 native event still ACTIVE
+→ block 3 arm request arrives
+→ collector rejects block 3 arm as PREVIOUS_EVENT_STILL_ACTIVE
+→ no valid block-3 native event is launched
+→ gust_event_window_timeout occurs downstream
+→ root stops fail-closed
+```
+
+The arm rejection is a host-side diagnostic and has no directly emitted PX4 source timestamp. The retained native truth places block 2's clear later in Gazebo simulation time; these distinct clock domains are not subtracted or converted into a fabricated PX4 timestamp.
+
+Infrastructure evidence remained healthy elsewhere:
+
+```text
+C1 replay records=18837
+positive C1 frontiers=11117
+missing replayable C1 lifecycle=0
+writer errors/drops/sequence gaps=0/0/0
+E8 ledger invalid seed=false
+status observer invalid seed=false
+native truth=2 onset + 2 clear (blocks 1-2 only)
+```
+
+Reverse/peeling remained structurally valid:
+
+```text
+graph=21 nodes / 34 edges
+Tarjan=21 singleton SCC
+forbidden cycles=0
+root causal core=false
+20 nodes removed from infrastructure invalid seed propagation
+```
+
+## Scientific accounting for fresh_33
+
+```text
+scientific blocks admitted=0
+treatment-effect action credited=0
+manifest slots consumed=0
+SEALED access=0
+G_ACTION_PILOT_RESULT=NOT_EVALUATED
+CAUSAL_DATASET_ACCEPTANCE=BLOCKED
+```
+
+The raw `first_scientific_t_d_committed` marker remains diagnostic-only and does not grant scientific admission or treatment authority.
+
+No part of `fresh_33`, including the four valid CALM rows, may be pooled with another root or analyzed as partial science.
+
+## Immediate next gate — native-event clear lifecycle synchronization
+
+The next owner-authorized infrastructure task must address inter-block native-event lifecycle synchronization without changing frozen within-block scientific timing.
+
+The repair target is conceptually:
+
+```text
+previous native event ACTIVE
+→ wait for exact matching canonical CLEAR / retirement
+→ only then permit next block native-event arm
+```
+
+Do not solve this with an arbitrary `sleep()` or by weakening the collector's `PREVIOUS_EVENT_STILL_ACTIVE` guard.
+
+The forensic/repair must distinguish inter-block readiness from within-block timing and preserve:
+
+```text
+M_STABLE_US
+W_MAX_US
+native GUST force/profile
+T_D / T_A
+H1000
+randomization
+arm assignment
+```
+
+After deterministic repair, run a new bounded non-scientific qualification containing consecutive native-event opportunities sufficient to prove:
+
+```text
+block1 arm → onset → clear
+block2 arm only after block1 clear → onset → clear
+block3 arm only after block2 clear → onset → clear
+
+PREVIOUS_EVENT_STILL_ACTIVE_REJECTIONS=0
+OVERLAPPING_NATIVE_EVENTS=0
+EVENT_IDENTITY_MATCH=PASS
+INTER_BLOCK_CLEAR_GATE=PASS
+PRE_RETRY_VALID_CAUSAL_CORE=true
+```
+
+Even if this qualification passes, it does not itself authorize another randomized pilot; return to owner review first.
 
 ## Immediate execution ladder
 
+See:
+
+[`CURRENT_EXECUTION_LADDER_WM_20260905.md`](CURRENT_EXECUTION_LADDER_WM_20260905.md)
+
+High-level sequence:
+
 ```text
-1. Inspect current validators / dataset builders / retained failure evidence
-2. Implement reverse timeline index offline
-3. Implement causal dependency DAG + peeling fixed point
-4. Prove mapping of every invalidation rule to an existing frozen contract clause
-5. Run deterministic equivalence/idempotence/monotonicity tests
-6. Use the engine to identify earliest divergence in fresh_25 / fresh_26 / fresh_27 where evidence remains
-7. Repair implementation/infrastructure only
-8. Run bounded non-scientific pre-retry qualification if deterministic proof is insufficient
-9. Require PRE_RETRY_VALID_CAUSAL_CORE=true
-10. Launch one new immutable full randomized G_action pilot
-11. Accept only a complete 96/96 valid root
-12. Only then perform scientific G_action analysis and causal-dataset acceptance
-13. Only after causal-dataset acceptance proceed to World-Model training / WISE refinement
+1. Audit native-event lifecycle ownership and exact state machine
+2. Prove inter-block clear waiting is implementation-preserving
+3. Implement canonical clear/retirement readiness gate; no fixed sleep
+4. Run deterministic overlap / wrong-clear / missing-clear tests
+5. Run bounded non-scientific consecutive-event qualification
+6. Run reverse processing + peeling; require PRE_RETRY_VALID_CAUSAL_CORE=true
+7. Return to owner for fresh randomized-pilot authorization
+8. New immutable root; full 8-session / 96-block matrix from block 1
+9. Stop on first invalid block; no retry/skip/resample/pooling
+10. Only after complete 96/96 validity perform scientific admission
+11. Only after causal-dataset acceptance proceed to G_action identification / WM training
 ```
-
-Execution-only pointer:
-
-[`CURRENT_EXECUTION_LADDER_WM_20260904.md`](CURRENT_EXECUTION_LADDER_WM_20260904.md)
 
 ## World-Model / WISE dependency
 
-Action-conditioned World-Model training remains blocked until a valid randomized causal dataset exists.
+Action-conditioned World-Model training remains blocked until one complete valid randomized causal dataset is accepted.
 
 ```text
-RAW / RANDOMIZED TRACE
+complete randomized root
 → VALID_CAUSAL_CORE
-→ CAUSAL DATASET ACCEPTANCE
+→ causal-dataset acceptance
 → G_action identification
 → World Model
 → WISE predictive refinement
 → AEGIS integration
 ```
 
-Do not jump directly to WM training from partial or infrastructure-invalid roots.
+Do not train from partial or infrastructure-invalid roots.
 
 ## Storage and authority boundaries
 
@@ -248,9 +308,7 @@ Large runtime/capture/dataset/training/intermediate artifacts remain under:
 /media/nahhao74/KINGSTON
 ```
 
-Source, tests, small deterministic fixtures, configuration and canonical documentation remain under the project/source workspace.
-
-Failed scientific roots remain immutable unless the owner explicitly authorizes operational cleanup. Cleanup does not upgrade or alter scientific conclusions.
+Failed scientific roots remain immutable evidence unless the owner explicitly authorizes operational cleanup. Cleanup never changes scientific conclusions.
 
 ```text
 SEALED_ACCESS_BOUNDARY=LOCKED_PRE_EVALUATION
