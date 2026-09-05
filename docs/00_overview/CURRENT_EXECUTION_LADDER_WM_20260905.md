@@ -2,11 +2,11 @@
 
 ## Purpose
 
-This file is the execution-only ladder for the current AURA–WISE–WM–AEGIS main pipeline after the `fresh_34` infrastructure failure was closed by a separately qualified `next_status` successor-frontier repair.
+This file is the execution-only ladder for the AURA–WISE–WM–AEGIS main pipeline after the owner-authorized `fresh_35` randomized `G_action` root stopped fail-closed in its first CALM row.
 
-The owner has authorized exactly one new fresh randomized `G_action` scientific pilot. The new root has not yet been executed.
+`fresh_35` is immutable infrastructure evidence. No scientific block, candidate exposure or manifest slot was admitted. The next executable task is **not** another randomized pilot; it is a separate forensic/minimal-repair review of accepted-cycle status callback visibility and bounded retention.
 
-This file does not replace scientific contracts. It summarizes the next executable sequence from the latest qualified infrastructure state.
+This file does not replace the scientific contract.
 
 ## Current authority
 
@@ -25,25 +25,29 @@ CONTINUOUS_C1_REPLAY_RECOVERY=CLOSED_BOUNDED_QUALIFICATION
 POST_RESET_E8_SOURCE_CAUSAL_PAIRING=QUALIFIED
 POST_RESET_E8_SOURCE_CAUSAL_HANDOFF_QUALIFICATION=VALID_NONSCIENTIFIC
 NATIVE_EVENT_CLEAR_LIFECYCLE_REPAIR=QUALIFIED_IMPLEMENTATION_PRESERVING
-INTER_BLOCK_CLEAR_GATE=PASS_3_OF_3
 NEXT_STATUS_SOURCE_FRONTIER_REPAIR=QUALIFIED_IMPLEMENTATION_PRESERVING
 NEXT_STATUS_SUCCESSOR_QUALIFICATION=VALID_NONSCIENTIFIC
-PRE_RETRY_VALID_CAUSAL_CORE=true
 
-LATEST_FAILED_SCIENTIFIC_ROOT=fresh_34
-FRESH34_RESULT=INVALID_INFRASTRUCTURE_NEW_ROOT_IMMUTABLE
+LATEST_FAILED_SCIENTIFIC_ROOT=fresh_35
+FRESH35_RESULT=INVALID_INFRASTRUCTURE_NEW_ROOT_IMMUTABLE
+PRIMARY_BOUNDARY=ACCEPTED_CYCLE_STATUS_SUCCESSOR_UNAVAILABLE_TO_PROBE
+PRODUCER_ABSENCE=NOT_PROVEN
+CAPACITY_CAUSALITY=LIKELY_BUT_NOT_PROVEN
+
 G_ACTION_PILOT_RESULT=NOT_EVALUATED
 CAUSAL_DATASET_ACCEPTANCE=BLOCKED
+SCIENTIFIC_EXECUTION=NOT_RUN
+MANIFEST_SLOTS_CONSUMED=0
 SEALED=LOCKED_PRE_EVALUATION
 production_authority=false
 
-OWNER_FRESH_RANDOMIZED_PILOT_AUTHORIZED=true
-NEW_FRESH_RANDOMIZED_PILOT_EXECUTED=false
-AUTHORIZE_0B5_RERUN=false
+AUTHORIZE_NEW_SCIENTIFIC_ROOT=false
+AUTHORIZE_TIMEOUT_INCREASE=false
+AUTHORIZE_QOS_CHANGE=false
 AUTHORIZE_WM_TRAINING=false
-AUTHORIZE_SEALED_OPEN=false
+AUTHORIZE_FAST_BASELINE_CHANGE=false
 
-NEXT_STATE=OWNER_AUTHORIZED_NEW_FRESH_RANDOMIZED_PILOT_READY_TO_EXECUTE
+NEXT_STATE=OWNER_ACCEPTED_CYCLE_STATUS_VISIBILITY_RETENTION_FORENSIC_REVIEW_REQUIRED
 ```
 
 ## Frozen scientific target
@@ -53,9 +57,9 @@ G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
 B = active PX4 + AURA + FAST/T1/C1 baseline
 ```
 
-No step below may change the estimand, AURA/FAST/T1/C1 semantics, treatment profiles, randomization, Direct Guard, `M_STABLE_US=100000`, `W_MAX_US=1000000`, `PX4_BOOT_US`, `AURA_C1_SOURCE_RESET`, `T_D/T_A`, H1000, SEALED, or production authority.
+No step below may change the estimand, AURA/FAST/T1/C1 semantics, PX4 authority, treatment profiles, randomization, Direct Guard, `M_STABLE_US=100000`, `W_MAX_US=1000000`, `PX4_BOOT_US`, `AURA_C1_SOURCE_RESET`, `T_D/T_A`, H1000, SEALED or production authority.
 
-Authoritative pilot identity:
+Authoritative manifest:
 
 ```text
 MANIFEST_ID=WM1_V2R1_FINAL_RANDOMIZED_SCIENTIFIC_PILOT_V1_1
@@ -69,362 +73,283 @@ P1=24
 P2=24
 ```
 
-## Historical blocker closures relevant to the next root
+## Latest root — fresh_35
 
-### Native-event lifecycle
-
-`fresh_33` failed because a later GUST block armed before the previous exact native event reached canonical CLEAR. The implementation-preserving lifecycle repair now enforces:
+Immutable root:
 
 ```text
-arm
-→ onset
-→ exact matching CLEAR
-→ complete
-→ retire
-→ next block may arm
+/media/nahhao74/KINGSTON/Detect_and_Response/
+wm1_v2r1_within_run_randomized_action_20260905_fresh_35
 ```
 
-Bounded qualification:
+Preflight passed with:
 
 ```text
-3/3 consecutive GUST blocks PASS
-PREVIOUS_EVENT_STILL_ACTIVE_REJECTIONS=0
-OVERLAPPING_NATIVE_EVENTS=0
-INTER_BLOCK_CLEAR_GATE=PASS_3_OF_3
 PRE_RETRY_VALID_CAUSAL_CORE=true
+TRACE_QOS=4096_RELIABLE_VOLATILE_DIAGNOSTIC_ONLY
+E8 ledger=4096
+Option-B=Direct Guard
+native CLEAR lifecycle qualified
+next_status successor qualification retained
+scientific semantic delta=NONE
 ```
 
-Historical `fresh_33` classification remains immutable. Its raw root was owner-deleted during storage cleanup; retained canonical summaries preserve the historical conclusion.
-
-### fresh_34 next-status failure
-
-`fresh_34` passed preflight but failed in the first CALM row before any scientific block was admitted:
+Runtime identity:
 
 ```text
-FIRST_INVALID_COMPONENT=NEXT_STATUS_SOURCE_FRONTIER_UNAVAILABLE
-previous_timestamp_us=81280000
-recorded_failure_frontier=79896000
-terminal=RuntimeError:next_status_timeout
+Git HEAD=a6cebe4d8f1e99a941ab7886efdd7d6a446143c3
+worktree entries=397
+dirty fingerprint SHA256=c6d0bb85b2d07c8db90c564a183866d1915c10dc22a81ab8c2aeb4bacad9385c
 ```
 
-Forensic established that a valid strict-future native successor existed. The old E8 mirror filtered it using additional health/authority fields that are not part of the canonical `next_status` predicate.
-
-Canonical successor predicate remains:
+Execution stopped at the first row:
 
 ```text
-timestamp_us > previous_timestamp_us
-AND controller_session_start_us == expected_session
-AND reset_generation == expected_reset
-AND timestamp_ready
+row=WM1V2R1_RAND_A_CALM_R1
+sessions attempted/valid=1/0 of 8
+blocks attempted/valid=1/0 of 96
+requested source frontier=38576000 PX4_BOOT_US
+previous accepted timestamp=38232000
+generation/session/reset=900706/632000/0
+terminal=RuntimeError:accepted_cycle_timeout
+next_status lookups/timeouts=0/0
 ```
 
-Root cause:
+No native GUST, candidate, `T_D`, ACK, accepted exposure, H1000 completion, manifest slot or SEALED access occurred.
+
+## Proven accepted-cycle boundary
+
+A same-lineage valid native status exists at:
 
 ```text
-native strict-future status exists
-→ old E8 mirror health filter rejects it
-→ observer cannot see contract-valid successor
-→ bounded next_status lookup
-→ next_status_timeout
+source frontier=38916000 PX4_BOOT_US
+generation/session/reset=900706/632000/0
+source_valid=true
+source_fresh=true
+gate_valid=true
+applied_authority=true
 ```
 
-Classification:
+The status is `340000 us` after the requested frontier, inside the existing `500000 us` source-match budget. Therefore producer absence is not proven.
+
+Timeout diagnostics:
 
 ```text
-NEXT_STATUS_FORENSIC_CLASS=B_STATUS_PUBLISHED_NOT_MIRRORED_FILTER_MISMATCH
-CAPACITY_CAUSALITY=NOT_PROVEN
-WATERMARK_VALIDITY=VALID
+thread_alive=true
+error=null
+status_count=2000
+lineage_count=2
+matching_statuses=[]
 ```
 
-Canonical repair:
+Current implementation facts:
 
 ```text
-native status
-→ mirror.publish(native_status)
-→ existing ingress/source-health/ACK gate
+accepted-cycle matcher scans self.statuses[-2000:]
+per-lineage latest slot exists
+find_cycle does not use the per-lineage latest slot
 ```
 
-No timeout, QoS, timestamp, session/reset, treatment, control or scientific semantics changed.
+Because callback receipt versus later retention loss was not independently persisted, do not claim ring eviction as proven.
 
-Qualified root:
+## Step 1 — Forensic callback receipt vs retention
+
+Instrument and reproduce only the accepted-cycle visibility path under a new non-scientific task/root.
+
+For the exact contract identity persist:
 
 ```text
-/media/nahhao74/KINGSTON/Detect_and_Respond/
-wm1_v2r1_next_status_frontier_qualification_20260905_03
+generation
+controller session
+reset generation
+native/source frontier
+callback receipt sequence
+callback receipt time/source identity
+ring insertion sequence
+ring oldest/newest identity
+per-lineage latest identity
+matcher scan range
+matcher selected/rejected candidates
+first reason a contract-valid candidate becomes unavailable
 ```
 
-Qualified evidence:
+The forensic must classify the earliest proven boundary as one of:
 
 ```text
-native callbacks=800
-mirror callbacks=794
-strict-future successor lookups=689
-next_status timeouts=0
-C1 records=19280
-C1 missing lifecycle=0
-writer errors/drops/gaps=0/0/0
+A_CALLBACK_NOT_RECEIVED
+B_CALLBACK_RECEIVED_THEN_NOT_RETAINED
+C_CALLBACK_RETAINED_BUT_MATCHER_SELECTION_FAILED
+D_OTHER_PROVEN_IMPLEMENTATION_BOUNDARY
+```
+
+If evidence is insufficient, report `UNRESOLVED`; do not infer eviction from capacity alone.
+
+## Step 2 — Source/semantic audit
+
+Before any repair, prove that the proposed change preserves the existing accepted-cycle contract:
+
+```text
+same generation/session/reset identity
+same source-time matching budget
+same accepted/applied status semantics
+same fail-closed behavior
+same candidate/exposure semantics
+same scientific estimand
+```
+
+Required classification:
+
+```text
+SCIENTIFIC_SEMANTIC_DELTA=NONE
+```
+
+Otherwise stop for owner review.
+
+## Step 3 — Minimal canonical repair
+
+Only after Step 1 identifies a concrete implementation defect, make the smallest reusable repair at the canonical owner.
+
+Preferred principle:
+
+```text
+preserve contract-valid status identity long enough for the canonical accepted-cycle matcher
+```
+
+Do not solve the problem by:
+
+```text
+increasing timeout
+increasing QoS merely to obtain PASS
+loosening generation/session/reset matching
+using host time in place of PX4 source time
+accepting an older favorable cross-lineage status
+patching fresh_35
+```
+
+If a canonical per-lineage index/slot can satisfy the existing matcher semantics without changing the contract, compare it against simple ring enlargement and prefer the smallest bounded deterministic mechanism that directly closes the proven failure.
+
+## Step 4 — Deterministic regression
+
+Cover at least:
+
+```text
+exact generation/session/reset match
+wrong generation reject
+wrong session reject
+wrong reset reject
+source frontier equal/behind reject
+valid in-budget future status accept
+out-of-budget status reject
+candidate remains selectable under unrelated status volume
+no stale cross-lineage fallback
+ring/index consistency
+reset/session transition cleanup
+```
+
+Existing `next_status`, E8 source-causal pairing, Direct Guard, native-CLEAR, C1 replay, H1000 and WM validity-engine tests must remain unchanged.
+
+## Step 5 — Bounded non-scientific qualification
+
+Run a dedicated qualification that exercises the repaired accepted-cycle visibility path without scientific treatment credit.
+
+Require:
+
+```text
+accepted-cycle lookups > 0
+accepted-cycle timeouts = 0 for contract-valid in-budget successors
+callback receipt/retention provenance persisted
+wrong-lineage false accepts = 0
+source/session/reset integrity = PASS
+C1 missing lifecycle = 0
+writer errors/drops/gaps = 0/0/0
 graph_valid=true
 forbidden_cycles=0
 PRE_RETRY_VALID_CAUSAL_CORE=true
+SCIENTIFIC_BLOCKS=0
+MANIFEST_SLOTS_CONSUMED=0
+SEALED_ACCESS=0
 ```
 
-## Step 1 — Create exactly one new immutable scientific root
+A PASS returns to owner review. It does not authorize a randomized pilot automatically.
 
-Create one new root under Kingston. Do not reuse or continue any previous scientific root.
+## Step 6 — Owner review
 
-Persist before execution:
+Only after the bounded qualification passes may the owner separately decide whether to authorize another fresh scientific root.
+
+Until then:
 
 ```text
-Git HEAD
-worktree/dirty fingerprint
-task/config version
-manifest ID + SHA
-PX4/world identity
-trace configuration
-E8 pairing version
-native-CLEAR lifecycle version
-next-status mirror/successor version
+FRESH_SCIENCE=BLOCKED
 ```
 
-Historical roots `fresh_29` through `fresh_34` remain separate evidence and are never pooled.
+## Step 7 — Future scientific retry, only if separately authorized
 
-## Step 2 — Full preflight
-
-Require before the first scientific block:
+A later authorized root must still use:
 
 ```text
-manifest identity PASS
-PX4/world identity PASS
-AURA PASS
-C1 PASS
-E8 source-causal pairing PASS
-Direct Guard PASS
-native-event CLEAR lifecycle PASS
-next_status successor path PASS
-status callback path PASS
-continuous-C1 replay prerequisites PASS
-H1000 prerequisites PASS
-TRACE_QOS=4096_RELIABLE_VOLATILE_DIAGNOSTIC_ONLY
-PRE_RETRY_VALID_CAUSAL_CORE=true
-Kingston writable/capacity PASS
-no stale PX4/Gazebo/task runtime PASS
+new immutable root
+same frozen manifest
+full preflight
+8 sessions / 96 blocks
+start from block 1
+stop on first invalid block
+no retry/skip/replace/resample/hot-fix/pooling
 ```
 
-If any preflight gate fails:
+No incomplete root may produce treatment-effect inference.
 
-```text
-SCIENTIFIC_EXECUTION=NOT_RUN
-STOP
-```
+## Canonical reverse processing / Tarjan / peeling
 
-Do not repair inside the scientific root.
-
-## Step 3 — Execute the frozen matrix exactly once
-
-Run:
-
-```text
-8 sessions
-4 CALM + 4 GUST_E
-12 blocks/session
-96 blocks total
-```
-
-Start from block 1.
-
-Forbidden inside the root:
-
-```text
-retry failed block
-skip/replace block
-resample arm
-arm relabeling
-hot-fix code
-process restart and continue
-QoS change
-timeout increase
-lifecycle semantic change
-pooling with another root
-```
-
-Stop at the first invalid block.
-
-## Step 4 — Keep the newly closed infrastructure observable
-
-For each relevant `next_status` lookup retain:
-
-```text
-previous_timestamp_us
-expected session
-expected reset
-observer retained count
-oldest/newest retained timestamp
-strict-future candidate count
-selected successor timestamp
-selected successor session/reset
-timestamp_ready
-lookup result
-```
-
-Also retain:
-
-```text
-native status callback count
-mirror callback count
-next_status lookup count
-next_status timeout count
-```
-
-For every GUST block retain exact lifecycle identity and require:
-
-```text
-PREVIOUS_EVENT_STILL_ACTIVE_REJECTIONS=0
-OVERLAPPING_NATIVE_EVENTS=0
-RETIRE_WITHOUT_CLEAR=0
-WRONG_CLEAR_ACCEPT=0
-```
-
-The callback counts are diagnostic; scientific acceptance depends on the required contract-valid successor/lifecycle observations, not arbitrary 1:1 callback-count equality unless a canonical contract explicitly requires it.
-
-## Step 5 — Preserve existing infrastructure health
-
-Keep visible:
-
-```text
-C1 replay missing lifecycle references
-writer errors/drops/sequence gaps
-E8 source-causal pairing
-Direct Guard
-H1000
-source/session/reset continuity
-projection/saturation diagnostics
-```
-
-Do not relax a gate to preserve progress.
-
-## Step 6 — No partial science
-
-Unless the root reaches:
-
-```text
-SESSIONS_VALID=8/8
-BLOCKS_VALID=96/96
-```
-
-report:
-
-```text
-G_ACTION_PILOT_RESULT=NOT_EVALUATED
-CAUSAL_DATASET_ACCEPTANCE=BLOCKED
-```
-
-Do not calculate partial treatment effects and do not use apparently valid rows from an incomplete root as scientific dataset credit.
-
-## Step 7 — Canonical reverse processing + Tarjan + peeling
-
-Use the existing WM causal-validity engine; do not create a task-local replacement.
-
-Required order:
+Every qualification or scientific root that can establish readiness/validity must reuse the canonical WM causal-validity pipeline:
 
 ```text
 reverse validity indexing
 → canonical source-grounded dependency graph
 → Tarjan SCC / forbidden-cycle validation
-→ direct invalid-seed assignment
+→ direct invalid seeds
 → fixed-point peeling
 ```
 
-Require structurally:
+For `fresh_35`:
 
 ```text
+graph=21 nodes / 34 edges
+SCC=21 singleton components
+forbidden cycles=0
 graph_valid=true
-forbidden_cycles=0
+reverse compact records=621
+peeling iterations=10
+VALID_CAUSAL_CORE=false
 ```
 
-For any failure retain the direct invalid seed and propagated causal path.
+The failed root remains immutable infrastructure evidence.
 
-Do not fabricate PX4 source timestamps from host or Gazebo time.
+## FAST research boundary
 
-## Step 8 — Complete-root scientific admission
+The current Phase-0 FAST/T1/C1 semantics remain frozen. Separate shadow/replay research may benchmark alternative FAST algorithms on the current simulator, but no challenger is currently selected or authorized for the scientific baseline.
 
-Only after a complete valid 96/96 root, freeze the root and run a separate causal-dataset admission audit.
+The earlier residual-PI proposal is not current main-pipeline direction.
 
-Audit at least:
+If a future FAST algorithm is promoted, baseline `B` changes and the action-conditioned scientific/model contract must be versioned accordingly.
+
+## World Model boundary
+
+Current canonical structure remains:
 
 ```text
-randomization integrity
-CALM/GUST support
-ZERO/P1/P2 support
-assigned vs requested vs accepted action
-T_D/T_A ordering
-exact treatment exposure
-H1000 completeness
-native-event lifecycle
-next_status integrity
-source/session/reset continuity
-H0/H20/H40/H80 response availability
-washout/carryover
-FAST/PX4 post-treatment mediation interpretation
-constraint/projection/saturation
-no prohibited post-treatment conditioning
-response construction
+Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
 ```
 
-Output only:
-
-```text
-CAUSAL_DATASET_ACCEPTANCE=PASS | FAIL | INSUFFICIENT
-```
-
-Primary treatment contrasts remain H40/H80; H0/H20/H40/H80 remain dataset-completeness horizons.
-
-## Step 9 — G_action / World Model boundary
-
-If and only if causal-dataset acceptance passes:
-
-```text
-READY_FOR_G_ACTION_IDENTIFICATION
-```
-
-World-Model training still requires separate owner authorization.
-
-Forward ladder:
-
-```text
-complete valid randomized root
-→ causal-dataset acceptance
-→ G_action identification
-→ action-conditioned World Model
-→ WISE predictive refinement
-→ latency/AoI/freshness characterization
-→ uncertainty calibration
-→ later FAST/CALE/AEGIS research
-```
-
-## FASTv2 research boundary
-
-The current research candidate combining the main FAST path with PID-branch lessons is post-Phase-0 only:
-
-```text
-PX4 firmware PID unchanged
-+
-AURA disturbance feedforward (-d_hat)
-+
-T1/C1 continuation
-+
-bounded residual 2-DOF PI at the qualified acceleration-correction boundary
-```
-
-This is not part of the authorized next scientific root and must not change baseline `B` during the current randomized identification campaign.
+WM training is blocked until a complete valid randomized root passes a separate causal-dataset admission audit and the owner separately authorizes training.
 
 ## Hard boundaries
 
-Never modify the experiment merely to obtain 96/96.
-
 ```text
-failed root = immutable historical conclusion
+failed root = immutable historical evidence
 partial valid rows ≠ scientific dataset
 infrastructure failure ≠ scientific negative result
+FAST research ≠ current baseline change
+WM design work ≠ training authority
 SEALED=LOCKED_PRE_EVALUATION
 production_authority=false
 ```
@@ -432,5 +357,5 @@ production_authority=false
 ## Current final state
 
 ```text
-OWNER_AUTHORIZED_NEW_FRESH_RANDOMIZED_PILOT_READY_TO_EXECUTE
+OWNER_ACCEPTED_CYCLE_STATUS_VISIBILITY_RETENTION_FORENSIC_REVIEW_REQUIRED
 ```
