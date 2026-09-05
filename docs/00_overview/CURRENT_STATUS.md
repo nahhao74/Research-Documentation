@@ -2,13 +2,16 @@
 
 ## Executive state
 
-The AURA–WISE–World Model–AEGIS main pipeline remains active. The latest owner-authorized randomized `G_action` root, `fresh_35`, passed the frozen preflight and then stopped fail-closed in the first CALM row before any scientific block, candidate exposure, GUST event or manifest slot was admitted.
+The AURA–WISE–World Model–AEGIS main pipeline remains active.
 
-The first proven invalid boundary is **accepted-cycle status visibility to the probe matcher**, not `next_status` and not treatment response. A same-lineage valid native status exists within the existing source-match budget, so producer absence is not proven. Callback receipt versus bounded-ring eviction was not independently persisted, so eviction is also not proven.
+The latest owner-authorized randomized `G_action` root, `fresh_35`, passed frozen preflight and stopped fail-closed in the first CALM row before any scientific block, GUST event, candidate exposure or manifest slot was admitted.
+
+The first proven invalid boundary is **accepted-cycle status visibility to the probe matcher**, not `next_status` and not treatment response.
+
+A same-lineage valid native status exists within the existing source-match budget, so producer absence is not proven. Callback receipt versus bounded-retention loss was not independently persisted, so eviction is also not proven.
 
 ```text
 MAIN_PIPELINE=ACTIVE
-PID_BENCHMARK_TRACK=RESEARCH_REFERENCE_ONLY
 
 PHASE_0B2=CLOSED
 PHASE_0B3_IMPLEMENTATION=CLOSED
@@ -63,14 +66,12 @@ NEXT_STATE=OWNER_ACCEPTED_CYCLE_STATUS_VISIBILITY_RETENTION_FORENSIC_REVIEW_REQU
 
 ## Frozen scientific target
 
-The scientific estimand and baseline are unchanged:
-
 ```text
 G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
-B = active PX4 + AURA + FAST/T1/C1 baseline
+B = active PX4 + AURA + current FAST/T1/C1 baseline
 ```
 
-The current Phase-0 contract continues to freeze:
+The current Phase-0 contract freezes:
 
 ```text
 AURA semantics
@@ -90,7 +91,7 @@ SEALED boundary
 production authority
 ```
 
-Authoritative pilot identity remains:
+Authoritative pilot identity:
 
 ```text
 MANIFEST_ID=WM1_V2R1_FINAL_RANDOMIZED_SCIENTIFIC_PILOT_V1_1
@@ -106,7 +107,7 @@ P2=24
 
 ## Qualified infrastructure retained before fresh_35
 
-The following closures remain valid and were present in `fresh_35` preflight:
+The following closures were present in `fresh_35` preflight and remain valid:
 
 ```text
 Option-B / Direct Guard
@@ -118,7 +119,13 @@ TRACE_QOS=4096/RELIABLE/VOLATILE diagnostic evidence path
 canonical WM reverse-index / graph / Tarjan / peeling engine
 ```
 
-`fresh_35` preflight reported `PRE_RETRY_VALID_CAUSAL_CORE=true` before runtime execution.
+`fresh_35` preflight reported:
+
+```text
+PRE_RETRY_VALID_CAUSAL_CORE=true
+```
+
+before runtime execution.
 
 ## Latest immutable scientific-root attempt — fresh_35
 
@@ -169,13 +176,13 @@ gate_valid=true
 applied_authority=true
 ```
 
-The source delta from the requested cycle frontier is:
+Source delta from the requested cycle frontier:
 
 ```text
 38916000 - 38576000 = 340000 us
 ```
 
-which is inside the existing `500000 us` source-match budget.
+This is inside the existing `500000 us` source-match budget.
 
 Observer diagnostics at timeout:
 
@@ -203,7 +210,7 @@ PRODUCER_ABSENCE=NOT_PROVEN
 CAPACITY_CAUSALITY=LIKELY_BUT_NOT_PROVEN
 ```
 
-Do not relabel this as proven eviction or callback loss until receipt/retention is independently instrumented.
+Do not relabel this as proven callback loss or proven eviction until callback receipt/retention is independently instrumented.
 
 ## Other fresh_35 health evidence
 
@@ -242,7 +249,7 @@ peeling iterations=10
 VALID_CAUSAL_CORE=false
 ```
 
-Direct failure seeds propagate through downstream scientific nodes; this remains an infrastructure-invalid root and is not pooled or reinterpreted as science.
+Direct infrastructure failure seeds propagate through downstream scientific nodes. The root remains infrastructure-invalid and is not pooled or reinterpreted as science.
 
 ## Immediate owner gate
 
@@ -256,7 +263,9 @@ B — callback received it but bounded retention removed it before find_cycle
 C — callback received/retained it but matcher/indexing logic could not select it
 ```
 
-Required evidence should persist callback receipt identity and retention/index state for the exact generation/session/reset/source frontier. The repair, if any, must reuse canonical status semantics and remain implementation-preserving.
+Required evidence must persist callback receipt identity and retention/index state for the exact generation/session/reset/source frontier.
+
+Any repair must reuse canonical status semantics and remain implementation-preserving.
 
 Forbidden before this boundary is proven and separately qualified:
 
@@ -272,17 +281,17 @@ pool partial roots
 
 ## FAST research boundary
 
-The current FAST baseline is frozen for Phase-0. No FAST challenger is promoted into the scientific baseline now.
+The current FAST/T1/C1 baseline is frozen for Phase-0.
 
-Separate shadow/replay research may compare the current FAST against bounded challengers on the same simulator to answer one question:
+Separate simulator shadow/replay research may evaluate whether immediate wind response, tracking and recovery can be materially improved over the current baseline while preserving PX4 firmware control semantics.
 
-> Can immediate wind response, tracking and recovery be materially improved over the current `-d_hat + T1/C1` path without changing PX4 firmware control semantics?
+No replacement FAST algorithm is currently selected.
 
-No primary replacement algorithm is currently selected. The earlier residual-PI proposal is not current main-pipeline direction. Any future FAST promotion would redefine baseline `B` and require a new versioned control/scientific contract.
+Any future material FAST promotion would redefine baseline `B` and require a versioned control/scientific review.
 
 ## World Model / WISE boundary
 
-The canonical WM structure remains unchanged:
+Canonical structure:
 
 ```text
 Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
@@ -290,9 +299,9 @@ Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
 
 with `G_action` defined relative to the frozen active baseline `B`.
 
-World-Model training remains blocked because no complete randomized causal dataset has been accepted. Infrastructure/tooling/model-design work may continue, but no partial or failed root is training authority.
+World-Model training remains blocked because no complete randomized causal dataset has been accepted. Infrastructure, tooling and model-design work may continue, but no partial or failed root is training authority.
 
-If a future FAST challenger is materially promoted after current Phase-0 closes, the production `G_action` model must be re-evaluated under the newly frozen baseline rather than assuming action-response invariance across different FAST semantics.
+If FAST semantics are materially changed later, production `G_action` must be re-evaluated under the newly frozen baseline rather than assuming action-response invariance.
 
 ## Storage and authority boundaries
 
@@ -302,7 +311,7 @@ Large runtime/capture/dataset/training/intermediate artifacts remain under:
 /media/nahhao74/KINGSTON
 ```
 
-Failed-root classifications are immutable scientific history even if raw storage is later cleaned by explicit owner decision.
+Failed-root classifications remain immutable scientific history even if raw storage is later cleaned by explicit owner decision.
 
 ```text
 SEALED_ACCESS_BOUNDARY=LOCKED_PRE_EVALUATION
