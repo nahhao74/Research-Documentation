@@ -11,75 +11,45 @@ unresolved=3
 UNRESOLVED_IDS=SRC-024,SRC-040,SRC-053
 ```
 
-GitHub retrieval index:
+Active GitHub retrieval index:
 
-- [`CURRENT_REGISTRY_V9.md`](CURRENT_REGISTRY_V9.md) — active v9 view through `SRC-156`.
-- [`CURRENT_REGISTRY_V8.md`](CURRENT_REGISTRY_V8.md) — historical v8 view through `SRC-149`.
-- [`CURRENT_REGISTRY_V7.md`](CURRENT_REGISTRY_V7.md) — historical v7 view through `SRC-141`.
-- [`CURRENT_REGISTRY_V5.md`](CURRENT_REGISTRY_V5.md) — historical view through `SRC-123`.
-- `library_snapshots/` — historical v1/v2 snapshots.
+- [`CURRENT_REGISTRY_V9.md`](CURRENT_REGISTRY_V9.md)
 
-## Registry lineage
+Older registry revisions are available through Git history. They are not current project-state documents.
 
-```text
-v1  87 sources; locators initially unresolved
-v2  87 sources; 84 resolved / 3 unresolved
-v3  SRC-088..SRC-094: pinned PX4/uXRCE/eProsima runtime references
-v4  SRC-095..SRC-103: PX4/Gazebo + uncertainty/planning/residual research
-v5  SRC-104..SRC-123: latency, scheduling, embedded predictive control, WM research
-v6  SRC-124..SRC-127: residual MPC, online dynamics, latency-aware control, safety filter
-v7  SRC-128..SRC-141: DDS/ROS2 latency, change detection, learned/adaptive disturbance, RTA
-v8  SRC-142..SRC-149: Tarjan, max-plus, three-valued monitoring, sweep-line, network-flow
-v9  SRC-150..SRC-156: timed enforcement, AoI, Network Calculus, adaptive experiment design,
-    conformal OOD MPC, set-membership uncertainty and ellipsoidal approximation
-```
+## Scope
 
-No existing source ID was deleted or renumbered.
-
-## v9 research direction
+The registry catalogs methodological and implementation references. It does not define:
 
 ```text
-Timed Runtime Enforcement
-→ stronger prior-art baseline for CTEE
-
-CTEE-F
-→ causal eligibility + information freshness + justified remaining-delay envelope
-
-CIBES
-→ post-Phase-0 information-efficient constrained excitation
-
-WM uncertainty ladder
-→ conformal and set-membership challengers after simpler baselines
+current Phase-0 state
+current blocker
+next authorized task
+active FAST algorithm
+World-Model training authority
+SEALED or production authority
 ```
 
-These methods are research hypotheses, not current runtime requirements.
-
-## Current Phase-0 authority boundary
+Use the following for those questions:
 
 ```text
-Q1_NOSCIENCE_NO_LAUNCH_CONTRACT=PREPARED
-Q1_RUNTIME_AUTHORIZED=false
-Q1_RUNTIME_EXECUTED=false
-OPTION_B_CONTRACT_READY=false
-IMPLEMENTATION_AUTHORIZED=false
-M_STABLE_US=UNFROZEN
-W_MAX_US=UNFROZEN
-FRESH_SCIENCE=BLOCKED
-production_authority=false
+../00_overview/CURRENT_STATUS.md
+../00_overview/CURRENT_EXECUTION_LADDER_WM_20260905.md
+../04_research/FUTURE_IMPLEMENTATION_ROADMAP.md
 ```
 
-The v9 additions do not change the exact next action: owner authorization for Q1 no-launch nonscientific runtime.
-
-## Evidence-gated adoption rule
+## Evidence-gated adoption
 
 ```text
 candidate method
-→ named project bottleneck
-→ measurable KPI
-→ simplest credible baseline
-→ shadow/offline/preflight evidence
+→ measured project problem
+→ source/literature support
+→ smallest credible implementation
+→ shadow/offline/non-scientific comparison
 → retain only if benefit is demonstrated
 ```
+
+Source presence never implies implementation approval.
 
 ## Authority hierarchy
 
