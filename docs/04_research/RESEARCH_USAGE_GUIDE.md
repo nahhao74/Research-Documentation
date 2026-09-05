@@ -2,20 +2,22 @@
 
 ## Purpose
 
-Research exists to answer a measured project question, not to accumulate algorithms.
+Research exists to answer measured project questions, not to accumulate algorithms.
 
 Current use is limited to:
 
-1. support the scientific design and causal-data pipeline;
-2. improve FAST on the current simulator through bounded shadow/replay comparison;
-3. design the minimum useful World Model/WISE path after valid causal data exists;
-4. evaluate later latency/freshness/uncertainty/safety mechanisms only after a measured need appears.
+1. supporting the causal/scientific design;
+2. improving FAST on the current simulator through bounded shadow/replay comparison;
+3. designing the minimum useful World Model/WISE path after valid causal data exists;
+4. evaluating later timing/freshness/uncertainty/safety mechanisms only when a measured need appears.
 
 The active research plan is defined only by:
 
 ```text
 FUTURE_IMPLEMENTATION_ROADMAP.md
 ```
+
+Anything not present there is background reference only.
 
 ## Authority hierarchy
 
@@ -31,7 +33,7 @@ For technical claims:
 7. issue/forum/blog hypothesis
 ```
 
-For current project state and execution permission, research sources have no authority; use `CURRENT_STATUS.md` and the latest execution ladder.
+For current project state and execution permission, use `CURRENT_STATUS.md` and the latest execution ladder. Research sources have no execution authority.
 
 ## Current active research questions
 
@@ -46,19 +48,17 @@ Research order:
 
 ```text
 measure latency/source age and response phases
-→ characterize current FAST limitation
-→ smallest justified challenger
+→ characterize the actual limitation
+→ test the smallest justified challenger
 → repeat-supported shadow/replay benchmark
 → retain only if materially better
 ```
 
-Do not add a second PI/PID tracking loop as an active direction.
-
-Do not introduce cross-airframe adaptation, online gain tuning or commercial fleet adaptation into the current simulator phase.
+No replacement algorithm is selected before the measured failure class is known.
 
 ### World Model / WISE
 
-Canonical structure remains:
+Canonical structure:
 
 ```text
 Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
@@ -66,11 +66,11 @@ G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
 B = active PX4 + AURA + current FAST/T1/C1
 ```
 
-Current research may improve interfaces, state representation, evaluation and serving design, but final action-conditioned training remains blocked until a complete valid randomized root passes causal-dataset admission.
+Current research may improve interfaces, state representation, evaluation and serving design. Final action-conditioned training remains blocked until a complete valid randomized root passes causal-dataset admission.
 
 ### Closed-loop identification
 
-Use the literature to preserve these conclusions:
+Preserve these conclusions:
 
 ```text
 feedback remaining active is compatible with the current estimand
@@ -89,7 +89,7 @@ Prefer pinned release/source over generic PX4 `main` when exact behavior matters
 
 ### `closed_loop_identification`
 
-Use for randomized/probing identification while the deployed controller remains active, persistent excitation, identifiability and treatment-response interpretation.
+Use for randomized/probing identification while deployed feedback remains active, persistent excitation, identifiability and treatment-response interpretation.
 
 ### `micro_randomized_trials` / `small_sample_cluster_inference`
 
@@ -101,21 +101,7 @@ Use for temporal/action-conditioned prediction, rollout, bounded planning and un
 
 ### `disturbance_observer` / `uav_control` / `stability_robust_control`
 
-Use to evaluate FAST challengers or later control mechanisms after a measured failure class exists. Source presence alone is not a reason to implement INDI, MPC, DOB, adaptive control or any other method.
-
-## Rejected / inactive directions
-
-The following are **not active main-pipeline research directions** and should not be reintroduced unless the owner explicitly reopens them after new evidence:
-
-```text
-residual PI / 2-DOF PI augmentation as FAST primary direction
-manual per-airframe PI tuning
-online gain adaptation for the current simulator phase
-cross-airframe adaptive controller / commercial commissioning design
-online neural-network controller adaptation
-```
-
-Git history preserves prior discussion; active documents should not present these as current candidates.
+Use only after a measured FAST/control limitation exists. Source presence alone is not an implementation reason.
 
 ## Research adoption rule
 
@@ -126,10 +112,16 @@ measured bottleneck
 → smallest credible mechanism
 → bounded benchmark
 → no important latency/robustness regression
-→ only then promotion review
+→ promotion review only if benefit is repeat-supported
 ```
 
-If the measured system does not need a mechanism, do not add it for novelty.
+Do not add a mechanism for novelty or because it appears in the registry.
+
+## Historical/rejected research
+
+Superseded or rejected directions are intentionally absent from active research documents. Git history preserves provenance.
+
+An AI must not reconstruct an old direction from Git history or source-registry entries unless the owner explicitly reopens it.
 
 ## Registry navigation
 
@@ -140,4 +132,4 @@ Use:
 ../02_source_registry/SOURCE_REGISTRY_CURRENT.md
 ```
 
-Older registry versions are Git history, not active indexes.
+The registry is a methodological index, not an active-algorithm list.
