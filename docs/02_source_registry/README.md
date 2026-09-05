@@ -15,10 +15,9 @@ unresolved=3
 UNRESOLVED_IDS=SRC-024,SRC-040,SRC-053
 ```
 
-Use:
+Use only:
 
-- [`CURRENT_REGISTRY_V9.md`](CURRENT_REGISTRY_V9.md) — active retrieval/index view.
-- [`SOURCE_REGISTRY_CURRENT.md`](SOURCE_REGISTRY_CURRENT.md) — stable pointer and source-use policy.
+- [`CURRENT_REGISTRY_V9.md`](CURRENT_REGISTRY_V9.md) — current retrieval/index view.
 
 Older registry versions are retained by Git history, not as competing `CURRENT_*` files in `main`.
 
@@ -49,7 +48,7 @@ named measured problem
 → owner/versioned promotion if required
 ```
 
-If a method is not present in the active roadmap, an AI must treat it as reference material only.
+If a method is not present in the active roadmap, treat it as reference material only.
 
 ## Authority hierarchy for research claims
 
