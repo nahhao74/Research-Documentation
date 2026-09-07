@@ -1,0 +1,45 @@
+# V3 E8 Trace Ingestion and Collector Cleanup Report
+
+TASK_ID=V3_E8_TRACE_INGESTION_COLLECTOR_CLEANUP_20260906
+RESULT=PASS_OFFLINE_MEASUREMENT_LIFECYCLE_QUALIFICATION
+SOURCE_ROOT=/media/nahhao74/KINGSTON/Detect_and_Response/d0_v3_calm_readiness_20260906_03
+SOURCE_ROOT_RESULT=UNKNOWN_MISSING_EVIDENCE
+
+E8_EVIDENCE_OWNER=E8AppliedNode._record_evidence/close_evidence
+E8_EVIDENCE_ARTIFACT=canonical_data0_row/e8_ingress_evidence.jsonl
+E8_EVIDENCE_SCHEMA=V3_DOWNSTREAM_EVALUATION_CORRESPONDENCE_V1
+E8_CANONICAL_INGESTION_MODEL=SECONDARY_APPEND_ONLY_EVIDENCE_SOURCE_CONSUMED_BY_V3_ORCHESTRATOR;NO_TRACE_LINE_COPY
+
+E8_TOTAL_RECORDS=4209
+E8_IN_WINDOW_RECORDS=4011_EXACT_DIAGNOSTIC_IDENTITIES
+E8_EXACT_DIAGNOSTIC_ID_MATCHES=1084_OF_1084_HISTORIC_e8_correspondence_unproven
+E8_UNMATCHED_REQUIRED_EVALUATIONS=0_FOR_THOSE_1084
+E8_DUPLICATES=0
+E8_MALFORMED=0
+E8_DEDUPLICATION_IDENTITY=c1_aura_evaluation_identity+source_frontier+reset_generation+source_frontier_domain;identical_duplicate_counted_once;contradictory_duplicate_fail_closed
+E8_FINALIZATION_POLICY=E8_shutdown_record_required_after_final_sidecar_drain;post_shutdown_record_fail_closed;file_identity/hash/partial-buffer_accounted
+EVALUATOR_INTEGRATION=V3WindowEvaluator remains sole classifier; sidecar is wrapped only as measurement evidence.
+
+REFERENCE_COLLECTOR_OWNER=vnext_data0_nominal.execute_row
+REFERENCE_COLLECTOR_PROCESS_MODEL=collector is a managed start_new_session process added to DATA0 processes list.
+REFERENCE_COLLECTOR_STOP_MODEL=existing exact _stop_process PID/process-group escalation; no broad match.
+REFERENCE_COLLECTOR_FINALIZATION_INVARIANT=reference_collector must be present and dead after DATA0 stop before writer_finalized/cleanup PASS.
+
+HOT_PATH_BLOCKING_IO=NONE_NEW
+OFFLINE_TEST_RESULT=50 focused non-ROS tests PASS; 68 canonical-ROS-environment tests PASS; py_compile PASS.
+FALSE_JOIN_COUNT=0
+FALSE_PASS_COUNT=0
+
+CONTROL_SEMANTIC_DELTA=NONE
+SCIENTIFIC_SEMANTIC_DELTA=NONE
+V3_CONTRACT_SEMANTIC_DELTA=NONE
+V3_WINDOW_SEMANTIC_DELTA=NONE
+FAST_SEMANTIC_DELTA=NONE
+E8_SEMANTIC_DELTA=NONE
+
+MISSING_REQUIRED_EVIDENCE=NONE
+READY_FOR_ONE_NEW_FRESH_D0_V3_ROOT=true
+READY_FOR_PHASE_D=false
+
+NEXT_TASK=Owner-authorized one new fresh immutable D0 V3 root; do not reuse `_03`.
+OWNER_AUTHORIZATION_REQUIRED=true

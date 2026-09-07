@@ -1,388 +1,221 @@
-# AURA–WISE–WORLD MODEL–AEGIS vNext
+# AURA–WISE–World Model–AEGIS vNext
 ## Active Implementation and Research Roadmap
 
-**Canonical roadmap:** `v8 — fresh_35 forensic / FAST shadow benchmark / WM baseline review`  
-**Scope:** Moving Mode only  
-**Research registry:** `AURA_WISE_WM_AEGIS_SOURCE_REGISTRY_v9`
+**Canonical roadmap:** `v9 — D0 V3 closure → Phase D FAST bottleneck measurement → baseline review`  
+**Updated:** 2026-09-07  
+**Scope:** Moving Mode only
 
-This file contains **only the active future direction**. Superseded or rejected research is intentionally absent and remains recoverable through Git history.
+This document contains only the active future direction. Superseded execution paths remain in Git history.
 
-Current runtime/scientific authority:
-
-```text
-../00_overview/CURRENT_STATUS.md
-../00_overview/CURRENT_EXECUTION_LADDER_WM_20260905.md
-```
-
----
-
-# 1. Current state
+## 1. Current priority
 
 ```text
-LATEST_FAILED_SCIENTIFIC_ROOT=fresh_35
-FRESH35_RESULT=INVALID_INFRASTRUCTURE_NEW_ROOT_IMMUTABLE
-PRIMARY_BOUNDARY=ACCEPTED_CYCLE_STATUS_SUCCESSOR_UNAVAILABLE_TO_PROBE
-PRODUCER_ABSENCE=NOT_PROVEN
-CAPACITY_CAUSALITY=LIKELY_BUT_NOT_PROVEN
-
-G_ACTION_PILOT_RESULT=NOT_EVALUATED
-CAUSAL_DATASET_ACCEPTANCE=BLOCKED
-SCIENTIFIC_EXECUTION=NOT_RUN
-MANIFEST_SLOTS_CONSUMED=0
-SEALED=LOCKED_PRE_EVALUATION
-production_authority=false
+CURRENT_MAINLINE=D0_V3_CAUSAL_OBSERVABILITY_AND_READINESS
+D0_CLOSED=false
+READY_FOR_PHASE_D=false
+CURRENT_BLOCKER=DATA0_PRECOLLECTOR_STARTUP_ATTESTATION_CONTRACT
 ```
 
-`fresh_35` passed frozen preflight but stopped in the first CALM row before any GUST, candidate, `T_D`, ACK or exposure.
+Formal root `_04` completed a clean 20 s window and exact downstream correspondence but did not pass readiness.
 
-A valid same-lineage native status exists inside the current source-match budget. The present evidence does not prove whether the status failed to reach the observer callback, was lost from bounded retention after receipt, or remained retained but unselectable by matcher/indexing logic.
-
----
-
-# 2. Phase-0 execution path
+Prospective registry replay gives:
 
 ```text
-accepted-cycle callback visibility / retention forensic
-        ↓
-minimal implementation-preserving repair if a concrete defect is proven
-        ↓
-bounded non-scientific qualification
-        ↓
-canonical reverse index → graph → Tarjan → peeling
-        ↓
-owner review
-        ↓
-new immutable randomized root only if separately authorized
-        ↓
-complete-root causal dataset admission
-        ↓
-minimal G_action identification
+VALID=2879
+EXPLAINED=1116
+NOT_READY=5
+UNKNOWN=1
 ```
 
-Hard rules:
+The one UNKNOWN is `CAUSAL_EXPECTED_AVAILABLE=false`; the five NOT_READY events are `motor_command_stale_or_missing`.
+
+## 2. Immediate execution path
 
 ```text
-no timeout increase merely to obtain PASS
-no QoS change merely to obtain PASS
-no source/session/reset semantic relaxation
-no patch-and-continue inside a scientific root
-no partial-root pooling
-no WM training from incomplete/invalid roots
+close DATA0 precollector startup/attestation contract offline
+        ↓
+one expected/motor provenance probe
+        ↓
+resolve expected-state disposition
+        ↓
+resolve motor-command NOT_READY root cause
+        ↓
+freeze final registry/evaluator
+        ↓
+one final fresh D0 root
+        ↓
+D0 CLOSED only if UNKNOWN/NOT_READY/READINESS_FAILURE/INVARIANT_VIOLATION are all zero
+        ↓
+freeze Phase-D campaign
 ```
 
----
+## 3. D0 V3 qualification principle
 
-# 3. Current scientific baseline
+D0 is an observability/readiness gate, not a demand for continuous valid control.
+
+Allowed PASS-compatible state:
+
+```text
+EXPLAINED_CONTROL_UNAVAILABLE(<registry-approved exact cause>)
+```
+
+Non-PASS states:
+
+```text
+UNKNOWN_MISSING_EVIDENCE
+NOT_READY_CONTROL_UNAVAILABLE
+READINESS_FAILURE
+INVARIANT_VIOLATION
+```
+
+`V3WindowEvaluator` remains the sole classifier. Causal precedence is earliest authoritative first-false only.
+
+## 4. Phase D — measure before redesign
+
+After D0 closure, characterize the current baseline:
+
+```text
+F0 = PX4 + AURA + current FAST/T1/C1
+```
+
+Separate disturbance phases:
+
+```text
+ONSET
+SUSTAINED
+CLEAR / RECOVERY
+```
+
+Measure:
+
+```text
+source age / AoI
+F0→F4 latency
+F5 diagnostic plant response
+peak position / velocity deviation
+RMSE
+recovery
+overshoot / settling
+control effort
+command TV / jerk
+projection / saturation / headroom
+validity gaps and recoveries
+```
+
+Do not select a replacement FAST algorithm before the dominant limitation is measured.
+
+## 5. FAST challenger families — only after bottleneck identification
+
+Possible families remain research candidates only:
+
+```text
+freshness/scheduling/AoI improvement
+bounded shaping/scaling/phase compensation
+estimator/feedforward/disturbance observer
+acceleration-domain INDI-like correction
+bounded short-horizon predictive correction
+filtering/multirate/event-triggered mechanisms
+```
+
+No challenger is selected today.
+
+Promotion requires repeat-supported improvement over F0 with no important robustness, latency, saturation or headroom regression.
+
+## 6. Baseline dependency of World Model science
+
+Frozen estimand:
 
 ```text
 G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
-B = active PX4 + AURA + current FAST/T1/C1 baseline
 ```
 
-Current FAST/T1/C1 semantics remain frozen during Phase-0.
+where `B` is the active closed-loop baseline.
 
-A material FAST change changes baseline `B`; therefore action-conditioned data/model validity must be reviewed under the newly frozen baseline.
-
----
-
-# 4. Active research track A — FAST improvement on the current simulator
-
-Research question:
-
-> Can the current simulated vehicle reject wind faster and more accurately than the existing `-d_hat + T1/C1` path while preserving PX4 firmware control semantics?
-
-This work is shadow/replay/separate non-scientific research only until Phase-0 closes.
-
-## 4.1 Baseline
+If Phase D later promotes a material FAST change:
 
 ```text
-F0 = current AURA + FAST(-d_hat) + T1/C1 + PX4
+B0 -> B1
 ```
 
-## 4.2 Research order
-
-Do not choose a replacement algorithm before the measured limitation is known.
-
-```text
-1. characterize source age and end-to-end latency
-2. separate ONSET / SUSTAINED GUST / CLEAR-RECOVERY failure modes
-3. identify whether the dominant limitation is estimation, timing, scaling or plant response
-4. introduce the smallest credible challenger for that measured limitation
-5. compare against F0 under identical simulator conditions
-6. retain only repeat-supported improvement with no important robustness regression
-```
-
-## 4.3 Required timing instrumentation
-
-```text
-F0 sensor/source frontier
-F1 AURA input accepted
-F2 disturbance estimate ready
-F3 FAST correction ready
-F4 PX4 correction/setpoint accepted
-F5 first measurable plant response
-```
-
-Report:
-
-```text
-segment p50 / p95 / p99 / max latency
-source age at application
-T_effect
-T_recover
-peak velocity deviation
-peak position deviation
-velocity RMSE
-cross-track RMSE
-sustained-GUST error
-post-CLEAR overshoot / settling
-control effort
-command variation / jerk
-projection / saturation / headroom
-```
-
-## 4.4 Promotion rule
-
-```text
-if challenger does not clearly beat F0
-→ retain current FAST
-
-if challenger clearly beats F0 with no important robustness/latency regression
-→ freeze a new versioned FAST baseline after Phase-0
-→ revalidate action-conditioned G_action under that baseline before production WM use
-```
-
----
-
-# 5. Active research track B — World Model / WISE
-
-Canonical model structure:
-
-```text
-Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
-```
-
-where:
-
-```text
-F_nominal = future evolution of the active closed-loop baseline
-G_action  = incremental candidate effect relative to ZERO under that same baseline
-```
-
-Current allowed work:
-
-```text
-StateBank / causal state representation
-model interfaces
-training/evaluation pipeline implementation
-serving contracts
-latency instrumentation
-uncertainty output interface
-small baseline-model tooling
-```
-
-Blocked now:
-
-```text
-final G_action training
-final action-conditioned model selection
-WISE efficacy claims
-production model promotion
-```
-
----
-
-# 6. Baseline review before final production WM
-
-After Phase-0 closes and FAST shadow research is complete:
-
-```text
-current Phase-0 closure
-+
-FAST benchmark result
-        ↓
-BASELINE REVIEW
-```
-
-### Current FAST remains best
-
-```text
-freeze B0
-→ use causal action data valid for B0
-→ minimal WM identification/training
-```
-
-### A FAST challenger is materially better
-
-```text
-freeze B1
-→ version control/scientific contract
-→ reacquire/revalidate action-conditioned G_action under B1
-→ train final production WM under B1
-```
-
-Do not assume:
+then production action-response validity must be reviewed/reacquired under B1. Do not assume:
 
 ```text
 G_action^(B0) == G_action^(B1)
 ```
 
-without evidence.
+## 7. World Model / WISE ladder
 
----
-
-# 7. Minimal World Model ladder
-
-Once causal data for the final chosen baseline is accepted:
+After the final baseline and causal dataset are accepted:
 
 ```text
-WM0 — ZERO / persistence / simple closed-loop predictor
-WM1 — linear / ridge action-conditioned model
-WM2 — compact structured dynamics model if WM1 is insufficient
-WM3 — small nonlinear model only if measured residual structure requires it
+WM0 persistence/simple closed-loop predictor
+WM1 linear/ridge action-conditioned model
+WM2 compact structured dynamics if justified
+WM3 small nonlinear model only if residual evidence requires it
 ```
 
-Model capacity is earned by held-out improvement.
-
-Evaluate separately:
+Canonical structure:
 
 ```text
-prediction quality
-G_action incremental-response quality
-H0/H20/H40/H80 behavior
-uncertainty calibration
-serving latency / deadline misses
-planning utility
-incremental benefit over best FAST baseline
+Y_future = F_nominal(X,h) + G_action(X,U_plan,h)
 ```
 
----
+WISE remains a bounded predictive candidate selector and never blocks FAST first response.
 
-# 8. WISE direction
+## 8. Production go/no-go
 
-WISE is a bounded predictive candidate selector, not first-response control.
-
-Preferred first implementation:
-
-```text
-causal StateBank state
-→ bounded candidate library / enumeration
-→ WM rollout
-→ score tracking / effort / uncertainty / constraints
-→ reject stale / uncertain / infeasible candidates
-→ bounded AEGIS execution
-```
-
-Escalate planning complexity only if the simplest bounded search fails a measured requirement.
-
----
-
-# 9. WM/WISE deployment go-no-go
-
-After the best FAST baseline is established, compare:
+Compare:
 
 ```text
 C0 = best qualified FAST baseline
 C1 = C0 + WM/WISE predictive refinement
 ```
 
-Retain WM/WISE in runtime only if repeat-supported incremental benefit justifies:
+Retain WM/WISE only if repeat-supported incremental benefit justifies compute, latency, uncertainty and complexity.
+
+## 9. Deferred work
 
 ```text
-compute cost
-latency
-uncertainty risk
-additional failure modes
-engineering complexity
+ADAPTIVE_FAST=FUTURE
+CROSS_AIRFRAME=FUTURE
+SIM_TO_REAL=FUTURE
+WM_PORTABILITY=FUTURE
 ```
 
-If C1 does not materially improve the Pareto frontier, WM remains a research/benchmark path rather than a production dependency.
+These must not displace D0 closure or measured Phase-D bottleneck work.
 
----
-
-# 10. Deferred work
-
-Later research may be opened only after the core path above exposes a specific need. It must not displace current priorities.
-
-Current priorities are exactly:
-
-```text
-1. close fresh_35 infrastructure boundary
-2. obtain a complete valid causal dataset
-3. benchmark FAST on the current simulator
-4. freeze the best FAST baseline
-5. build the minimum useful WM for that baseline
-6. prove whether WISE adds incremental closed-loop value
-```
-
----
-
-# 11. Integrated roadmap
+## 10. Integrated roadmap
 
 ```text
 NOW
-├─ MAIN PIPELINE
-│  accepted-cycle visibility/retention forensic
-│  → minimal repair if proven
-│  → bounded non-scientific qualification
-│  → owner review
-│  → later fresh randomized root if authorized
-│  → causal dataset acceptance
-│
-└─ PARALLEL SHADOW RESEARCH
-   current FAST F0
-   → latency/source-age characterization
-   → measured limitation
-   → smallest justified challenger
-   → repeat-supported benchmark
+D0 precollector lifecycle closure
+→ expected/motor provenance
+→ final registry
+→ final D0 qualification
 
-AFTER PHASE-0
-baseline review: current FAST vs best challenger
-        ↓
-freeze final baseline B*
-        ↓
-ensure G_action causal data is valid for B*
-        ↓
-minimal F_nominal + G_action WM
-        ↓
-WISE bounded-candidate benchmark
-        ↓
-C0 best FAST vs C1 best FAST + WM/WISE
-        ↓
-retain only components with measurable incremental value
+NEXT
+Phase-D metric freeze
+→ F0 bottleneck measurement
+→ smallest justified challenger
+→ repeat benchmark
+→ freeze best FAST baseline B*
+
+THEN
+validate/acquire G_action for B*
+→ minimal WM
+→ WISE benchmark
+→ C0 vs C1 production decision
 ```
 
----
-
-# 12. Go/no-go principle
+## Hard authority boundaries
 
 ```text
-measure
-→ identify the real bottleneck
-→ introduce the smallest credible mechanism
-→ compare against the simpler baseline
-→ validate timing / causality / robustness
-→ retain only if repeat-supported benefit is real
+PX4 remains authoritative
+FAST remains first-response path
+WM/WISE cannot block first response
+failed roots remain immutable
+no semantic relaxation to obtain PASS
+SEALED=LOCKED_PRE_EVALUATION
+production_authority=false
+large runtime artifacts -> /media/nahhao74/KINGSTON
 ```
-
----
-
-# 13. Hard authority boundaries
-
-This roadmap does not authorize changes to:
-
-```text
-current G_action estimand
-current randomized manifest
-current AURA/FAST/T1/C1 semantics
-PX4 firmware control semantics / PX4 authority
-Direct Guard
-M_STABLE_US
-W_MAX_US
-T_D/T_A
-H1000
-SEALED
-production authority
-```
-
-Any material change requires explicit owner review, a versioned control/scientific contract, implementation evidence and qualification.
