@@ -1,8 +1,8 @@
 # Milestone and Root-Cause Summary
 
-This is the compact canonical audit trail. Large runtime roots and telemetry remain under `/media/nahhao74/KINGSTON`; detailed evidence is indexed under `docs/03_evidence/`.
+This is the compact canonical audit trail. Large runtime roots and telemetry remain under `/media/nahhao74/KINGSTON`; detailed D0 and Phase-D evidence are indexed under `docs/03_evidence/`.
 
-For current state use:
+For current authority use:
 
 ```text
 ../00_overview/CURRENT_STATUS.md
@@ -12,7 +12,7 @@ phase_d/README.md
 
 ## Historical foundation retained
 
-Before the current Phase-D program, the project established:
+Before the current Phase-D program, the project had already established:
 
 ```text
 bounded additive AEGIS candidate architecture
@@ -20,23 +20,23 @@ PX4 control authority
 exact candidate/exposure identity
 native-source vs clock-mapping separation
 StateBank startup/causal barriers
-WM reverse-index → graph → Tarjan SCC → fixed-point peeling validity engine
+Option-B Direct Guard
+WM reverse-index -> graph -> Tarjan SCC -> fixed-point peeling validity engine
 continuous-C1 replay/recovery
 post-reset E8 source-causal pairing
 native-event CLEAR lifecycle
+next_status source-frontier repair
 ```
 
-The randomized WM1 `G_action` track remains separately gated; Phase-D currently characterizes the active B0 baseline before any FAST challenger decision.
+The randomized WM1 `G_action` scientific campaign remains separately gated; it is not the current executable priority.
 
-## D0 V3 closure — 2026-09-06/07
+## D0 V3 closure
 
-D0 V3 progressed through startup, owner-provenance, downstream-correspondence, E8-ingestion, explained-cause, and lifecycle defects without changing control semantics.
-
-The fresh canonical qualification root finally closed formal readiness:
+After multiple infrastructure/observability repairs, fresh canonical D0 V3 readiness closed successfully:
 
 ```text
 ROOT=/media/nahhao74/KINGSTON/Detect_and_Response/d0_v3_calm_readiness_20260907_02
-FORMAL_D0_DECISION=PASS_D0_V3_READINESS
+RESULT=PASS_D0_V3_READINESS
 TOTAL_REQUIRED=4000
 ACCOUNTED=4000
 VALID_CONTROL=2537
@@ -48,101 +48,166 @@ UNKNOWN=0
 W20/C1/E8=4000/4000
 ```
 
-Therefore:
+This moved the active mainline from D0 closure into Phase-D B0 characterization.
+
+## Phase-D B0 scientific freeze
+
+Frozen baseline:
 
 ```text
-D0_INFRASTRUCTURE_CLOSED=true
-READY_FOR_PHASE_D=true at the D0 qualification boundary
+B0 = PX4 + AURA + current FAST/T1/C1
 ```
 
-Detailed D0 evidence remains under `d0_v3/`.
-
-## Phase-D B0 sequence — 2026-09-07/08
-
-### 1. Frozen B0 contract and eight-condition campaign
+Frozen contract bindings:
 
 ```text
-BASELINE_ID=B0_PX4_AURA_FAST_T1_C1_CURRENT
 METRIC_CONTRACT_ID=PHASE_D_B0_METRICS_V1_1
 METRIC_CONTRACT_SHA256=5928dceea0a6e8e745f94282f7834bc268d0c10ccf61f2ccc4b424d43b78ed93
 CAMPAIGN_MANIFEST_SHA256=dfab451d58f45e087fc9b25ab5eb9866bbff8e8d8ac6bd0475dffe25c1a2d247
+PLANNED_SCIENTIFIC_CONDITIONS=8
+PERFORMANCE_THRESHOLDS=NONE_FROZEN_DESCRIPTIVE_ONLY
+RETRY_UNTIL_FAVORABLE=false
+FAST_CHALLENGER_SELECTION=NOT_PERFORMED
 ```
 
-No performance thresholds, adaptive changes, favorable retries, or challenger selection were introduced.
+## Phase-D runtime and closure sequence
 
-### 2. Original campaign — four measured rows, then C1 retention failure
+### 1. Original campaign — four measured conditions
 
-Slots 1–4 produced complete F0–F4 measurement outputs under the then-active tooling. Original slot 5 stopped on a C1 mutation-retention gap.
+The original campaign produced complete F0–F4 measurements for slots 1–4, then stopped at original slot 5 on a C1 trace-retention defect.
 
-The defect was measurement infrastructure, not control behavior.
+These measurements remain descriptive evidence; formal admission is still subject to prewind qualification/comparability review.
 
-### 3. C1 callback→persistence accounting closure
+### 2. C1 trace-retention closure
 
-Prospective repair introduced explicit callback/persisted/drop/error/gap/finalization accounting under `V3_C1_TRACE_WRITER_ACCOUNTING_V1`.
+Root cause:
 
-Historical original slot-5 failure remains immutable.
+```text
+CANONICAL_C1_TRACE_RETENTION_GAP_INTERNAL_CALLBACK_VS_PERSISTENCE_HOP_UNPROVEN
+```
 
-### 4. Option-B slot 5 — runtime complete, strict JSON failed
+Prospective repair introduced explicit callback/persistence/drop/error/gap/finalization accounting under:
 
-Later slot 5 completed runtime evidence but strict JSON postprocessing rejected expected non-finite `ActuatorMotors.control[4..11]` fixed-width padding.
+```text
+V3_C1_TRACE_WRITER_ACCOUNTING_V1
+```
 
-Qualified repair preserved full channel positions using JSON `null` + explicit finite mask/count/index metadata; active-channel non-finite remains fail-closed.
+No control semantic change was introduced.
+
+### 3. Option-B slot-5 strict-JSON failure
+
+A later slot-5 acquisition retained complete runtime evidence but failed postprocessing because fixed-width `ActuatorMotors.control[4..11]` contained expected non-finite PX4 padding.
+
+Qualified repair:
+
+```text
+active Sparrow channels 0..3 -> required finite
+unused padding 4..11        -> JSON null + mask/count/index
+allow_nan=false retained
+active-channel nonfinite    -> fail closed
+```
 
 Read-only derived requalification preserved F0–F4 and latency exactly.
 
-### 5. Refreeze V2 slot 6 — precollector closure-binding bug
+### 4. Refreeze V2 slot-6 precollector failure
 
-The first V2 slot-6 attempt stopped before collector/F0 on:
+The next slot-6 attempt stopped before collector/F0 on:
 
 ```text
 UnboundLocalError: runtime_attestation_emitted
 ```
 
-Minimal `nonlocal` repair qualified with affected D0/Phase-D/C1 regressions. Historical failed root remains immutable and is not reprocessable as a scientific row.
+Minimal closure binding repair qualified offline with affected D0/Phase-D/C1 regression coverage. The failed historical root remains immutable and is not scientifically salvageable because F0 was never reached.
 
-### 6. Prewind contract/wiring audit — current blocker
+### 5. Historical prewind evidence audit
 
-Source audit found that historical Phase-D execution did not canonical-enforce the complete V3/V2 prewind gate on the native-F0 path. Retained slots 1–5 also lack the canonical attestation marker and `TRACE_MEASUREMENT_READY` lifecycle transition.
+Retained slots 1–5 do not contain the canonical contemporaneous attestation marker / `TRACE_MEASUREMENT_READY` lifecycle transition.
 
-Canonical descriptive replay proves their pre-F0 evaluation populations are eventually accountable with finalized downstream evidence, but does not prove contemporaneous live completeness before F0.
+Canonical replay with finalized downstream evidence proves the underlying evaluation populations are eventually accountable, but does not prove the complete evidence set existed live before historical F0.
 
-Current disposition:
+Current historical disposition:
 
 ```text
-slots 1..5 = UNKNOWN_MISSING_FROZEN_PREWIND_EVIDENCE
+UNKNOWN_MISSING_FROZEN_PREWIND_EVIDENCE
 HISTORICAL_CONTROL_FAILURE=NOT_INFERRED
-RECORDED_USABLE_CONDITIONS=5_UNCHANGED_PENDING_AUDIT
 ```
 
-### 7. Owner-approved prewind population/checkpoint
+### 6. Full-prefix `[V2,F0)` boundary found causally unqualified
+
+Offline source/frontier audits established:
+
+- ordinary Phase-D uses host-monotonic phase timing and immediate native v1 commands;
+- exact physical F0 is only known when Gazebo applies the disturbance in `PreUpdate`;
+- ordinary command emission therefore has no prospectively known exact physical-F0 source frontier;
+- a scheduled future target alone does not prove the final pre-target evaluations are already produced, transported, persisted, flushed, and reconciled at an earlier authorization boundary;
+- received sequence contiguity cannot prove no trailing owner evaluation is missing.
+
+The previously approved prospective `[V2,F0)` live population was therefore superseded.
+
+### 7. Prewind Qualification V2 — fixed checkpoint C
+
+Current owner-approved prospective rule:
 
 ```text
-population = every canonical V3 evaluation from first V2 eligibility to F0 exclusive
-checkpoint = one-shot immediately before the frozen F0 opportunity
+PREWIND_POPULATION_V2=[V2_ELIGIBLE,C)
 ```
 
-No 20-second dwell, no F0 movement, no retry-until-PASS, no favorable-state selection, no dynamic prefix shortening, and no window restart.
+with:
 
-A control-inert prefix-completeness seal may be implemented to prove live persistence/reconciliation while writers remain active; end-of-row finalization stays mandatory and separate.
+```text
+[V2,C) = prewind admission
+[C,F0)  = transition observation
+[F0,...) = scientific response
+```
+
+`C` must be prospectively frozen, source-owned, control-independent, non-adaptive, and immutable for the bound execution design.
+
+This is explicitly a qualification/admission contract revision:
+
+```text
+SCIENTIFIC_EXPERIMENT_DESIGN_CHANGED=false
+QUALIFICATION_ADMISSION_CONTRACT_CHANGED=true
+PREWIND_QUALIFICATION_CONTRACT_DELTA=[V2,F0) -> [V2,C)
+CONTROL_SEMANTIC_DELTA=NONE
+FAST_SEMANTIC_DELTA=NONE
+DISTURBANCE_SEMANTIC_DELTA=NONE
+PHASE_D_METRIC_SEMANTIC_DELTA=NONE
+```
+
+Physical F0 remains native Gazebo application truth.
 
 ## Current milestone gate
 
+Current state:
+
 ```text
-canonical V3 -> prewind semantic mapping
-→ predicate-by-predicate historical audit
-→ fixed-prefix completeness mechanism
-→ minimal native-F0 wiring
-→ exact execution-harness qualification
-→ Astra independent audit
-→ freeze only actually missing scientific conditions
-→ Phase-D runtime
-→ eight contract-qualified usable conditions
-→ combined characterization
-→ bottleneck classification
+INFRASTRUCTURE_LAUNCH_ATTEMPTS=7
+F0_REACHED_ACQUISITION_ATTEMPTS=6
+RECORDED_USABLE_CONDITIONS=5_UNCHANGED_PENDING_PREWIND_REVIEW
+CHECKPOINT_C_CANONICAL_BINDING=PENDING
+PREWIND_PREFIX_SEAL=NOT_IMPLEMENTED
+EXACT_EXECUTION_HARNESS_GATE=NOT_COMPLETED
+READY_FOR_PHASE_D_RUNTIME=false
+READY_FOR_FAST_CHALLENGER_SELECTION=false
 ```
 
-No FAST replacement algorithm is selected at this stage.
+Immediate sequence:
+
+```text
+identify/freeze exact canonical C
+-> owner upper-watermark through C
+-> writer flush/accounting through C
+-> C1/E8 reconciliation through C
+-> one-shot disturbance authorization
+-> adversarial exact execution harness
+-> Astra independent audit
+-> historical comparability / missing-condition decision
+-> execution binding
+-> Phase-D runtime
+```
+
+No scientific runtime is authorized before the exact harness passes.
 
 ## Evidence retention rule
 
-Formal roots, failed attempts, and historical results remain immutable. Prospective repairs and derived artifacts add lineage; they do not erase prior failures or transform unfavorable valid science into a rerunnable condition.
+Formal roots, failed attempts, historical audits, and superseded owner decisions remain immutable lineage. New prospective qualification decisions do not rewrite historical classifications.
