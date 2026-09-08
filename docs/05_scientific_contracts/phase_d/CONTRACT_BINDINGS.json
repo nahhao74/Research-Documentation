@@ -1,0 +1,35 @@
+{
+  "schema_version": "PHASE_D_CONTRACT_BINDINGS_V1",
+  "snapshot_date": "2026-09-08",
+  "baseline_id": "B0_PX4_AURA_FAST_T1_C1_CURRENT",
+  "metric_contract": {
+    "id": "PHASE_D_B0_METRICS_V1_1",
+    "source_repo_path": "reports/phase_d_metrics_campaign_freeze_v1_1/phase_d_metrics_contract_v1_1.json",
+    "sha256": "5928dceea0a6e8e745f94282f7834bc268d0c10ccf61f2ccc4b424d43b78ed93"
+  },
+  "campaign_manifest": {
+    "id": "PHASE_D_B0_CALM_WIND_CHARACTERIZATION_V1",
+    "source_repo_path": "reports/phase_d_metrics_campaign_freeze_v1_1/phase_d_campaign_manifest_v1_1.json",
+    "sha256": "dfab451d58f45e087fc9b25ab5eb9866bbff8e8d8ac6bd0475dffe25c1a2d247",
+    "rows_sha256": "18a71d0f95447f0e47f0d4643a679e91ec0ffb9470f7930f52f13f384ff62c39"
+  },
+  "d0_source": {
+    "root": "/media/nahhao74/KINGSTON/Detect_and_Response/d0_v3_calm_readiness_20260907_02",
+    "formal_result": "PASS_D0_V3_READINESS",
+    "report_sha256": "0114c2531e323ba659f97c9bb9298149b54a6c741c2476e101f6414b72e800be",
+    "readiness_report_sha256": "032b726472f0cdb75e17bdf541d9cf9ef786188ba10918a61f224c8bb81c6a2e",
+    "provenance_sha256": "eab327a08932e29827c0ef2f2b83af8ba0fe4ac6deace18390ba3f03f16c302c"
+  },
+  "canonical_px4": {
+    "git_head": "85df8c2281c2466b30a121b22b0bf33dc69bcfe4",
+    "binary_sha256": "e61b09f974fa2a5211753f6c6b8cc5270539291493b12a5711d86badfdd42d8d"
+  },
+  "policy": {
+    "performance_thresholds": "NONE_FROZEN_DESCRIPTIVE_ONLY",
+    "retry_until_favorable": false,
+    "adaptive_changes": false,
+    "challenger_selection": "NOT_PERFORMED",
+    "prewind_min_dwell_20s": "NOT_FROZEN_NOT_REQUIRED"
+  },
+  "mirror_policy": "Research-Documentation stores bindings/hashes and human-readable contract summaries. Byte-canonical machine artifacts remain authoritative in the source repository and KINGSTON evidence roots."
+}
