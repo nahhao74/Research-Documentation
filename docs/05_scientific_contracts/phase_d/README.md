@@ -1,8 +1,8 @@
 # Phase-D B0 Frozen Scientific Contract
 
-This directory is the documentation-layer binding for the frozen Phase-D B0 contract. Byte-canonical machine artifacts remain authoritative in the source repository and KINGSTON evidence roots; this repository stores verified hashes, design semantics, and navigation.
+This directory is the documentation-layer binding for the frozen Phase-D B0 science plus approved qualification amendments. Byte-canonical machine artifacts remain authoritative in the source repository and KINGSTON evidence roots; this repository stores verified hashes, human-readable semantics, and explicit prospective qualification lineage.
 
-## Canonical identities
+## Canonical scientific identities
 
 ```text
 BASELINE_ID=B0_PX4_AURA_FAST_T1_C1_CURRENT
@@ -15,9 +15,10 @@ CAMPAIGN_ROWS_SHA256=18a71d0f95447f0e47f0d4643a679e91ec0ffb9470f7930f52f13f384ff
 ## Files
 
 - [`CONTRACT_BINDINGS.json`](CONTRACT_BINDINGS.json) — verified source paths, SHA-256 identities, D0/PX4 bindings, and mirror policy.
-- [`CAMPAIGN_DESIGN.md`](CAMPAIGN_DESIGN.md) — human-readable frozen eight-condition design, F0–F4 semantics, phase boundaries, and prewind rule.
+- [`CAMPAIGN_DESIGN.md`](CAMPAIGN_DESIGN.md) — human-readable frozen eight-condition scientific design and F0–F4 metric semantics.
+- [`PREWIND_QUALIFICATION_V2.md`](PREWIND_QUALIFICATION_V2.md) — approved prospective qualification/admission revision using fixed checkpoint `C`.
 
-Canonical source artifacts are bound by hash to:
+Canonical source artifacts are hash-bound to:
 
 ```text
 reports/phase_d_metrics_campaign_freeze_v1_1/phase_d_metrics_contract_v1_1.json
@@ -35,16 +36,49 @@ performance thresholds = NONE_FROZEN_DESCRIPTIVE_ONLY
 adaptive changes = false
 retry until favorable = false
 FAST challenger selection = NOT_PERFORMED
+physical F0 = native Gazebo application truth
 ```
 
-The contract requires the qualified `PHASE_D0_PHASE_D_READINESS_V3 / V3_RUNTIME_START_EVENT_V2` one-shot readiness gate before scheduled native disturbance.
+A 20-second Phase-D prewind dwell is not frozen or required.
 
-A 20-second Phase-D prewind dwell is **not** frozen or required.
+## Qualification amendment V2
 
-Current implementation work may add only control-inert measurement/orchestration required to prove the fixed prewind evidence prefix and place the gate on the native-F0 path. It must not change scientific metric meanings, disturbance/reference, control mathematics, or retry policy.
+The earlier prospective attempt to use the complete live population `[V2_ELIGIBLE,F0)` was superseded after source/frontier audits showed that the ordinary Phase-D path cannot know the exact physical-F0 source frontier before command emission and cannot guarantee the late pre-F0 suffix is live-complete at that earlier decision boundary.
+
+Current prospective admission rule:
+
+```text
+PREWIND_POPULATION_V2=[V2_ELIGIBLE,C)
+```
+
+with:
+
+```text
+[V2,C) = prewind admission
+[C,F0)  = transition observation
+[F0,...) = scientific response
+```
+
+`C` must be prospectively frozen, source-owned, control-independent, non-adaptive, and immutable for the bound execution design.
+
+The qualification revision is explicitly accounted as:
+
+```text
+SCIENTIFIC_EXPERIMENT_DESIGN_CHANGED=false
+QUALIFICATION_ADMISSION_CONTRACT_CHANGED=true
+PREWIND_QUALIFICATION_CONTRACT_DELTA=[V2,F0) -> [V2,C)
+CONTROL_SEMANTIC_DELTA=NONE
+FAST_SEMANTIC_DELTA=NONE
+DISTURBANCE_SEMANTIC_DELTA=NONE
+PHASE_D_METRIC_SEMANTIC_DELTA=NONE
+```
+
+The concrete canonical binding of `C`, live owner upper-watermark, writer flush, C1/E8 reconciliation, and exact execution harness are still pending. Runtime is not authorized.
 
 ## Related current evidence
 
 - Current status: `../../00_overview/CURRENT_STATUS.md`
 - Phase-D evidence index: `../../03_evidence/phase_d/README.md`
-- Owner checkpoint decision: `../../03_evidence/phase_d/prewind/PREWIND_CHECKPOINT_DECISION_20260908.md`
+- Current checkpoint-C decision: `../../03_evidence/phase_d/prewind/PREWIND_CHECKPOINT_C_DECISION_20260908.md`
+- Source-frontier audit: `../../03_evidence/phase_d/prewind/SOURCE_FRONTIER_BINDING_AUDIT_20260908.md`
+- Scheduled-frontier audit: `../../03_evidence/phase_d/prewind/SCHEDULED_FRONTIER_AUDIT_20260908.md`
