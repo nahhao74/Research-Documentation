@@ -1,292 +1,172 @@
-# Current Status — 2026-09-07
+# Current Status — 2026-09-08
 
 ## Executive state
 
-The active mainline is now **D0 V3 causal-observability/readiness closure before Phase D FAST bottleneck measurement**.
-
-The previous WM randomized-science track remains historically valid but is not the current executable priority. `G_action` training/scientific admission remains blocked; SEALED remains locked; production authority remains false.
-
-The latest formal D0 root is immutable `_04`:
+The active mainline is **Phase-D B0 characterization closure**. Formal D0 V3 readiness has closed successfully; the current blocker is no longer D0 itself.
 
 ```text
-ROOT=/media/nahhao74/KINGSTON/Detect_and_Response/d0_v3_calm_readiness_20260906_04
-RESULT=UNKNOWN_MISSING_EVIDENCE
-TOTAL_REQUIRED=4001
-ACCOUNTED=4001
-VALID_CONTROL=2879
-EXPLAINED_CONTROL_UNAVAILABLE=1094
-UNEXPLAINED_CONTROL_UNAVAILABLE=28
+BASELINE_ID=B0_PX4_AURA_FAST_T1_C1_CURRENT
+D0_INFRASTRUCTURE_CLOSED=true
+FORMAL_D0_DECISION=PASS_D0_V3_READINESS
+READY_FOR_PHASE_D_RUNTIME=false
+READY_FOR_FAST_CHALLENGER_SELECTION=false
 ```
 
-After the prospective explained-cause registry was frozen and `_04` replayed read-only:
+Current accounting remains:
 
 ```text
-DERIVED_04_VALID=2879
-DERIVED_04_EXPLAINED=1116
-DERIVED_04_NOT_READY=5
-DERIVED_04_UNKNOWN=1
+INFRASTRUCTURE_LAUNCH_ATTEMPTS=7
+F0_REACHED_ACQUISITION_ATTEMPTS=6
+RECORDED_USABLE_CONDITIONS=5_UNCHANGED_PENDING_PREWIND_AUDIT
 ```
 
-The remaining semantic blockers are:
+No control, FAST, scientific, or metric semantic change is currently authorized.
+
+## What is already closed
+
+### D0 V3 readiness
+
+Fresh canonical root:
 
 ```text
-1 × CAUSAL_EXPECTED_AVAILABLE=false
-    -> UNKNOWN pending fresh expected-setpoint owner-time provenance
-
-5 × motor_command_stale_or_missing
-    -> NOT_READY_CONTROL_UNAVAILABLE
-    -> must not be explained away
-```
-
-The latest diagnostic provenance probe did not reach collection because canonical DATA0 failed precollector startup at:
-
-```text
-FIRST_FAILED_PROOF_OBLIGATION=runtime_source_counter_attestation:trace_attestation_marker_missing
-ROOT_CAUSE=CANONICAL_DATA0_PRECOLLECTOR_TRACE_ATTESTATION_MARKER_ABSENT
-```
-
-This is a measurement/lifecycle infrastructure failure, not a FAST/AURA/W20/C1/E8 control defect.
-
-## Current canonical state
-
-```text
-D0_CONTRACT=PHASE_D0_PHASE_D_READINESS_V3
-D0_FORMAL_CLOSURE=false
-READY_FOR_PHASE_D=false
-
-V3_RUNTIME_BINDING=QUALIFIED
-V3_CONCRETE_DATA0_BACKEND=QUALIFIED
-V3_STARTUP_TRACE_STATE_MACHINE=QUALIFIED
-V3_AURA_OWNER_OPERAND_LEDGER=QUALIFIED
-V3_DOWNSTREAM_EVALUATION_CORRESPONDENCE=QUALIFIED
-V3_E8_SECONDARY_EVIDENCE_INGESTION=QUALIFIED
-REFERENCE_COLLECTOR_CLEANUP=QUALIFIED
-V3_EXPLAINED_CAUSE_REGISTRY=V3_EXPLAINED_CAUSE_REGISTRY_V1
-
-KNOWN_REASON_COUNT=24_PLUS_UNKNOWN_FALLBACK
-UNMAPPED_KNOWN_REASON_COUNT=0
-
-CURRENT_BLOCKER=DATA0_PRECOLLECTOR_STARTUP_ATTESTATION_CONTRACT
-NEXT_RUNTIME_ACTION=NONE_UNTIL_OFFLINE_STARTUP_CONTRACT_CLOSED
-```
-
-## What D0 V3 has already proven
-
-### Production runtime and fixed window
-
-Formal roots `_02`, `_03`, and `_04` completed a fixed 20 s V3 observation window with exact evaluation accounting.
-
-Root `_04` proved:
-
-```text
-TOTAL_REQUIRED=4001
-ACCOUNTED=4001
-OWNER_SEQUENCE_DUPLICATES=0
-OWNER_SEQUENCE_OMISSIONS=0
-RECORDER_MALFORMED=0
-RECORDER_DROPS=0
-RECORDER_GAPS=0
-WRITER_ERRORS=0
-TRACE_FINALIZATION=PASS
-REFERENCE_COLLECTOR=DEAD_AND_REAPED
-```
-
-### Owner-side causal evidence
-
-The canonical owner ledger now records at the actual decision sites:
-
-```text
-M3 ordered predicates + actual first-false
-runtime-gate operands
-attitude owner-time lookup provenance
-velocity owner-time lookup provenance
-expected-state lookup provenance schema
-existing aura-shadow diagnostic identity
-```
-
-Frozen M3 order:
-
-```text
-SOURCE_IDENTITY_VALID
-→ RESET_GENERATION_UNCHANGED
-→ CALIBRATION_UNCHANGED
-→ CAUSAL_ATTITUDE_AVAILABLE
-→ CAUSAL_EXPECTED_AVAILABLE
-```
-
-Runtime-gate operands:
-
-```text
-ACCELERATION_AVAILABLE
-→ ARMED
-→ COMMAND_FRESH
-```
-
-### Exact downstream correspondence
-
-One diagnostic identity remains control-inert:
-
-```text
-aura-shadow:<sequence>
-```
-
-It joins:
-
-```text
-AURA evaluation
-→ W20
-→ C1
-→ E8
-```
-
-while never replacing source frontier, reset identity, native generation, ingress generation or PX4 audit identity.
-
-Root `_04` established:
-
-```text
-W20_CORRESPONDENCE=4001/4001
-C1_CORRESPONDENCE=4001/4001
-E8_EXACT_DIAGNOSTIC_ID_MATCHES=4001
-E8_EXACT_C1_ID_MATCHES=4001
-E8_UNMATCHED_REQUIRED_EVALUATIONS=0
-E8_DUPLICATES=0
-E8_MALFORMED=0
-E8_FINALIZATION=PASS
-```
-
-### Explained-cause registry
-
-`V3_EXPLAINED_CAUSE_REGISTRY_V1` is frozen prospectively.
-
-Examples:
-
-```text
-M3 attitude stale
-→ EXPLAINED_CONTROL_UNAVAILABLE(ATTITUDE_FRESHNESS)
-
-M3 attitude NO_CANDIDATE
-→ EXPLAINED_CONTROL_UNAVAILABLE(CAUSAL_ATTITUDE_UNAVAILABLE)
-
-motor warmup
-→ EXPLAINED_CONTROL_UNAVAILABLE(MOTOR_WARMUP)
-
-W20 no causal baseline
-→ EXPLAINED_CONTROL_UNAVAILABLE(W20_NOT_READY_NO_CAUSAL_BASELINE)
-
-motor_command_stale_or_missing
-→ NOT_READY_CONTROL_UNAVAILABLE
-
-CAUSAL_EXPECTED_AVAILABLE=false
-→ UNKNOWN pending fresh owner-time provenance and owner disposition
-```
-
-A future D0 PASS now requires all of:
-
-```text
-UNKNOWN_MISSING_EVIDENCE=0
-NOT_READY_CONTROL_UNAVAILABLE=0
+ROOT=/media/nahhao74/KINGSTON/Detect_and_Response/d0_v3_calm_readiness_20260907_02
+RESULT=PASS_D0_V3_READINESS
+TOTAL_REQUIRED=4000
+ACCOUNTED=4000
+VALID_CONTROL=2537
+EXPLAINED_CONTROL_UNAVAILABLE=1463
+NOT_READY=0
 READINESS_FAILURE=0
-INVARIANT_VIOLATION=0
+INVARIANT=0
+UNKNOWN=0
+W20/C1/E8=4000/4000
 ```
 
-`EXPLAINED_CONTROL_UNAVAILABLE` is allowed only for registry-approved, exact-evidence fail-closed states.
+### Phase-D infrastructure closures
 
-## Current blocker — DATA0 precollector startup contract
+Three separate infrastructure defects have been diagnosed without inferring a control defect:
 
-The first expected/motor provenance probe is immutable and inconclusive:
+1. **Original slot-5 C1 retention gap** — prospective C1 callback/persistence accounting qualified.
+2. **Option-B slot-5 NaN serialization** — standards-compliant `null + mask/count/index` representation qualified; read-only derived requalification preserved F0–F4 and latency.
+3. **V2 slot-6 runtime-attestation closure bug** — `runtime_attestation_emitted` closure binding repaired with minimal `nonlocal` change; affected regressions passed.
+
+Historical failed roots remain immutable.
+
+## Frozen Phase-D scientific contract
 
 ```text
-ROOT=/media/nahhao74/KINGSTON/Detect_and_Response/v3_expected_motor_provenance_probe_20260906_01
-RESULT=PROBE_INCONCLUSIVE_INVALID_MEASUREMENT_INFRASTRUCTURE_PRECOLLECTOR
+METRIC_CONTRACT_ID=PHASE_D_B0_METRICS_V1_1
+METRIC_CONTRACT_SHA256=5928dceea0a6e8e745f94282f7834bc268d0c10ccf61f2ccc4b424d43b78ed93
+CAMPAIGN_MANIFEST_SHA256=dfab451d58f45e087fc9b25ab5eb9866bbff8e8d8ac6bd0475dffe25c1a2d247
+PLANNED_SCIENTIFIC_CONDITIONS=8
+PERFORMANCE_THRESHOLDS=NONE_FROZEN_DESCRIPTIVE_ONLY
+RETRY_UNTIL_FAVORABLE=false
+ADAPTIVE_CHANGES=false
+FAST_CHALLENGER_SELECTION=NOT_PERFORMED
 ```
 
-Collector never started, so the probe produced no evidence about expected-state failures or motor-command failures.
-
-The current task is an **offline global precollector startup/lifecycle audit**, not a single marker patch.
-
-It must close the dependency chain:
+No 20-second Phase-D prewind dwell is frozen:
 
 ```text
-bootstrap
-→ root/row initialization
-→ trace writer process start
-→ source-counter attestation
-→ trace-attestation readiness
-→ trace measurement-ready
-→ runtime-child eligibility
-→ collector eligibility
-→ collector start
-→ acquisition
+PHASE_D_PREWIND_MIN_DWELL_20S=NOT_FROZEN_NOT_REQUIRED
 ```
 
-Required anti-whack-a-mole outcomes:
+## Current blocker — prewind evidence boundary
+
+The Phase-D contract requires the qualified:
 
 ```text
-UNMAPPED_PRECOLLECTOR_OBLIGATION_COUNT=0
-CYCLIC_DEPENDENCY_COUNT=0
-IMPLICIT_FILE_EXISTENCE_ASSUMPTION_COUNT=0
-ARBITRARY_SLEEP_DEPENDENCY_COUNT=0
+PHASE_D0_PHASE_D_READINESS_V3 / V3_RUNTIME_START_EVENT_V2
 ```
 
-## Next execution sequence
+readiness gate before scheduled native disturbance.
+
+Source audit established that historical Phase-D `_run_row()` did not canonical-enforce the complete V3/V2 prewind gate on the F0 path, and retained slots 1–5 do not contain the canonical runtime-attestation marker / `TRACE_MEASUREMENT_READY` transition.
+
+This absence does **not** prove the underlying physical/control readiness predicates failed.
+
+Canonical replay of each historical pre-F0 population using finalized downstream evidence produced complete accounting with zero unknown/not-ready states. The unresolved question is whether the required evidence was complete **contemporaneously before F0**, not whether it eventually exists.
+
+Therefore slots 1–5 remain:
 
 ```text
-NOW
-1. offline DATA0 precollector startup/attestation contract audit + deterministic repair
-2. offline qualification; no real UAV runtime
-3. one new expected/motor provenance probe if startup contract passes
-4. resolve CAUSAL_EXPECTED_AVAILABLE disposition
-5. resolve root cause of motor_command_stale_or_missing while retaining NOT_READY until proven otherwise
-6. freeze final registry/evaluator
-7. exactly one fresh D0 V3 qualification root
-8. if UNKNOWN=0, NOT_READY=0, READINESS_FAILURE=0, INVARIANT_VIOLATION=0 -> D0 CLOSED
-9. freeze Phase-D measurement campaign
-10. measure actual FAST bottleneck
+HISTORICAL_PREWIND_STATUS=UNKNOWN_MISSING_FROZEN_PREWIND_EVIDENCE
+HISTORICAL_CONTROL_FAILURE=NOT_INFERRED
+RECORDED_USABLE_CONDITIONS=5_UNCHANGED
 ```
 
-## FAST / Phase D boundary
+## Owner-approved prospective checkpoint rule
 
-No replacement FAST algorithm is selected.
-
-Do not optimize FAST before D0 closes. Phase D must first measure:
+The prewind population is now prospectively fixed as:
 
 ```text
-source age / AoI
-F0→F4 latency and F5 diagnostic plant response
-ONSET / SUSTAINED / CLEAR behavior
-peak position/velocity error
-RMSE
-recovery
-overshoot
-control effort
-TV / jerk
-projection / saturation / headroom
+PREWIND_POPULATION_START = first canonical evaluation satisfying V3_RUNTIME_START_EVENT_V2
+PREWIND_POPULATION_END_EXCLUSIVE = frozen scheduled F0 source frontier
+PREWIND_POPULATION = [V2 eligibility, scheduled F0)
 ```
 
-Only after the dominant limitation is measured may a smallest-justified challenger be selected.
-
-## World Model / WISE boundary
-
-Frozen scientific target remains:
+The decision occurs once, immediately before the frozen F0 opportunity:
 
 ```text
-G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
-B = active PX4 + AURA + current FAST/T1/C1 baseline
+PASS    -> F0 eligible
+FAIL    -> F0 forbidden
+UNKNOWN -> F0 forbidden
+INFRASTRUCTURE_INVALID -> F0 forbidden
 ```
 
-World-Model training remains blocked until a complete valid causal dataset is separately admitted. D0/Phase-D control-readiness work does not authorize WM training or SEALED access.
-
-## Hard invariants
+The system must not:
 
 ```text
-PX4 inner loops remain authoritative
-FAST remains immediate disturbance-response path
-WM/WISE must not block first response
-candidate action remains bounded incremental augmentation
-StateBank remains causal/always warm
-missing/stale unsupported evidence fails closed
-failed roots remain immutable
-large runtime artifacts remain on /media/nahhao74/KINGSTON
-production_authority=false
-SEALED=LOCKED_PRE_EVALUATION
+move F0
+wait beyond F0
+retry until PASS
+select favorable control state
+shorten the population to an already-complete prefix
+restart the window
 ```
+
+A **control-inert prewind prefix-completeness seal** may be implemented to prove that every evaluation in the closed prefix has the required identity/evidence persisted and reconciled before F0 while writers remain alive.
+
+This prefix seal is not end-of-row finalization. Writer/C1/E8/collector/lifecycle/strict-JSON/result finalization remains independently mandatory after the row.
+
+## Immediate next task
+
+Offline only:
+
+```text
+1. finish canonical V3 -> prewind semantic mapping
+2. complete predicate-by-predicate historical audit
+3. define exact live prefix-completeness mechanism
+4. implement minimal measurement/orchestration wiring
+5. qualify exact production execution harness
+6. Astra independently audits all evidence
+```
+
+No scientific Phase-D runtime or new execution binding is authorized until the exact harness passes.
+
+Required harness properties include:
+
+```text
+FALSE_PREWIND_PASS_COUNT=0
+F0_BEFORE_PREWIND_PASS_COUNT=0
+FAIL_ALLOWED_F0_COUNT=0
+UNKNOWN_ALLOWED_F0_COUNT=0
+INCOMPLETE_PREFIX_ALLOWED_F0_COUNT=0
+DYNAMIC_PREFIX_SHORTEN_COUNT=0
+FAVORABLE_STATE_RETRY_COUNT=0
+WINDOW_RESTART_COUNT=0
+F0_SCHEDULE_SHIFT_COUNT=0
+```
+
+## Completion target
+
+Phase-D closes only when one contract-qualified usable binding exists for all eight planned conditions, all historical invalid attempts remain visible, frozen control/scientific/metric semantics remain unchanged, and the combined characterization is independently audited.
+
+Only then may the project decide whether evidence supports FAST challenger design review or requires additional characterization.
+
+## Authoritative documents
+
+- Phase-D evidence index: `../03_evidence/phase_d/README.md`
+- Phase-D frozen contract package: `../05_scientific_contracts/phase_d/README.md`
+- Current execution ladder: `CURRENT_EXECUTION_LADDER_PHASE_D_20260908.md`
+- D0 V3 evidence index: `../03_evidence/d0_v3/REPORT_INDEX.md`
