@@ -1,6 +1,6 @@
 # Phase-D B0 Evidence Index
 
-This directory is the canonical compact evidence package for **Phase-D B0 characterization**. Large runtime roots and telemetry stay on `/media/nahhao74/KINGSTON`; Git stores contracts, reports, machine-readable results, audit summaries, and hash ledgers.
+This directory is the canonical compact evidence package for **Phase-D B0 characterization**. Large runtime roots and telemetry remain under `/media/nahhao74/KINGSTON`; Git stores compact audit reports, lineage, decisions, hashes, and human-readable bindings.
 
 ## Current state
 
@@ -9,12 +9,14 @@ D0_INFRASTRUCTURE_CLOSED=true
 FORMAL_D0_DECISION=PASS_D0_V3_READINESS
 READY_FOR_PHASE_D_RUNTIME=false
 READY_FOR_FAST_CHALLENGER_SELECTION=false
+EXACT_EXECUTION_HARNESS_GATE=NOT_COMPLETED
 
 INFRASTRUCTURE_LAUNCH_ATTEMPTS=7
 F0_REACHED_ACQUISITION_ATTEMPTS=6
-RECORDED_USABLE_CONDITIONS=5_UNCHANGED_PENDING_PREWIND_AUDIT
+RECORDED_USABLE_CONDITIONS=5_UNCHANGED_PENDING_PREWIND_REVIEW
 
-CURRENT_BLOCKER=PHASE_D_PREWIND_EVIDENCE_BOUNDARY_AND_LIVE_PREFIX_COMPLETENESS
+CURRENT_BLOCKER=CHECKPOINT_C_CANONICAL_BINDING_AND_PREFIX_COMPLETENESS
+QUALIFICATION_ADMISSION_CONTRACT_CHANGED=true
 ```
 
 For authoritative current status, read `../../00_overview/CURRENT_STATUS.md` first.
@@ -25,34 +27,22 @@ For authoritative current status, read `../../00_overview/CURRENT_STATUS.md` fir
 phase_d/
 ├── README.md
 ├── campaign/
-│   ├── PHASE_D_B0_CHARACTERIZATION_REPORT.md
-│   └── phase_d_b0_campaign_result.json
+│   └── CAMPAIGN_STATUS.md
 ├── closures/
-│   ├── PHASE_D_C1_MUTATION_TRACE_CLOSURE_REPORT.md
-│   ├── PHASE_D_NAN_SERIALIZATION_CLOSURE_REPORT.md
-│   ├── derived_slot5_postprocess_requalification.json
-│   └── PHASE_D_RUNTIME_ATTESTATION_CLOSURE_REPORT.md
-├── continuation/
-│   ├── PHASE_D_B0_CONTINUATION_FREEZE_REPORT.md
-│   ├── phase_d_b0_continuation_manifest.json
-│   ├── PHASE_D_B0_CONTINUATION_RUNTIME_REPORT.md
-│   ├── phase_d_b0_continuation_runtime_result.json
-│   ├── PHASE_D_B0_CONTINUATION_REFREEZE_REPORT.md
-│   ├── phase_d_b0_continuation_manifest_v2.json
-│   ├── PHASE_D_B0_CONTINUATION_RUNTIME_REPORT_V2.md
-│   └── phase_d_b0_continuation_runtime_result_v2.json
-├── prewind/
-│   ├── PHASE_D_PREWIND_HISTORICAL_AUDIT_20260908.md
-│   ├── PREWIND_PREDICATE_AUDIT_20260908.md
-│   ├── PREWIND_CHECKPOINT_DECISION_20260908.md
-│   └── evidence/
-│       ├── HISTORICAL_EVIDENCE_HASHES_20260908.json
-│       └── REPLAY_INPUT_HASHES_20260908.json
-└── sync/
-    └── PHASE_D_SYNC_MANIFEST_20260908.json
+│   └── CLOSURE_SUMMARY.md
+└── prewind/
+    ├── PHASE_D_PREWIND_HISTORICAL_AUDIT_20260908.md
+    ├── PREWIND_PREDICATE_AUDIT_20260908.md
+    ├── PREWIND_CHECKPOINT_DECISION_20260908.md          # superseded historical rule
+    ├── PREWIND_CHECKPOINT_C_DECISION_20260908.md        # current owner decision
+    ├── SOURCE_FRONTIER_BINDING_AUDIT_20260908.md
+    ├── SCHEDULED_FRONTIER_AUDIT_20260908.md
+    └── evidence/
+        ├── HISTORICAL_EVIDENCE_HASHES_20260908.json
+        └── REPLAY_INPUT_HASHES_20260908.json
 ```
 
-Frozen scientific contract files are stored separately under:
+Frozen scientific/qualification contract bindings are stored separately under:
 
 ```text
 ../../../05_scientific_contracts/phase_d/
@@ -62,25 +52,19 @@ Frozen scientific contract files are stored separately under:
 
 ### 1. Original Phase-D campaign
 
-The original B0 campaign reached four valid measured conditions, then stopped on the original slot-5 C1 trace-retention defect.
-
-The four measured rows retain descriptive latency evidence, but their final formal admission remains subject to the current prewind audit.
+The original B0 campaign produced four measured rows before stopping on the original slot-5 C1 trace-retention defect. Those rows remain recorded descriptive evidence but final formal admission remains subject to the prewind qualification/comparability audit.
 
 ### 2. C1 trace closure
 
-Root cause:
+Original root cause:
 
 ```text
 CANONICAL_C1_TRACE_RETENTION_GAP_INTERNAL_CALLBACK_VS_PERSISTENCE_HOP_UNPROVEN
 ```
 
-Prospective closure introduced explicit callback/persistence/drop/error/gap/finalization accounting under:
+Prospective closure introduced explicit callback/persistence/drop/error/gap/finalization accounting under `V3_C1_TRACE_WRITER_ACCOUNTING_V1`.
 
-```text
-V3_C1_TRACE_WRITER_ACCOUNTING_V1
-```
-
-### 3. Option-B slot-5 postprocessing closure
+### 3. Slot-5 strict-JSON closure
 
 The later slot-5 acquisition completed runtime evidence but failed strict JSON serialization because fixed-width `ActuatorMotors.control[4..11]` contained expected non-finite PX4 padding.
 
@@ -97,60 +81,84 @@ Read-only derived requalification preserved F0–F4 and latency exactly.
 
 ### 4. V2 slot-6 attestation implementation closure
 
-The first refrozen slot-6 attempt stopped precollector/pre-F0 on:
+The first refrozen slot-6 attempt stopped precollector/pre-F0 on `UnboundLocalError: runtime_attestation_emitted`. Minimal closure binding repair qualified offline. The failed root remains immutable and is not salvageable as a scientific row because it never reached F0.
+
+### 5. Historical prewind audit
+
+Historical slots 1–5 lack canonical contemporaneous attestation / `TRACE_MEASUREMENT_READY` evidence. Canonical replay proves their retained pre-F0 evaluation populations are eventually accountable with finalized downstream evidence, but not that all required evidence was available live before historical F0.
+
+Therefore:
 
 ```text
-UnboundLocalError: runtime_attestation_emitted
+HISTORICAL_ORIGINAL_PREWIND_STATUS=UNKNOWN_MISSING_FROZEN_PREWIND_EVIDENCE
+HISTORICAL_CONTROL_FAILURE=NOT_INFERRED
 ```
 
-Minimal closure binding repair qualified offline. The failed root remains immutable and is not salvageable as a scientific row because it never reached F0.
+### 6. Full-prefix `[V2,F0)` boundary audit
 
-### 5. Current prewind evidence boundary
+Two subsequent source/frontier audits established that the ordinary Phase-D path cannot safely use physical F0 as the live pre-emission population end:
 
-Historical slots 1–5 lack the canonical contemporaneous attestation artifact / `TRACE_MEASUREMENT_READY` lifecycle transition.
+- ordinary commands are immediate native v1 commands driven by host-monotonic phase timing;
+- exact physical F0 is only known at native Gazebo application;
+- enabling scheduled-native v2 alone would change timing ownership and does not prove ordinary-path comparability;
+- a future target still does not prove the final pre-target evaluations are already produced/persisted/reconciled at an earlier decision boundary;
+- sequence contiguity cannot detect a missing suffix without an owner upper-watermark.
 
-Canonical replay proves their retained pre-F0 evaluation populations are eventually accountable when finalized downstream evidence is supplied, but does not prove that all required evidence was already complete at live F0 time.
+The earlier `[V2,F0)` owner decision is therefore preserved as superseded lineage, not current authority.
 
-Therefore current historical disposition remains:
+### 7. Current checkpoint-C qualification decision
+
+Current prospective admission population:
 
 ```text
-UNKNOWN_MISSING_FROZEN_PREWIND_EVIDENCE
+PREWIND_POPULATION_V2=[V2_ELIGIBLE,C)
 ```
 
-This is not a control-failure claim.
-
-## Owner-approved prospective prewind rule
+`C` must be prospectively frozen, source-owned, control-independent, non-adaptive, and immutable for the bound execution design.
 
 ```text
-population_start = first canonical evaluation satisfying V3_RUNTIME_START_EVENT_V2
-population_end_exclusive = frozen scheduled native F0 source frontier
-population = [start, F0)
+[V2,C) = prewind admission population
+[C,F0)  = transition observation
+[F0,...) = Phase-D scientific response
 ```
 
-At the one-shot F0 authorization point:
+Physical F0 remains unchanged as native application truth for metrics.
+
+At the existing disturbance opportunity:
 
 ```text
-PASS -> F0 eligible
-FAIL / UNKNOWN / INFRA_INVALID -> F0 forbidden and row stops
+sealed PASS over [V2,C) -> disturbance eligible
+FAIL / UNKNOWN / incomplete / infra invalid -> no disturbance; retain root; stop
 ```
 
-No dwell, F0 shift, favorable-state retry, dynamic prefix shortening, or window restart is allowed.
+No waiting, retry-until-PASS, F0 shift, favorable-state selection, dynamic C selection, dynamic prefix shortening, window restart, or 20-second dwell is allowed.
 
-A control-inert prefix-completeness seal may prove closed-prefix evidence persistence while writers remain live. End-of-row finalization remains separate and mandatory.
+## Qualification-contract accounting
+
+```text
+SCIENTIFIC_EXPERIMENT_DESIGN_CHANGED=false
+QUALIFICATION_ADMISSION_CONTRACT_CHANGED=true
+PREWIND_QUALIFICATION_CONTRACT_DELTA=[V2,F0) -> [V2,C)
+CONTROL_SEMANTIC_DELTA=NONE
+FAST_SEMANTIC_DELTA=NONE
+DISTURBANCE_SEMANTIC_DELTA=NONE
+PHASE_D_METRIC_SEMANTIC_DELTA=NONE
+```
 
 ## Read order inside Phase-D
 
 1. `../../00_overview/CURRENT_STATUS.md`
 2. `README.md` (this file)
 3. `../../../05_scientific_contracts/phase_d/README.md`
-4. `prewind/PREWIND_PREDICATE_AUDIT_20260908.md`
-5. `prewind/PREWIND_CHECKPOINT_DECISION_20260908.md`
-6. `closures/PHASE_D_RUNTIME_ATTESTATION_CLOSURE_REPORT.md`
-7. `closures/PHASE_D_NAN_SERIALIZATION_CLOSURE_REPORT.md`
-8. `closures/PHASE_D_C1_MUTATION_TRACE_CLOSURE_REPORT.md`
-9. `campaign/PHASE_D_B0_CHARACTERIZATION_REPORT.md`
-10. `continuation/` for exact attempt lineage.
+4. `../../../05_scientific_contracts/phase_d/PREWIND_QUALIFICATION_V2.md`
+5. `prewind/PREWIND_CHECKPOINT_C_DECISION_20260908.md`
+6. `prewind/SOURCE_FRONTIER_BINDING_AUDIT_20260908.md`
+7. `prewind/SCHEDULED_FRONTIER_AUDIT_20260908.md`
+8. `prewind/PREWIND_PREDICATE_AUDIT_20260908.md`
+9. `prewind/PHASE_D_PREWIND_HISTORICAL_AUDIT_20260908.md`
+10. `closures/CLOSURE_SUMMARY.md`
+11. `campaign/CAMPAIGN_STATUS.md`
 
 ## Integrity rule
 
-Historical reports/results are immutable evidence snapshots. New closures, derived artifacts, or owner decisions do not overwrite the historical classification; they add explicit lineage.
+Historical reports/results and decisions remain immutable lineage. New closures or contract revisions do not overwrite historical classifications; they supersede prospective authority explicitly and preserve the previous state for audit.
