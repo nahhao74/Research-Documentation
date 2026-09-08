@@ -1,6 +1,6 @@
 # Current Execution Ladder — Phase-D B0 — 2026-09-08
 
-This is the authoritative execution ladder for the current Phase-D closure program. It supersedes the D0-only ladder as the active sequence; older dated ladders remain historical evidence.
+This is the authoritative execution ladder for the current Phase-D closure program.
 
 ## State entry
 
@@ -9,126 +9,179 @@ D0_INFRASTRUCTURE_CLOSED=true
 FORMAL_D0_DECISION=PASS_D0_V3_READINESS
 READY_FOR_PHASE_D_RUNTIME=false
 EXACT_EXECUTION_HARNESS_GATE=NOT_COMPLETED
-RECORDED_USABLE_CONDITIONS=5_UNCHANGED_PENDING_PREWIND_AUDIT
+RECORDED_USABLE_CONDITIONS=5_UNCHANGED_PENDING_PREWIND_REVIEW
+QUALIFICATION_ADMISSION_CONTRACT_CHANGED=true
 ```
 
-## Ladder
+## L0 — Frozen science remains unchanged
 
-### L0 — Frozen science remains unchanged
-
-Verify and bind:
+Bind and preserve:
 
 ```text
 B0 = PX4 + AURA + current FAST/T1/C1
 PHASE_D_B0_METRICS_V1_1
-original eight-condition campaign
+original eight scientific conditions
 no performance thresholds
 no adaptive changes
 no retry-until-favorable
-no challenger
+no FAST challenger
 ```
 
-Any material control/scientific/metric change returns to owner review.
+Current qualification-contract revision does not change B0, disturbance/reference, F0–F4 metric semantics, or scientific condition design.
 
-### L1 — Canonical prewind semantic mapping
+## L1 — Canonical V3 readiness semantics
 
-Determine from canonical V3 source:
+Retain the canonical V3 predicates/dispositions and separate:
 
 ```text
-V3_PREDICATES
-V3_DISPOSITIONS
-V3_REQUIRED_EVIDENCE
-V3_PREWIND_DECIDABLE_PREDICATES
-V3_POST_ROW_FINALIZATION_OBLIGATIONS
-V3_FORMAL_FINAL_PASS_REQUIREMENTS
+V2 start-event eligibility
+TRACE_MEASUREMENT_READY
+prewind admission decision
+end-of-row finalization
+formal D0 V3 terminal result
 ```
 
-Do not equate V2 eligibility, `TRACE_MEASUREMENT_READY`, motor readiness, or process liveness with V3 PASS unless the exact semantics prove it.
+Do not replace canonical readiness with motor readiness, PID/process liveness, source counters, or TRACE_MEASUREMENT_READY alone.
 
-### L2 — Fixed prewind population
+## L2 — Prewind Qualification V2
 
-Prospective owner-approved population:
+The earlier prospective live population `[V2_ELIGIBLE,F0)` is superseded for prospective qualification because ordinary Phase-D cannot know exact physical F0 before command emission and cannot prove the late pre-F0 suffix is live-complete before that emission.
+
+Current admission population:
 
 ```text
-start = first canonical V3 evaluation satisfying V3_RUNTIME_START_EVENT_V2
-end_exclusive = frozen scheduled native F0 source frontier
-population = [start, F0)
+start = first canonical V2-eligible evaluation
+end_exclusive = fixed source-owned checkpoint C
+population = [V2_ELIGIBLE, C)
 ```
 
-No 20-second dwell requirement.
+`C` must be prospectively frozen, source-owned, control-independent, non-adaptive, and immutable for the bound execution design.
 
-No dynamic shortening to the latest fully closed prefix.
+No dynamic selection of `C` from latest-complete evidence is permitted.
 
-### L3 — Historical predicate audit
+## L3 — Bind exact checkpoint C
 
-For slots 1–5, evaluate each applicable frozen predicate from retained raw pre-F0 evidence.
+Before implementation/runtime, identify the exact canonical owner of `C`.
 
-Per slot classify exactly one:
+Preference order:
 
 ```text
-PASS_FROZEN_PREWIND_OBLIGATIONS_FROM_RAW_EVIDENCE
-FAIL_FROZEN_PREWIND_OBLIGATION
-UNKNOWN_MISSING_FROZEN_PREWIND_EVIDENCE
+1. existing canonical source-owned lifecycle frontier
+2. existing deterministic evaluation-sequence frontier
+3. explicitly versioned new qualification frontier
 ```
 
-Do not fabricate a historical marker or retroactive live prefix seal.
+Do not choose a numeric offset merely to improve harness feasibility.
 
-Do not change scientific accounting until Astra independently audits the predicate results.
+If no source-owned/control-independent frontier can be bound without changing scientific/control/timing semantics beyond the approved qualification revision, return to owner review.
 
-### L4 — Prefix-completeness mechanism
+## L4 — Interval separation
 
-If existing canonical semantics support the mapping, implement only a control-inert measurement/orchestration mechanism sufficient to close the fixed prewind prefix while writers remain live.
-
-It must prove, for every member of the population, required identity/evidence persistence and reconciliation with no known omission/duplicate/contradiction.
-
-This mechanism must not change control output, freshness, rate, QoS, disturbance timing, or science.
-
-### L5 — Native-F0 authorization wiring
-
-Place the gate on the actual native-disturbance emission path:
+Freeze:
 
 ```text
-canonical runtime evidence
-→ fixed-prefix V3 evaluation/accounting
-→ prefix completeness seal
-→ persisted gate decision
-→ PASS / FAIL / UNKNOWN
-→ PASS only opens native F0 eligibility
+[V2_ELIGIBLE, C) = PREWIND_ADMISSION_POPULATION
+[C, physical_F0) = TRANSITION_OBSERVATION
+[physical_F0, ...) = PHASE_D_SCIENTIFIC_RESPONSE
 ```
 
-At the single frozen F0 opportunity:
+Physical F0 remains native Gazebo application truth.
+
+`[C,F0)` is recorded and audited but is not retroactively inserted into the admission population.
+
+## L5 — Prefix completeness mechanism
+
+For every evaluation `< C`, prove before disturbance authorization:
 
 ```text
-PASS -> emit eligible F0
-FAIL/UNKNOWN/INFRA_INVALID -> no F0, retain root, stop row
+owner upper-watermark through C
+writer-owned flush/accounting through C
+C1 persistence/reconciliation through C
+E8 persistence/reconciliation through C
+source/reset/generation/session identities complete
+no unresolved mandatory omission/duplicate/contradiction
+```
+
+Persistence counters that advance before actual flush are insufficient by themselves.
+
+This prefix-completeness seal is control-inert measurement/orchestration only.
+
+## L6 — One-shot disturbance authorization
+
+At the existing disturbance opportunity:
+
+```text
+canonical V3 evaluation over [V2,C)
++ complete prefix seal
+        ↓
+PASS -> emit existing disturbance command
+FAIL / UNKNOWN / incomplete / infra invalid -> no disturbance; retain root; stop row
 ```
 
 Forbidden:
 
 ```text
-moving F0
-waiting for later evidence
+waiting
 retry-until-PASS
+F0 shift
 favorable-state selection
+dynamic C selection
+dynamic prefix shortening
 window restart
+20-second dwell
 ```
 
-### L6 — Exact execution harness
+## L7 — Post-row finalization remains independent
 
-Before science, exercise the production path as far as possible:
+A prewind prefix seal does not replace:
+
+```text
+trace writer finalization
+complete C1 callback/persistence accounting
+writer drop/error/gap accounting
+E8 finalization
+collector completion
+lifecycle cleanup
+post-row exact correspondence
+strict JSON
+result/report serialization
+```
+
+Do not weaken shutdown/finalization semantics to obtain an early gate PASS.
+
+## L8 — Historical comparability audit
+
+Historical slots 1–5 remain:
+
+```text
+UNKNOWN_MISSING_FROZEN_PREWIND_EVIDENCE
+```
+
+After `C` is concretely bound, replay historical evidence separately as:
+
+```text
+HISTORICAL_COMPARABILITY_UNDER_PREWIND_V2=PASS | FAIL | UNKNOWN
+```
+
+Do not fabricate historical live seals and do not overwrite historical statuses.
+
+## L9 — Exact execution harness
+
+Before science, exercise the production path through:
 
 ```text
 _run_row
 → execute_row
 → trace startup
 → runtime attestation
-→ prewind mapping
+→ checkpoint-C membership
+→ owner upper-watermark
+→ writer flush
+→ C1/E8 reconciliation
 → prefix seal
 → gate decision
-→ F0 authorization boundary
-→ collector
-→ C1
-→ E8
+→ disturbance authorization boundary
+→ collector/runtime path
 → ActuatorMotors extraction
 → postprocessor
 → strict JSON
@@ -137,30 +190,39 @@ _run_row
 → controlled cleanup/finalization
 ```
 
-Mandatory counters:
+Mandatory results:
 
 ```text
-FALSE_PREWIND_PASS_COUNT=0
-F0_BEFORE_PREWIND_PASS_COUNT=0
-FAIL_ALLOWED_F0_COUNT=0
-UNKNOWN_ALLOWED_F0_COUNT=0
-INCOMPLETE_PREFIX_ALLOWED_F0_COUNT=0
+C_MEMBERSHIP_FIXED_BEFORE_ROW=PASS
+C_CONTROL_INDEPENDENT=PASS
+OWNER_UPPER_WATERMARK_THROUGH_C=PASS
+WRITER_FLUSH_THROUGH_C=PASS
+C1_RECONCILIATION_THROUGH_C=PASS
+E8_RECONCILIATION_THROUGH_C=PASS
+PREWIND_PREFIX_SEAL=PASS
+FAIL_ALLOWED_DISTURBANCE_COUNT=0
+UNKNOWN_ALLOWED_DISTURBANCE_COUNT=0
+INCOMPLETE_PREFIX_ALLOWED_DISTURBANCE_COUNT=0
+DYNAMIC_C_SELECTION_COUNT=0
 DYNAMIC_PREFIX_SHORTEN_COUNT=0
 FAVORABLE_STATE_RETRY_COUNT=0
-WINDOW_RESTART_COUNT=0
-F0_SCHEDULE_SHIFT_COUNT=0
+DISTURBANCE_SCHEDULE_SHIFT_COUNT=0
 ```
 
-Any path not genuinely exercised is `RUNTIME_ONLY_UNQUALIFIED`, not PASS.
+Adversarial delayed-last-evaluation `< C` must abort with no disturbance.
 
-### L7 — Astra independent audit
+Any production path not genuinely exercised is `RUNTIME_ONLY_UNQUALIFIED`, not PASS.
 
-Astra verifies:
+## L10 — Astra independent audit
+
+Astra independently checks:
 
 ```text
 source semantics
 raw evidence
 source/receipt timestamp domains
+owner watermark semantics
+flush/persistence semantics
 reset/generation/session identities
 validator logic
 accounting denominators
@@ -170,18 +232,18 @@ process lifecycle
 
 Luna supplies implementation/evidence; Luna does not decide scientific disposition.
 
-### L8 — Execution binding
+## L11 — Execution binding
 
-Only after L1–L7 pass:
+Only after L1–L10 pass:
 
-- determine exactly which historical slots remain admissible;
-- freeze only the actually missing conditions as new prospective attempts;
+- determine exactly which historical slots remain admissible under the approved comparability policy;
+- freeze only the actually missing scientific conditions as new prospective attempts;
 - preserve every historical invalid/unknown attempt in the ledger;
-- bind metric/postprocess/C1/readiness/source identities.
+- bind metric/postprocess/C1/readiness/checkpoint-C/source identities.
 
-Do not automatically rerun all eight rows unless the audit proves all eight require reacquisition.
+Do not automatically rerun all eight rows unless evidence proves all eight require reacquisition.
 
-### L9 — Phase-D runtime
+## L12 — Phase-D runtime
 
 Execute frozen rows sequentially with:
 
@@ -191,13 +253,11 @@ RETRY_UNTIL_FAVORABLE=false
 ADAPTIVE_CHANGES=false
 ```
 
-Every valid row requires complete readiness, F0–F4, C1/E8, lifecycle, postprocessing, and finalization evidence.
+Every valid row requires complete prewind qualification V2, F0–F4 evidence, C1/E8 accounting, lifecycle, postprocessing, and finalization.
 
-### L10 — Combined characterization
+## L13 — Combined characterization
 
-When all eight planned scientific conditions have contract-qualified usable bindings, produce the combined characterization using the frozen metrics.
-
-Evaluate:
+When all eight planned scientific conditions have contract-qualified usable bindings, produce the frozen combined characterization:
 
 ```text
 latency decomposition
@@ -211,9 +271,9 @@ STEADY vs GUST
 worker/repeat consistency
 ```
 
-### L11 — Bottleneck classification and owner review
+## L14 — Bottleneck classification and owner review
 
-Use only the frozen taxonomy:
+Use only:
 
 ```text
 AURA_DETECTION_OR_FRESHNESS
@@ -227,6 +287,6 @@ MULTIFACTOR
 UNRESOLVED
 ```
 
-`UNRESOLVED` is acceptable if the complete evidence genuinely cannot discriminate the mechanism.
+`UNRESOLVED` is acceptable if complete evidence genuinely cannot discriminate the mechanism.
 
 FAST challenger design remains a separate owner-authorized program.
