@@ -1,0 +1,131 @@
+{
+  "schema_version": "PHASE_D_METRICS_CONTRACT_V1_1",
+  "metric_contract_id": "PHASE_D_B0_METRICS_V1_1",
+  "status": "FROZEN_PROSPECTIVE_NOT_EXECUTED",
+  "canonical_owner": {
+    "metric_owner": "1_AURA/aura_data_acquisition/fast_path_causal_instrumentation.py",
+    "frontier_owner": "1_AURA/aura_data_acquisition/fast_path_latency_r1.py",
+    "source_contract_schema": "FAST_PHASE_D_METRICS_V1",
+    "source_contract_function": "fast_path_causal_instrumentation.phase_d_metric_contract",
+    "source_implementation_hash": "44183516b4f8fa537275be5bca9dc1af5aeacab5876ee1d0257c48995c11e7bc",
+    "compatibility": "This freeze binds the existing probe-only owner and adds prospective metric/campaign definitions without changing runtime code."
+  },
+  "baseline": {
+    "baseline_id": "B0_PX4_AURA_FAST_T1_C1_CURRENT",
+    "d0_source_root": "/media/nahhao74/KINGSTON/Detect_and_Response/d0_v3_calm_readiness_20260907_02",
+    "d0_result": "PASS_D0_V3_READINESS",
+    "d0_report_sha256": "0114c2531e323ba659f97c9bb9298149b54a6c741c2476e101f6414b72e800be",
+    "d0_report_path": "/home/nahhao74/px4_ros2_ws/Detect_and_Respond_Module/reports/d0_v3_start_event_v2_fresh_readiness/D0_V3_TASK_REPORT.md",
+    "d0_readiness_report_path": "/media/nahhao74/KINGSTON/Detect_and_Response/d0_v3_calm_readiness_20260907_02/d0_v3_readiness_report.json",
+    "d0_readiness_report_sha256": "032b726472f0cdb75e17bdf541d9cf9ef786188ba10918a61f224c8bb81c6a2e",
+    "d0_provenance_path": "/media/nahhao74/KINGSTON/Detect_and_Response/d0_v3_calm_readiness_20260907_02/provenance.json",
+    "d0_provenance_sha256": "eab327a08932e29827c0ef2f2b83af8ba0fe4ac6deace18390ba3f03f16c302c",
+    "module_git_head": "a6cebe4d8f1e99a941ab7886efdd7d6a446143c3",
+    "px4_git_head": "85df8c2281c2466b30a121b22b0bf33dc69bcfe4",
+    "worktree_fingerprint": "eb0be6d636d52794e3ab5c50e7ef17aac1235da10f904ab59fbe8b9c73c30cf9",
+    "worktree_note": "Module and PX4 worktrees were dirty at D0 provenance freeze; the recorded fingerprint is retained and no source was changed by this task.",
+    "px4": {
+      "source_root": "/home/nahhao74/PX4-Autopilot",
+      "binary": "/home/nahhao74/PX4-Autopilot/build/px4_sitl_default/bin/px4",
+      "binary_sha256": "e61b09f974fa2a5211753f6c6b8cc5270539291493b12a5711d86badfdd42d8d"
+    },
+    "vehicle": {
+      "family": "sparrow_6cam",
+      "mass_kg": 2.3,
+      "worker_variants": {
+        "A": {"world": "sim_world_a", "namespace": "uav_a", "model": "sparrow_6cam_0"},
+        "B": {"world": "sim_world_b", "namespace": "uav_b", "model": "sparrow_6cam_1"}
+      },
+      "vehicle_parameter_seed": 0
+    },
+    "configuration": {
+      "policy_variant": "T1",
+      "arm": "ARM_C",
+      "reference_body_flu_m_s": [0.55, 0.0],
+      "control_rates_hz": {"aura_control": 100, "aura_command": 50, "wrench": 250, "state_log": 50, "aegis_update": 100},
+      "qos": {
+        "aura_and_c1_diagnostic": "reliable_volatile_depth64",
+        "applied_ingress": "best_effort_volatile_depth64",
+        "sensor_pipeline": "best_effort_volatile_depth64",
+        "nominal_setpoint": "best_effort_volatile_depth64"
+      },
+      "authority": "PX4_PLUS_AURA_PLUS_FAST_T1_C1",
+      "safety_boundary": "35_m_boundary_unchanged"
+    },
+    "source_hashes": {
+      "1_AURA/setup.py": "82d6a5de8474958dcbfbe26af19c430b1ea3a5af1e8fcfd1c260f6475c9ada27",
+      "1_AURA/aura_data_acquisition/fast_path_causal_instrumentation.py": "44183516b4f8fa537275be5bca9dc1af5aeacab5876ee1d0257c48995c11e7bc",
+      "1_AURA/aura_data_acquisition/fast_path_latency_r1.py": "45d67243aaea7956076ca96c138b1eb7cac80e6de1bc7c14c26b7492249be968",
+      "1_AURA/aura_data_acquisition/phase_d0_v3_readiness_contract.py": "0133b89822220ff39bb108503e031a2375c1bab820b82674ad463d1e605639f6",
+      "1_AURA/aura_data_acquisition/phase_d0_v3_measurement.py": "22dcfa007abcc9d125fe5b5e2c75c6635e2c4147735bda3265e39a88bf696db8",
+      "1_AURA/aura_data_acquisition/phase_d0_v3_orchestrator.py": "6e59cf2dbbc03fce23838cc128921a3d9abc6cb1eb9f262b8a7089d7ed8a782b",
+      "1_AURA/aura_data_acquisition/phase_d0_v3_runtime_binding.py": "d3e9ce3e87dabd2f3bfa2a46de1b5f4109a15dbc85fbe8c670e3b3d65a86c223",
+      "1_AURA/aura_data_acquisition/phase_d0_v3_data0_backend.py": "d68d61f05fb4534d22783b67083dbb8d89eeca7f3e16f4d0168e13bffe74a3dd",
+      "1_AURA/aura_data_acquisition/vnext_data0_nominal.py": "38c4690887424d32cb76d5543d5ad8ead4046474ab065aeba0f3fe1ce3f099a4",
+      "1_AURA/aura_data_acquisition/vnext_data0_trace.py": "3e8e00eaef0ca183d88e2c5e314280b0274a89a23467250666237e6990ec9375",
+      "1_AURA/aura/vnext_disturbance.py": "fad494cd7bf83d166ff44f6cbcd3b83ad3b01254f7aff48d89b8099fb1f290da",
+      "1_AURA/aura/vnext_deployable_shadow.py": "282f306a962d4b635fdf2fd9c1d3cebcac62bf4e6bf15f5595463f62f684624b",
+      "3_AEGIS/aegis/core.py": "b008cb34d79ef433efd1eb5577ea35f7752b886deae2310298364cb72c1dc42e",
+      "3_AEGIS/aegis/continuous_c1_shadow.py": "ef260f51eb58ac430e6283f805c9ebf4400c387e634f8e7fc6694c38cb969aee",
+      "3_AEGIS/aegis/continuous_c1_shadow_node.py": "046c53967de017e43ad78eb2a75239d03f7dce14eb6d684dd8d7f657f219d8c4",
+      "3_AEGIS/aegis/e8_applied_gate.py": "6963d95c1941df81aa31a9f4f7ddb6215ea000fcb4bce113b13e22f1c8551aec",
+      "3_AEGIS/aegis/e8_applied_node.py": "5b235ecdc06c2313fa5162c0c449012fe0720c37f0466d5c95d1c15232ac58bd",
+      "3_AEGIS/aegis/e8_identity.py": "907f8cd7ec5058f57d20bbf5eca0d98a29",
+      "1_AURA/config/aura_collection.yaml": "adde117bd1e609b183318409747491bed9f2cd02a497cef66a4ea2f8cf1b169b",
+      "1_AURA/config/quality_thresholds.yaml": "7e2b82d0666ae3f417e057d60262c39bc684878a939603e1efe56e8b8460d510",
+      "1_AURA/config/model.yaml": "ed18f42ff4f45cd68821eea247c3985de1485a910ce7e95a1496d8d198dc52b5",
+      "scripts/runtime_env.sh": "c5732835fc088cee46038e7673dd33291b7ee979e590e6e422713c59f97cc567",
+      "scripts/run_aura_phase_d0_v3.sh": "eb39d2aa350ca13baefd1f6cfc24980368450a4128b8686684b1c486e7f1d423"
+    }
+  },
+  "time_domains": {
+    "source": "PX4_BOOT_US",
+    "native_truth": "sim_time_ns",
+    "native_to_source_mapping": "floor(sim_time_ns / 1000)",
+    "receipt": "host_monotonic_ns",
+    "evaluation": "owner_source_timestamp_us",
+    "rule": "Subtract only values in the same qualified domain; receipt monotonic time is diagnostic ordering/AoI evidence and is never substituted for source time."
+  },
+  "phase_boundaries": {
+    "onset": {"definition": "[F0, F0 + rise_seconds] from native ACTIVE application truth"},
+    "sustained": {"definition": "[F0 + rise_seconds, F0 + duration_seconds - fall_seconds]"},
+    "clear_recovery": {"definition": "[F0 + duration_seconds - fall_seconds, observation_horizon] including the native fall and recovery; native CLEAR remains an event record"},
+    "pooling": "ONSET, SUSTAINED, and CLEAR_RECOVERY are reported separately; no pooled score is defined."
+  },
+  "frontiers": {
+    "F0": {"definition": "Native disturbance application: first DISTURBANCE_ONSET event with application_state=ACTIVE and finite nonzero force/torque.", "owner": "fast_path_latency_r1._physical_onset", "source_fields": ["sim_time_ns", "disturbance_event_id", "application_sequence", "force_y_n", "force_x_n", "frame"], "source_timestamp": "sim_time_ns mapped to PX4_BOOT_US by floor(sim_time_ns/1000)", "control_use": "event timing/truth only; never injected into control", "implementation_anchor": "instrument_trace.frontiers.f0_sensor is a separate first-sensor measurement anchor; it is not substituted for native F0"},
+    "F1": {"definition": "First qualified AURA response after F0: source-bound, valid/fresh, directionally agreeing d_fast with exact owner/source/reset evidence.", "owner": "fast_path_latency_r1._aura_candidates", "diagnostic_anchor": "fast_path_causal_instrumentation._first_aura_input and _first_estimate are retained as input/estimate evidence; the qualified response is not inferred from receipt chronology."},
+    "F2": {"definition": "First exact FAST/T1/C1/E8 emission linked to F1 by source frontier, domain, reset/session and generation identity; valid/fresh/policy/authority predicates must pass.", "owner": "fast_path_causal_instrumentation._emissions plus fast_path_latency_r1._frontiers and canonical E8 sidecar correspondence", "required_identity": ["source_frontier_us", "source_frontier_domain", "ingress_generation", "controller_session_start_us", "reset_generation", "diagnostic evaluation identity where available"]},
+    "F3": {"definition": "First PX4 accepted correction exactly matching F2 source frontier/domain, ingress generation, session/reset identity, p_fast and bridge, with valid ingress/gate/authority evidence.", "owner": "fast_path_causal_instrumentation._first_acceptance and fast_path_latency_r1._status_candidates"},
+    "F4": {"definition": "First causally linked ActuatorMotors response at or after F3 with finite controls and matching position-controller audit/session lineage.", "owner": "fast_path_latency_r1._actuator_frontier", "required_identity": ["timestamp_sample", "position_controller audit timestamp", "controller session", "publication sequence", "record sequence"]},
+    "F5": {"status": "DIAGNOSTIC_ONLY_UNKNOWN_ACTION_ISOLATION_UNAVAILABLE", "definition": "Physical acceleration response is retained descriptively only; no isolated action credit is assigned."}
+  },
+  "latency_metrics": {
+    "L_AURA": {"formula": "F1.source_frontier_us - F0.source_us", "unit": "us", "censoring": "missing F1"},
+    "L_AEGIS": {"formula": "F2.source_frontier_us - F1.source_frontier_us", "unit": "us", "censoring": "missing F2"},
+    "L_ACCEPT": {"formula": "F3.timestamp_us - F2.source_frontier_us", "unit": "us", "censoring": "missing F3"},
+    "L_ACTUATOR": {"formula": "F4.timestamp_sample_us - F3.timestamp_us", "unit": "us", "censoring": "missing F4"},
+    "L_F0_F3": {"formula": "F3.timestamp_us - F0.source_us", "unit": "us", "censoring": "missing F3"},
+    "L_F0_F4": {"formula": "F4.timestamp_sample_us - F0.source_us", "unit": "us", "censoring": "missing F4"}
+  },
+  "activation_coverage_metrics": ["scheduled_disturbance_onsets", "F1_observed_or_censored_reason", "F2_observed_or_censored_reason", "F3_observed_or_censored_reason", "F4_observed_or_censored_reason", "exact_causal_correspondence", "prewind_D0_gate_result", "safety_termination_or_measurement_loss"],
+  "onset_metrics": ["peak_position_error_after_onset_m", "peak_velocity_error_after_onset_m_s", "cross_track_error_peak_m", "along_track_error_peak_m", "initial_deviation_slope_m_per_s", "time_to_first_corrective_acceleration_us", "correction_direction_agreement", "fast_contribution_norm_m_s2", "t1_c1_bridge_contribution_norm_m_s2", "requested_vs_accepted_acceleration_correction_m_s2"],
+  "sustained_metrics": ["position_error_rms_m", "velocity_error_rms_m_s", "position_error_peak_m", "velocity_error_peak_m_s", "cross_track_error_rms_m", "cross_track_error_peak_m", "along_track_error_rms_m", "along_track_error_peak_m", "mean_absolute_tracking_error_m", "persistent_offset_or_drift", "FAST_active_coverage", "explained_unavailable_coverage", "correction_magnitude_m_s2", "correction_total_variation_m_s2", "acceleration_command_jerk_proxy_m_s3", "PX4_projection_or_clipping_count", "PX4_saturation_and_headroom", "allocator_or_motor_activity"],
+  "clear_recovery_metrics": ["native_CLEAR_to_recovery_us", "residual_position_error_m", "residual_velocity_error_m_s", "post_clear_peak_overshoot_m", "cross_track_recovery_m", "along_track_recovery_m", "residual_correction_m_s2", "recovery_control_effort_m_s2", "oscillation_and_sign_change_behavior"],
+  "recovery_rule": {"status": "FROZEN_EXISTING_SOURCE_RULE", "baseline_window_us": 1000000, "criterion": "position and velocity error each remain at or below the corresponding pre-onset p95 for a continuous hold", "hold_us": 200000, "source_owner": "fast_path_causal_instrumentation.analyze_phase_d_trace", "censoring": "If native CLEAR, baseline, or a continuous qualifying hold is absent within the observation horizon, report censored/not achieved; no artificial recovery time."},
+  "aoi_metrics": ["source_timestamp", "receipt_timestamp_monotonic_ns", "evaluation_timestamp", "source_age", "freshness_result", "generation_reset_session_identity", "algorithmic_response_delay", "source_sample_freshness_delay", "scheduler_transport_delay"],
+  "effort_metrics": ["requested_FAST_acceleration_m_s2", "requested_T1_C1_bridge_m_s2", "total_requested_correction_m_s2", "PX4_accepted_correction_m_s2", "actuator_command_variation", "projection_or_saturation_count", "total_variation", "jerk_proxy"],
+  "headroom_metrics": ["requested_horizontal_acceleration_norm_m_s2", "accepted_horizontal_acceleration_norm_m_s2", "requested_minus_accepted_norm_m_s2", "PX4_acceleration_projection_or_clipping", "PX4_limit_activity", "allocator_saturation_activity", "actuator_headroom_proxy_when_source_supported"],
+  "metric_validity_rules": {"cross_track_and_along_track": "Require a source-bound NED reference vector; otherwise report NOT_MEASURABLE rather than infer axes.", "initial_deviation_slope": "Report only when source-valid state samples bracket onset.", "all_error_and_effort_metrics": "Use finite source-valid samples in their frozen phase interval; retain missing intervals as censored."},
+  "w20_analysis": {"metrics": ["first_directional_reaction", "strict_causal_baseline_recenter", "sustained_d_fast_decay", "W20_recenter_vs_T1_bridge"], "interpretation": "W20 recentering is measured as a behavior and is not presumed defective."},
+  "bottleneck_classification": {"classes": ["AURA_DETECTION_OR_FRESHNESS", "AEGIS_COMPUTE_OR_EMISSION", "PX4_ACCEPTANCE", "ACTUATOR_PATH", "CONTROL_HEADROOM_OR_SATURATION", "SUSTAINED_ESTIMATION_DECAY_OR_RECENTER", "RECOVERY_CONTROL_BEHAVIOR", "MULTIFACTOR", "UNRESOLVED"], "rule": "Use consistency across latency, response coverage, error evolution, effort, AoI and headroom/constraint evidence; one largest scalar latency cannot determine the class.", "output": "descriptive characterization only; no controller-goodness threshold and no challenger selection"},
+  "censoring_policy": {"missing_F1": "retain row; CENSOR_F1_NOT_OBSERVED", "missing_F2": "retain row; CENSOR_F2_NOT_OBSERVED", "missing_F3": "retain row; CENSOR_F3_NOT_OBSERVED", "missing_F4": "retain row; CENSOR_F4_NOT_OBSERVED", "safety_termination": "retain partial evidence and safety termination reason", "incomplete_sustained_interval": "retain row and mark interval censored", "no_recovery_within_horizon": "retain row; CENSOR_RECOVERY_NOT_ACHIEVED", "measurement_loss": "retain row; infrastructure/measurement loss is not a control success"},
+  "prewind_readiness_rule": {"contract": "PHASE_D0_PHASE_D_READINESS_V3", "start_event": "V3_RUNTIME_START_EVENT_V2", "rule": "Each row must pass the qualified one-shot D0 V3 readiness/evidence gate before its scheduled native disturbance. No new D0 contract, no favorable-state selection, and no retry until valid."},
+  "native_truth_policy": {"owner": "NativeDisturbanceSystem", "transport": "gazebo_transport", "frame": "world_enu", "units": "force_N_torque_Nm", "allowed_use": ["event timing", "stimulus identity", "offline evaluation"], "forbidden_use": "native truth never enters production control"},
+  "campaign_binding": {"campaign_id": "PHASE_D_B0_CALM_WIND_CHARACTERIZATION_V1", "manifest_file": "reports/phase_d_metrics_campaign_freeze_v1_1/phase_d_campaign_manifest_v1_1.json", "manifest_sha256": "dfab451d58f45e087fc9b25ab5eb9866bbff8e8d8ac6bd0475dffe25c1a2d247", "campaign_rows_sha256": "18a71d0f95447f0e47f0d4643a679e91ec0ffb9470f7930f52f13f384ff62c39", "row_count": 8, "source_owner": "fast_path_latency_r1.SCENARIO_ORDER", "scenario_order": [[1, "A", ["STEADY_E", "GUST_E"]], [2, "B", ["GUST_E", "STEADY_E"]], [3, "A", ["GUST_E", "STEADY_E"]], [4, "B", ["STEADY_E", "GUST_E"]]], "workers": ["A", "B"], "repeats": [1, 2, 3, 4], "balance": "4 steady + 4 gust; 4 rows per worker; each worker has two repeats and both profiles; scenario order is counterbalanced by the canonical source matrix", "challenger_selection": "NOT_PERFORMED"},
+  "performance_thresholds": {"status": "NONE_FROZEN_DESCRIPTIVE_ONLY", "values": {}, "policy": "No maximum latency, minimum recovery score, error limit, or improvement percentage is invented by this freeze."},
+  "semantic_deltas": {"CONTROL_SEMANTIC_DELTA": "NONE", "SCIENTIFIC_SEMANTIC_DELTA": "NONE", "FAST_SEMANTIC_DELTA": "NONE", "V3_RUNTIME_CONTROL_SEMANTIC_DELTA": "NONE"},
+  "execution": {"runtime_started": false, "wind_started": false, "phase_d_rows_started": false, "science_started": false, "world_model_training": false},
+  "qualification": {"ready_for_phase_d_runtime": true, "phase_d_runtime_started": false, "owner_authorization_required": true},
+  "provenance_correction": {"schema_version": "PHASE_D_PROVENANCE_CORRECTION_V1", "corrected_from_metric_contract_id": "PHASE_D_B0_METRICS_V1", "corrected_from_metric_contract_sha256": "afff2d23082c46f44772d091438edc506d2e4244f62f3f4620b027ea42fd80c7", "correct_d0_source_root": "/media/nahhao74/KINGSTON/Detect_and_Response/d0_v3_calm_readiness_20260907_02", "serialization_delta": "CORRECT_D0_ROOT_PATH", "metric_semantics_unchanged": true, "campaign_row_semantics_unchanged": true}
+}
