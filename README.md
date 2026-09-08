@@ -14,12 +14,12 @@ Large telemetry, runtime roots, datasets, and replay bundles remain outside GitH
 6. [`docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md`](docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md) — timing, causality, and StateBank.
 7. [`docs/03_evidence/MILESTONE_SUMMARY.md`](docs/03_evidence/MILESTONE_SUMMARY.md) — compact audit trail.
 8. [`docs/03_evidence/phase_d/README.md`](docs/03_evidence/phase_d/README.md) — Phase-D evidence index and lineage.
-9. [`docs/05_scientific_contracts/phase_d/README.md`](docs/05_scientific_contracts/phase_d/README.md) — frozen Phase-D B0 contract package.
+9. [`docs/05_scientific_contracts/phase_d/README.md`](docs/05_scientific_contracts/phase_d/README.md) — frozen Phase-D B0 science and qualification amendments.
 10. [`docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md`](docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md) — future implementation roadmap.
 11. [`docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md`](docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md) — frozen WM1 randomized-science contract.
 12. [`docs/02_source_registry/CURRENT_REGISTRY_V9.md`](docs/02_source_registry/CURRENT_REGISTRY_V9.md) — source registry.
 
-Superseded current-state and execution-ladder documents are retained by Git history or dated filenames and are not competing current authority.
+Superseded current-state and qualification decisions remain available as dated lineage; they are not competing current authority.
 
 ## Pipeline
 
@@ -54,75 +54,90 @@ large artifacts=/media/nahhao74/KINGSTON
 
 ## Current state — 2026-09-08
 
-The active mainline is **Phase-D B0 characterization closure**, after formal D0 V3 readiness closed successfully.
+The active mainline is **Phase-D B0 characterization closure** after formal D0 V3 readiness closed successfully.
 
 ```text
 D0_INFRASTRUCTURE_CLOSED=true
 FORMAL_D0_DECISION=PASS_D0_V3_READINESS
 READY_FOR_PHASE_D_RUNTIME=false
 READY_FOR_FAST_CHALLENGER_SELECTION=false
+EXACT_EXECUTION_HARNESS_GATE=NOT_COMPLETED
 
 INFRASTRUCTURE_LAUNCH_ATTEMPTS=7
 F0_REACHED_ACQUISITION_ATTEMPTS=6
-RECORDED_USABLE_CONDITIONS=5_UNCHANGED_PENDING_PREWIND_AUDIT
-
-CURRENT_BLOCKER=PHASE_D_PREWIND_EVIDENCE_BOUNDARY_AND_LIVE_PREFIX_COMPLETENESS
-EXACT_EXECUTION_HARNESS_GATE=NOT_COMPLETED
+RECORDED_USABLE_CONDITIONS=5_UNCHANGED_PENDING_PREWIND_REVIEW
 ```
 
-The frozen Phase-D contract requires the qualified V3/V2 readiness gate before native F0. A 20-second Phase-D prewind dwell is **not** frozen or required.
+## Current blocker — checkpoint-C qualification
 
-The unresolved issue is narrower: define and prove the canonical pre-F0 evaluation population and live completeness checkpoint while writers remain active, then wire that decision directly onto the native-F0 emission path without changing FAST/control semantics.
+Offline source/frontier audits established that the ordinary Phase-D path cannot use physical F0 itself as a live pre-emission prefix endpoint:
 
-## Current approved Phase-D prewind rule
+- ordinary Phase-D uses host-monotonic phase timing and immediate native v1 commands;
+- exact physical F0 is only known when Gazebo applies the disturbance;
+- a future scheduled target alone does not prove the final pre-target evaluations are already produced, persisted, flushed, and reconciled before an earlier authorization decision.
+
+Therefore the earlier prospective `[V2_ELIGIBLE,F0)` admission rule has been superseded for prospective qualification.
+
+Current approved rule:
 
 ```text
-population = every canonical V3 evaluation from first V2 eligibility
-             up to but excluding scheduled native F0
+PREWIND_POPULATION_V2=[V2_ELIGIBLE,C)
+```
 
-decision boundary = one-shot checkpoint immediately before the frozen F0 opportunity
+where `C` is a fixed source-owned checkpoint that must be prospectively bound before runtime.
 
-PASS    -> F0 eligible
-FAIL    -> F0 forbidden
-UNKNOWN -> F0 forbidden
-INFRASTRUCTURE_INVALID -> F0 forbidden
+```text
+[V2,C) = prewind admission
+[C,F0)  = transition observation
+[F0,...) = scientific response
+```
+
+Physical F0 remains native Gazebo application truth and all frozen F0–F4 metric semantics remain unchanged.
+
+At the existing disturbance opportunity:
+
+```text
+sealed PASS over [V2,C) -> disturbance eligible
+FAIL / UNKNOWN / incomplete prefix / infrastructure invalid -> no disturbance; retain root; stop
 ```
 
 Forbidden:
 
 ```text
 no 20 s dwell
-no moving F0
+no waiting
 no retry-until-PASS
+no F0 shift
 no favorable-state selection
+no dynamic C selection
 no dynamic prefix shortening
 no window restart
 ```
 
-A control-inert prefix-completeness seal may be added to prove that the closed prewind prefix is fully persisted/reconciled before F0. End-of-row writer/C1/E8/collector/finalization obligations remain separate and mandatory.
-
-## Phase-D evidence status
-
-Historical slots 1–5 remain recorded but are currently classified:
+This is explicitly a qualification/admission contract revision, not a control/science rewrite:
 
 ```text
-UNKNOWN_MISSING_FROZEN_PREWIND_EVIDENCE
+SCIENTIFIC_EXPERIMENT_DESIGN_CHANGED=false
+QUALIFICATION_ADMISSION_CONTRACT_CHANGED=true
+PREWIND_QUALIFICATION_CONTRACT_DELTA=[V2,F0) -> [V2,C)
+CONTROL_SEMANTIC_DELTA=NONE
+FAST_SEMANTIC_DELTA=NONE
+DISTURBANCE_SEMANTIC_DELTA=NONE
+PHASE_D_METRIC_SEMANTIC_DELTA=NONE
 ```
-
-Canonical replay proves their pre-F0 evaluation populations are eventually accountable when finalized downstream evidence is supplied. That does **not** yet prove the same evidence was complete at the live pre-F0 boundary.
-
-The missing-marker finding therefore does not imply a FAST/control failure, and the five rows are not silently discarded or promoted.
 
 ## Current execution plan
 
 ```text
-canonical V3 -> Phase-D prewind semantic mapping
-→ predicate-by-predicate historical audit
-→ exact prewind evidence boundary / prefix completeness definition
-→ minimal control-inert wiring
+bind exact canonical checkpoint C
+→ implement owner upper-watermark through C
+→ implement writer flush/accounting through C
+→ reconcile C1/E8 through C
+→ wire one-shot disturbance authorization
 → exact execution-harness qualification
 → Astra independent audit
-→ freeze only actually missing execution conditions
+→ determine historical comparability and actually missing conditions
+→ execution binding
 → Phase-D runtime
 → 8 contract-qualified usable conditions
 → combined characterization and bottleneck classification
