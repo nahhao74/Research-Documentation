@@ -1,0 +1,15 @@
+{
+  "/media/nahhao74/KINGSTON/phase_d_b0_runtime_characterization_20260907_01/E8FASTLAT_R1_r1_STEADY_E_A/trace/trace.jsonl": "74d8ec86bfa3484d3e67b4a27d38b70f1c8f5d9092092553302f6c2e4e0093d8",
+  "/media/nahhao74/KINGSTON/phase_d_b0_runtime_characterization_20260907_01/E8FASTLAT_R1_r1_STEADY_E_A/e8_ingress_evidence.jsonl": "f4da180c5a5551a27c715f4d22c67da4125a9928a94d4457b7e1624c4b137426",
+  "/media/nahhao74/KINGSTON/phase_d_b0_runtime_characterization_20260907_01/E8FASTLAT_R1_r1_GUST_E_A/trace/trace.jsonl": "227193432d78a18ed350ca858cc9a6172444b97a131898532a7ac98b34dc27b5",
+  "/media/nahhao74/KINGSTON/phase_d_b0_runtime_characterization_20260907_01/E8FASTLAT_R1_r1_GUST_E_A/e8_ingress_evidence.jsonl": "2b947b845fae3c26e4b1abf2ea93ea3ed96b316d3a3f08e471233843cf7c8d01",
+  "/media/nahhao74/KINGSTON/phase_d_b0_runtime_characterization_20260907_01/E8FASTLAT_R1_r2_GUST_E_B/trace/trace.jsonl": "45d2d73ca23c33afb7b1a2622427d788899c40e873123c4560018eca02cab64e",
+  "/media/nahhao74/KINGSTON/phase_d_b0_runtime_characterization_20260907_01/E8FASTLAT_R1_r2_GUST_E_B/e8_ingress_evidence.jsonl": "c7e99b53b140a31a87b55085683bdebc5c1eb70f671d4c97fb38af8a42c194ab",
+  "/media/nahhao74/KINGSTON/phase_d_b0_runtime_characterization_20260907_01/E8FASTLAT_R1_r2_STEADY_E_B/trace/trace.jsonl": "2191b40e392aeaf1e5379874640eeab583fb5c1d988945bb6ff2b1a249a60dfe",
+  "/media/nahhao74/KINGSTON/phase_d_b0_runtime_characterization_20260907_01/E8FASTLAT_R1_r2_STEADY_E_B/e8_ingress_evidence.jsonl": "7a1f8383943985c5d906e2f19349812f8846bc2d80670b2452b0cfb29504c0a2",
+  "/media/nahhao74/KINGSTON/phase_d_b0_continuation_option_b_20260907_01/PHASE_D_B0_CONT_OPTION_B_slot5_attempt1/trace/trace.jsonl": "ff426522771d08373bf7748a5667fc5fa509ed3f47a2f50cd2c9887643ff2ccb",
+  "/media/nahhao74/KINGSTON/phase_d_b0_continuation_option_b_20260907_01/PHASE_D_B0_CONT_OPTION_B_slot5_attempt1/e8_ingress_evidence.jsonl": "a06ac7c6d4b4f4be7afeba34397e13604002c4e275085c2f9a1bcf7a690ce092",
+  "1_AURA/aura_data_acquisition/phase_d0_v3_measurement.py": "22dcfa007abcc9d125fe5b5e2c75c6635e2c4147735bda3265e39a88bf696db8",
+  "1_AURA/aura_data_acquisition/phase_d0_v3_runtime_binding.py": "d3e9ce3e87dabd2f3bfa2a46de1b5f4109a15dbc85fbe8c670e3b3d65a86c223",
+  "1_AURA/aura_data_acquisition/phase_d0_v3_readiness_contract.py": "0133b89822220ff39bb108503e031a2375c1bab820b82674ad463d1e605639f6"
+}
