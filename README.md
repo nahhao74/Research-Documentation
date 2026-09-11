@@ -7,21 +7,17 @@ Large telemetry, runtime roots, datasets, replay bundles, and generated plots re
 ## Read order
 
 1. [`docs/00_overview/CURRENT_STATUS.md`](docs/00_overview/CURRENT_STATUS.md) — authoritative current state.
-2. [`docs/00_overview/CURRENT_STATE_CHECKPOINT_20260911_TU_TA_RUNTIME_REPAIR.md`](docs/00_overview/CURRENT_STATE_CHECKPOINT_20260911_TU_TA_RUNTIME_REPAIR.md) — latest complete G-action/T_U/T_A handoff.
-3. [`docs/03_evidence/world_model/G_ACTION_TU_TA_RUNTIME_20260911.md`](docs/03_evidence/world_model/G_ACTION_TU_TA_RUNTIME_20260911.md) — latest compact runtime evidence.
-4. [`docs/05_scientific_contracts/G_ACTION_MRT_V2R1_TU_ORIGIN_PRE_FREEZE_20260911.md`](docs/05_scientific_contracts/G_ACTION_MRT_V2R1_TU_ORIGIN_PRE_FREEZE_20260911.md) — current MRT/G-action pre-freeze timing boundary.
-5. [`docs/00_overview/CURRENT_STATE_CHECKPOINT_20260910_G_ACTION_CONTIGUOUS_MRT_PREP.md`](docs/00_overview/CURRENT_STATE_CHECKPOINT_20260910_G_ACTION_CONTIGUOUS_MRT_PREP.md) — prior contiguous/MRT-preparation checkpoint retained as lineage.
-6. [`docs/00_overview/DOCUMENT_AUTHORITY.md`](docs/00_overview/DOCUMENT_AUTHORITY.md) — authority and onboarding rules.
-7. [`docs/01_architecture/SYSTEM_ARCHITECTURE.md`](docs/01_architecture/SYSTEM_ARCHITECTURE.md) — structural pipeline.
-8. [`docs/01_architecture/CONTROL_ACTION_PATH.md`](docs/01_architecture/CONTROL_ACTION_PATH.md) — control path and PX4 authority.
-9. [`docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md`](docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md) — timing, causality, and StateBank.
-10. [`docs/03_evidence/MILESTONE_SUMMARY.md`](docs/03_evidence/MILESTONE_SUMMARY.md) — historical audit trail.
-11. [`docs/03_evidence/phase_d/README.md`](docs/03_evidence/phase_d/README.md) — retained Phase-D evidence index.
-12. [`docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md`](docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md) — older frozen randomized-identification contract retained as lineage.
-13. [`docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md`](docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md) — future implementation roadmap.
-14. [`docs/02_source_registry/CURRENT_REGISTRY_V9.md`](docs/02_source_registry/CURRENT_REGISTRY_V9.md) — source registry.
+2. [`docs/00_overview/CURRENT_STATE_CHECKPOINT_20260911_G_ACTION_E8_PREOFFER_REVIEW.md`](docs/00_overview/CURRENT_STATE_CHECKPOINT_20260911_G_ACTION_E8_PREOFFER_REVIEW.md) — latest complete G-action handoff.
+3. [`docs/00_overview/DOCUMENT_AUTHORITY.md`](docs/00_overview/DOCUMENT_AUTHORITY.md) — authority and AI-onboarding policy.
+4. [`docs/05_scientific_contracts/G_ACTION_MRT_V2R1_TU_ORIGIN_PRE_FREEZE_20260911.md`](docs/05_scientific_contracts/G_ACTION_MRT_V2R1_TU_ORIGIN_PRE_FREEZE_20260911.md) — current pre-freeze timing boundary; not execution authority.
+5. [`docs/01_architecture/SYSTEM_ARCHITECTURE.md`](docs/01_architecture/SYSTEM_ARCHITECTURE.md) — structural pipeline.
+6. [`docs/01_architecture/CONTROL_ACTION_PATH.md`](docs/01_architecture/CONTROL_ACTION_PATH.md) — control path and PX4 authority.
+7. [`docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md`](docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md) — timing, causality, and StateBank.
+8. [`docs/03_evidence/MILESTONE_SUMMARY.md`](docs/03_evidence/MILESTONE_SUMMARY.md) — historical audit trail.
+9. [`docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md`](docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md) — future implementation roadmap.
+10. [`docs/02_source_registry/CURRENT_REGISTRY_V9.md`](docs/02_source_registry/CURRENT_REGISTRY_V9.md) — source registry.
 
-Superseded states remain available as dated lineage; they are not competing current authority.
+Superseded checkpoints remain available as dated lineage; they are not competing current authority.
 
 ## Pipeline
 
@@ -41,90 +37,21 @@ Sensors / PX4 / Reference ──────┬────> StateBank (always w
 
 ## Current state — 2026-09-11
 
-The active engineering task is now:
+Current canonical execution:
 
 ```text
-G_ACTION_TU_TA_RUNTIME_IMPLEMENTATION_REPAIR
-```
-
-Current canonical state:
-
-```text
+AURA_EXECUTION_PHASE_V1=CANONICAL
 CURRENT_BASELINE_B=PX4+AURA+FAST/T1/C1
 FAST_ACTIVE_BASELINE=true
-QUALIFIED_LIFECYCLE_MIGRATION_COMPLETE=true
-CONTIGUOUS_MODE=BOUNDED_CONTIGUOUS_CANDIDATE_EXPOSURE_V1
-TREATMENT_ONSET=T_U
-T_A_ROLE=EXACT_NATIVE_ACCEPTANCE_ACK
-CONTIGUOUS_EXPOSURE_SOURCE_QUALIFIED=false
-V2R1_TEMPORAL_LADDER_NOW_DERIVABLE=false
+ATTITUDE_MAX_AGE_US=10000
 SCIENTIFIC_ACQUISITION_EXECUTED=false
 G_ACTION_CAUSAL_STATUS=UNQUALIFIED
+WM_CONTROL_WRITE=false
+WISE_ENABLED=false
+AEGIS_WM_AUTHORITY=false
 ```
 
-Two fresh engineering runtime roots now exist.
-
-First root:
-
-```text
-/media/nahhao74/KINGSTON/g_action_contiguous_minimal_runtime_qualification_20260910_234803
-```
-
-proved that candidate application can precede exact accepted `T_A`, creating a real conflict with the old assumption that `T_A` was physical treatment onset.
-
-Owner then approved:
-
-```text
-T_U = first source-bound candidate application
-T_A = exact native accepted ACK
-physical treatment onset = T_U
-hold expiry origin = T_U + planned duration
-G target origin proposal = T_U
-```
-
-Fresh requalification root:
-
-```text
-/media/nahhao74/KINGSTON/g_action_tu_ta_contiguous_requalification_20260911_001245
-```
-
-showed `T_U=T_A=16440000` for the nonzero plan, but did not qualify the primitive because an invalid C1 evaluation failed closed while the emitted ledger retained stale pre-gate candidate-active state.
-
-```text
-STATUS=INVALID_RUNTIME_IMPLEMENTATION
-FIRST_MATERIAL_BLOCKER=NONE
-```
-
-This is an implementation/observability defect, not a new timing-semantic conflict.
-
-## Immediate repair target
-
-The next prospective repair must make one post-gate effective candidate state the single truth for both control composition and ledger output:
-
-```text
-C1 gates
-  -> effective candidate state
-  -> baseline + candidate composition
-  -> status/diagnostics
-  -> exposure ledger
-```
-
-Required runtime invariants include:
-
-```text
-LEDGER_CANDIDATE == CONTROL_COMPOSITION_CANDIDATE
-exactly one ledger row per qualified C1 evaluation
-MISSING_EXPOSURE_CYCLES=0
-DUPLICATE_EXPOSURE_CYCLES=0
-candidate ZERO before T_U
-planned T_U-relative exposure completed as planned
-release ACK does not extend physical dose
-FAST remains active
-```
-
-## World Model and MRT boundary
-
-Current model conclusion remains:
+Current World Model conclusion:
 
 ```text
 F_ENGINEERING_STATUS=USEFUL_SHORT_HORIZON_ENGINEERING_PREDICTION
@@ -133,32 +60,127 @@ PRIMARY_G_LIMITATION=INSUFFICIENT_EFFECTIVE_ACTION_HORIZON
 MODEL_CAPACITY_INCREASE_JUSTIFIED=false
 ```
 
-Future MRT design is intended to use:
+Current treatment timing:
 
 ```text
-assignment at T_D
-physical treatment onset T_U
-transaction confirmation T_A
-bounded duration from T_U
-parent-linked release
-T_U-relative proximal outcome
+T_U = first source-bound effective E8 candidate application
+T_A = exact native accepted ACK frontier
+TREATMENT_ONSET=T_U
+T_A_ROLE=TRANSACTION_CONFIRMATION
 ```
 
-But the scientific campaign is not frozen or executed.
+Do not promote observed run-specific ordering into a universal timing invariant.
+
+## Closed execution findings
+
+The following are no longer open generic research questions:
+
+```text
+AURA V2.1 MultiThreadedExecutor path -> rejected for current architecture
+source-rate intervention -> not currently justified
+old 3C/5C/7C accepted-event semantics -> not duration-derivable
+20 ms treatment -> not supported as default under current source/freshness evidence
+model-capacity increase -> not justified
+```
+
+Current retained conditional source-history support:
+
+```text
+>=4 ms   ~99.96–100%
+>=8 ms   ~80.2%
+>=12 ms  ~51.5%
+>=16 ms  ~13.5%
+>=20 ms  ~7.0%
+```
+
+These values are engineering support diagnostics, not scientific completion probabilities.
+
+## ZERO / 8 ms / 12 ms campaign
+
+A finite 12-session engineering-only response campaign was executed once under V1 + FAST.
+
+Consumed manifest SHA256:
+
+```text
+9cf311644423ab1c65bd52977ef014db1eaeb0e184cd7a1c0c0e3efb3cb13486
+```
+
+Observed engineering exposure:
+
+```text
+8MS accepted=3; completed=2; one early source-invalid termination
+12MS accepted=3; completed=0; all three early source-invalid terminations
+```
+
+However the campaign is runtime-invalid for response interpretation and must not be used for a causal ZERO/8/12 signal conclusion.
+
+The consumed manifest and its roots are immutable and must never be replayed as replacement evidence.
+
+## Latest runtime repair
+
+The latest task repaired two implementation defects:
+
+```text
+1. runner offer trigger now waits for a current prospective C1 admission witness
+2. release validator now binds the exact accepted lifecycle transaction
+```
+
+Fresh lifecycle-only qualification:
+
+```text
+84 focused tests PASS
+ZERO = PASS
+8MS  = PASS
+12MS = RETAINED_NATIVE_ACCEPTANCE_TIMEOUT_AFTER_QUALIFIED_ADMISSION
+```
+
+For accepted transactions, exact T_U/T_A, control-ledger identity, bridge identity, fail-closed semantics, and release binding pass.
+
+No T_U/T_A was fabricated for the rejected 12 ms transaction.
+
+## Current material boundary
+
+The remaining issue is now semantic rather than a generic implementation bug:
+
+```text
+current C1-qualified admission witness
+→ one assigned offer
+→ E8 can still reject the pending offer before native accepted ACK
+```
+
+Preventing this requires defining a stronger E8 pre-offer eligibility condition than the currently approved C1 predicate. That changes the opportunity population and therefore requires explicit owner review.
+
+The owner must decide whether:
+
+```text
+A. a source-proven, arm-independent, future-free E8 condition becomes common pre-offer eligibility;
+B. pre-acceptance E8 rejection remains a legitimate assigned engineering outcome; or
+C. conditional G-response identification and C1→E8 practical admission/support are separated.
+```
+
+Current next task:
+
+```text
+NEXT_TASK=OWNER_REVIEW_G_ACTION_E8_PREOFFER_ADMISSION_CONTRACT
+```
+
+No new response campaign should execute before this decision.
 
 ## Hard invariants
 
 ```text
 PX4 remains authoritative
 FAST remains active immediate-response baseline
+AURA_EXECUTION_PHASE_V1=CANONICAL
+ATTITUDE_MAX_AGE_US=10000
 legacy EVENT_ONLY_V1 remains unchanged
-bounded-contiguous mode remains explicit opt-in
 historical invalid roots remain immutable
 large artifacts=/media/nahhao74/KINGSTON
-V1/V1.1/V1.2 unchanged
-current V2 unchanged
 PX4_FIRMWARE_MODIFIED=false
 FAST_CONTROL_LAW_MODIFIED=false
+T1_C1_MATH_MODIFIED=false
+SOURCE_RATE_CHANGED=false
+CONTROL_AUTHORITY_CHANGED=false
 WM_CONTROL_WRITE=false
 WISE_ENABLED=false
 AEGIS_WM_AUTHORITY=false
@@ -166,3 +188,7 @@ SCIENTIFIC_ACQUISITION_EXECUTED=false
 SEALED_PAYLOAD_OPENED=false
 G_ACTION_CAUSAL_STATUS=UNQUALIFIED
 ```
+
+## Repository role
+
+This `Research-Documentation` repository is the canonical research-state and handoff source for the project. Future progress updates should advance `docs/00_overview/CURRENT_STATUS.md` plus a dated checkpoint here, rather than relying on older status text in the runtime repository.
