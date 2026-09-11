@@ -2,26 +2,27 @@
 
 ## Executive state
 
-The active engineering frontier is the World Model `G_action` acquisition path, specifically repair and requalification of the bounded-contiguous candidate exposure runtime under the approved `T_U/T_A` timing semantics.
+The active frontier is no longer the original T_U/T_A implementation repair. That work progressed through treatment-onset correction, exposure-ledger repair, executor/source-delivery characterization, finite ZERO/8/12 engineering response execution, and a fresh runtime implementation repair.
+
+Current canonical state:
 
 ```text
-CURRENT_MODE=WM_G_ACTION_TU_TA_RUNTIME_IMPLEMENTATION_REPAIR
+CURRENT_MODE=G_ACTION_E8_PREOFFER_ADMISSION_OWNER_REVIEW
 ENGINEERING_BUILD_MODE=ACTIVE
 FORMAL_PHASE_D_QUALIFICATION=PAUSED_NOT_DELETED
 CURRENT_BASELINE_B=PX4+AURA+FAST/T1/C1
 FAST_ACTIVE_BASELINE=true
-QUALIFIED_LIFECYCLE_MIGRATION_COMPLETE=true
-CONTIGUOUS_MODE=BOUNDED_CONTIGUOUS_CANDIDATE_EXPOSURE_V1
-TREATMENT_ONSET=T_U
-T_A_ROLE=EXACT_NATIVE_ACCEPTANCE_ACK
-CONTIGUOUS_EXPOSURE_SOURCE_QUALIFIED=false
-V2R1_TEMPORAL_LADDER_NOW_DERIVABLE=false
+AURA_EXECUTION_PHASE_V1=CANONICAL
+ATTITUDE_MAX_AGE_US=10000
 SCIENTIFIC_ACQUISITION_EXECUTED=false
 G_ACTION_CAUSAL_STATUS=UNQUALIFIED
-NEXT_TASK=G_ACTION_TU_TA_RUNTIME_IMPLEMENTATION_REPAIR
+WM_CONTROL_WRITE=false
+WISE_ENABLED=false
+AEGIS_WM_AUTHORITY=false
+NEXT_TASK=OWNER_REVIEW_G_ACTION_E8_PREOFFER_ADMISSION_CONTRACT
 ```
 
-The architecture/refactor phase is closed. Two fresh engineering runtime smokes have now been executed. They exposed one material timing-contract conflict, which the owner resolved by introducing `T_U` as physical treatment onset, followed by a separate implementation/observability defect in the fresh `T_U` requalification root.
+The current blocker is an owner-level prospective-eligibility definition, not a generic implementation bug and not a World Model capacity problem.
 
 ## Canonical pipeline boundary
 
@@ -45,261 +46,266 @@ PRIMARY_G_LIMITATION=INSUFFICIENT_EFFECTIVE_ACTION_HORIZON
 MODEL_CAPACITY_INCREASE_JUSTIFIED=false
 ```
 
-The current priority remains better causal/action-support acquisition, not increasing model capacity.
+The corrected physical-target and timing work through V1/V1.1/V1.2 is closed. V1.2 explicit-delay corrected timing semantics but did not recover general G-action gain; oracle-delay checks also failed to establish a general gain. The current priority remains causal/action-support quality, not model-capacity escalation.
 
-## Shared qualified lifecycle closure
+## Canonical treatment timing
 
-The canonical transaction stack remains:
-
-```text
-QualifiedOffer
-QualifiedAcceptance
-QualifiedActionLinkLifecycle
-```
-
-Current migration state:
+Owner-approved timing remains:
 
 ```text
-QUALIFIED_TRANSACTION_HOOK_IMPLEMENTED=FULL
-STAGE1PROBE_USES_SHARED_HOOK=true
-CONTIGUOUS_RUNNER_USES_SHARED_HOOK=true
-LIVE_RUNNER_ARBITRARY_SOURCE_ALLOWED=false
-RELEASE_TRANSACTION_IMPLEMENTED=true
-RELEASE_USES_SHARED_HOOK=true
-LEGACY_EQUIVALENCE_PASS=true
-LEGACY_EVENT_ONLY_BEHAVIOR_UNCHANGED=true
-```
-
-The migration previously passed 100 focused tests plus ROS imports, `py_compile`, and task-scoped diff validation.
-
-## First fresh contiguous runtime smoke — material timing conflict
-
-Root:
-
-```text
-/media/nahhao74/KINGSTON/g_action_contiguous_minimal_runtime_qualification_20260910_234803
-```
-
-The smoke executed one assigned ZERO plan and one `+E 0.012 m/s^2` bounded plan with FAST active, then landed and cleaned up normally.
-
-Key nonzero timing:
-
-```text
-OFFER_FRONTIER_US=15652000
-first observed candidate application=15656000
-accepted T_A=15676000
-requested hold=20000 us
-```
-
-The candidate was physically/source-bound in E8 before the exact native accepted ACK. Because PX4 must receive an ingress before it can emit the accepted status, the old contract `candidate=ZERO for all t<T_A` was incompatible with the actual ActionLink/E8 protocol.
-
-The same root also showed useful partial evidence:
-
-```text
-active candidate records at 15676000, 15680000, 15688000, 15692000
-candidate vector correct on recorded active cycles
-first post-expiry source 15696000 was ZERO
-release parent binding PASS
-release ACK PASS at 15860000
-release ACK did not extend physical dose
-FAST remained active
-```
-
-But the root did not qualify the primitive:
-
-```text
-EXPECTED_QUALIFIED_C1_CYCLES=7
-RECORDED_EXPOSURE_CYCLES=6
-MISSING_EXPOSURE_CYCLES=1
-STATUS=BLOCKED_MATERIAL_CONTROL_CONFLICT
-```
-
-The root remains immutable.
-
-## Owner timing decision — `T_U/T_A`
-
-The owner explicitly approved:
-
-```text
-APPROVE_G_ACTION_TREATMENT_ONSET_AT_FIRST_SOURCE_BOUND_APPLICATION
-```
-
-Canonical timing is now:
-
-```text
-T_D = causal decision / pre-treatment planning frontier
-T_U = first source-bound applied candidate frontier
-T_A = exact native accepted transaction ACK frontier
+T_D = decision / pre-treatment planning frontier
+T_U = first source-bound effective E8 candidate application
+T_A = exact native accepted ActionLink ACK frontier
 T_R_phys = physical candidate termination frontier
-T_R_ack = release acceptance/ACK frontier
+T_R_ack = release acceptance / ACK frontier
 ```
-
-Semantics:
 
 ```text
 TREATMENT_ONSET=T_U
-T_A_SEMANTICS_MODIFIED=false
 T_A_ROLE=TRANSACTION_CONFIRMATION
-HOLD_EXPIRY_ORIGIN=T_U_PLUS_PLANNED_HOLD_DURATION_US
-G_TARGET_ORIGIN_PROPOSAL=T_U
+HOLD_EXPIRY_ORIGIN=T_U_PLUS_ASSIGNED_DURATION
 ```
 
-Expected valid ordering:
+Observed ordering in one run must not be promoted into a universal timing invariant unless source semantics establish it.
+
+## Freshness / treatment support
+
+Protected freshness remains:
 
 ```text
-T_D < T_U <= T_A
-T_R_phys <= T_R_ack
+ATTITUDE_MAX_AGE_US=10000
 ```
 
-The interval `[T_U,T_A)` is realized treatment exposure when present; it must not be discarded simply because ACK has not yet arrived.
-
-For future scientific identification, the proposed physical action-relative outcome becomes `T_U`-relative, while F remains decision/frontier-relative. This timing delta is owner-approved but scientific V2R1 execution remains unfrozen and unexecuted.
-
-## Fresh `T_U/T_A` requalification
-
-Root:
+Retained conditional source-history support from the minimum-realizable-exposure characterization:
 
 ```text
-/media/nahhao74/KINGSTON/g_action_tu_ta_contiguous_requalification_20260911_001245
+>=4 ms   ~99.96–100%
+>=8 ms   ~80.2%
+>=12 ms  ~51.5%
+>=16 ms  ~13.5%
+>=20 ms  ~7.0%
+>=40 ms  ~0.35–0.42%
+>=80 ms  ~0–0.06%
 ```
 
-Fresh engineering-only ZERO/nonzero smoke executed successfully at the infrastructure level:
+These are not scientific completion probabilities, confidence intervals or physical actuator-hold guarantees.
+
+## AURA executor/source-delivery result retained
+
+The experimental V2.1 `MultiThreadedExecutor(2)` path is closed for the current architecture. Exact hash-guarded ready-time instrumentation plus sparse/full perturbation closure established large repeated V2.1 ready-to-handler tails while wrapper-only behavior remained externally compatible.
 
 ```text
-RUNTIME_SMOKE_EXECUTED=true
-BASELINE_FLIGHT_STABLE=true
-FAST_ACTIVE_DURING_SMOKE=true
-LANDING_PASS=true
-CLEANUP_PASS=true
+INSTRUMENTATION_CAUSES_MATERIAL_V2_TAIL=false
+V2_READY_TO_HANDLER_TAIL_INTRINSICALLY_SUPPORTED=true
+STATUS=V2_CONCURRENCY_ARCHITECTURE_NOT_SUITABLE_CONFIRMED
+AURA_EXECUTION_PHASE_V1=CANONICAL
 ```
 
-Nonzero timing:
+Do not reopen V2/V2.1 without a genuinely new owner-approved architecture.
+
+## Source-rate result retained
+
+The retained PX4 runtime identity is bound to the local compiled uXRCE-DDS attitude export throttle near 10 ms, but upstream native `vehicle_attitude` production rate remains unidentified.
 
 ```text
-OFFER_FRONTIER_US=16436000
-T_U_US=16440000
-T_A_US=16440000
-PRE_ACK_EXPOSURE_US=0
-EXPIRY_TARGET_US=16460000
+EXPORT_THROTTLE_BOUND_TO_RUNTIME=true
+NATIVE_PRODUCER_RATE_IDENTIFIED=false
+RATE_PATH_PRIMARY_LIMIT=RATE_PATH_MIXED
+SOURCE_RATE_INTERVENTION_CURRENTLY_JUSTIFIED=false
 ```
 
-This runtime did not reveal a new timing-semantic conflict. Instead, it exposed a control/observability consistency defect:
+No source-rate change is authorized.
+
+## Short-duration G-action identification
+
+Offline targeted identification selected 8 ms as the primary investigation candidate and 12 ms as the secondary candidate. Retained evidence did not identify treatment signal, response latency, SNR, minimum detectable effect, or scientific sample size.
 
 ```text
-at 16456000 px4_boot_us:
-  C1 evaluation became invalid
-  bounded candidate fail-closed correctly
-  emitted ledger still reported stale pre-evaluation candidate as active
+DURATION_8MS_SIGNAL_STATUS=UNIDENTIFIED
+DURATION_12MS_SIGNAL_STATUS=UNIDENTIFIED
+RESPONSE_LATENCY_IDENTIFIED=false
+SNR_PROXY_8MS=UNAVAILABLE
+SNR_PROXY_12MS=UNAVAILABLE
+SCIENTIFIC_SAMPLE_SIZE_DERIVABLE=false
 ```
+
+This justified a finite engineering-only ZERO/8/12 response campaign before any source-rate intervention.
+
+## Consumed ZERO / 8 ms / 12 ms engineering campaign
+
+A frozen 12-session engineering response campaign was executed once under V1 + FAST with unchanged freshness and `+E 0.012 m/s^2` candidate magnitude.
+
+Consumed manifest SHA256:
+
+```text
+9cf311644423ab1c65bd52977ef014db1eaeb0e184cd7a1c0c0e3efb3cb13486
+```
+
+Assignments:
+
+```text
+ZERO=4
+8MS=4
+12MS=4
+```
+
+Retained exposure observations:
+
+```text
+ZERO accepted/executed evidence=2; completed=1
+8MS accepted=3; completed=2; early source-invalid=1; realized exposure 4–12 ms
+12MS accepted=3; completed=0; early source-invalid=3; realized exposure 4,4,8 ms
+```
+
+The campaign is immutable and runtime-invalid for response interpretation.
+
+```text
+STATUS=ENGINEERING_CAMPAIGN_RUNTIME_INVALID
+DURATION_8MS_SIGNAL_STATUS=NO_CLEAR_SEPARATION
+DURATION_12MS_SIGNAL_STATUS=INSUFFICIENT_COMPLETED_EXPOSURE
+8MS_VS_12MS_RESPONSE=UNRESOLVED
+RESPONSE_LATENCY_IDENTIFIED=false
+```
+
+These signal labels are not causal/statistical conclusions.
+
+## Runtime implementation repair — latest engineering result
+
+Task:
+
+```text
+G_ACTION_8_12_RUNTIME_IMPLEMENTATION_REPAIR
+```
+
+Result:
+
+```text
+TASK_RESULT=RUNTIME_IMPLEMENTATION_REPAIR_PARTIALLY_QUALIFIED
+STATUS=BLOCKED_MATERIAL_RUNTIME_SEMANTIC_CHANGE
+```
+
+Historical response evidence remains immutable:
+
+```text
+HISTORICAL_MANIFEST_IMMUTABLE=true
+HISTORICAL_ASSIGNMENTS_REPLACED=false
+```
+
+### Admission-before-offer repair
+
+The runner now waits for a current prospective C1 admission witness before arming/submitting its single assigned offer.
+
+```text
+ADMISSION_TRIGGER_REPAIR_IMPLEMENTED=true
+QUALIFIED_ADMISSION_OBSERVED_BEFORE_OFFER=true
+COMMON_ARM_ADMISSION_SEMANTICS_PASS=true
+ONE_OFFER_PER_ASSIGNED_SESSION_PASS=true
+```
+
+Current owner chain:
+
+```text
+ContiguousEngineeringRunner.run_assigned
+→ QualifiedActionLinkLifecycle
+→ Stage1Probe._c1_callback
+```
+
+Prospective admission owner:
+
+```text
+ContiguousEngineeringRunner.wait_for_qualified_admission
+```
+
+### Release-validator repair
+
+Historical SESSION_09 source evidence proves that an accepted ZERO/release lifecycle transaction exists. The old validator incorrectly required a duplicated E8 diagnostic acceptance event.
+
+The validator now binds the exact accepted lifecycle transaction.
+
+```text
+SESSION09_ACCEPTED_RELEASE_SOURCE_PROVEN=true
+RELEASE_VALIDATOR_REPAIR_IMPLEMENTED=true
+RELEASE_EXACT_BINDING_PASS=true
+RELEASE_ACK_VALID=true
+RELEASE_ACK_EXTENDED_PHYSICAL_DOSE=false
+```
+
+Historical runtime evidence was not rewritten.
+
+### Regression and fresh lifecycle-only qualification
+
+```text
+FOCUSED_TESTS_PASS=84
+ZERO_QUALIFICATION_RESULT=PASS
+8MS_QUALIFICATION_RESULT=PASS
+12MS_QUALIFICATION_RESULT=RETAINED_NATIVE_ACCEPTANCE_TIMEOUT_AFTER_QUALIFIED_ADMISSION
+```
+
+For accepted qualification transactions:
+
+```text
+T_A_SOURCE_BINDING_PASS=true
+T_U_SOURCE_BINDING_PASS=true
+CONTROL_LEDGER_IDENTITY_PASS=true
+BRIDGE_EFFECTIVE_STATE_IDENTITY_PASS=true
+FAIL_CLOSED_SEMANTICS_PASS=true
+```
+
+No T_U or T_A was fabricated for the rejected 12 ms transaction.
+
+## Current material boundary
+
+The old offer-before-C1 race is closed. The remaining issue is now:
+
+```text
+current qualified C1 admission witness
+→ single pending assigned offer
+→ E8 can still reject that pending offer before native accepted ACK
+```
+
+Preventing this rejection would require a stronger E8 prospective condition than the currently approved C1 admission predicate. That condition is not currently exposed as a canonical prospective eligibility contract.
+
+Adding it changes the opportunity/eligibility population and therefore requires owner review.
 
 Current classification:
 
 ```text
-PER_CYCLE_CANDIDATE_DECOMPOSITION=INVALID_STALE_ACTIVE_FLAG_AFTER_FAIL_CLOSED_C1
-EXPOSURE_LEDGER_CONTINUITY=false
-T_U_SOURCE_QUALIFIED=false
-CONTIGUOUS_EXPOSURE_SOURCE_QUALIFIED=false
-STATUS=INVALID_RUNTIME_IMPLEMENTATION
-FIRST_MATERIAL_BLOCKER=NONE
+PRE_ACCEPTANCE_TIMEOUT_DEFECT_CLOSED=false
+FIRST_MATERIAL_BLOCKER=
+A qualified C1 admission witness can still reach E8 as a pending offer and be rejected before native ACK.
 ```
 
-Release behavior in this root remained correct:
+## Current owner decision
+
+The next task must decide whether:
+
+1. a source-proven, arm-independent, future-free E8 condition becomes part of common prospective pre-offer eligibility; or
+2. pre-acceptance E8 rejection remains a legitimate assigned engineering outcome; or
+3. the project explicitly separates conditional G-response identification from C1→E8 practical admission/support characterization.
 
 ```text
-RELEASE_PARENT_BINDING_PASS=true
-RELEASE_ACCEPTANCE_VALID=true
-RELEASE_ACK_VALID=true
-RELEASE_ACK_LATENCY_US=4000
-RELEASE_ACK_EXTENDED_PHYSICAL_DOSE=false
+NEXT_TASK=OWNER_REVIEW_G_ACTION_E8_PREOFFER_ADMISSION_CONTRACT
 ```
 
-The root remains immutable and cannot be repaired by post-processing into PASS evidence.
-
-## Current implementation repair target
-
-The next task is:
-
-```text
-G_ACTION_TU_TA_RUNTIME_IMPLEMENTATION_REPAIR
-```
-
-The required repair is implementation/observability only:
-
-1. Evaluate current-cycle validity/fail-closed gates.
-2. Produce one canonical effective candidate state after those gates.
-3. Use that same post-gate state for control composition, diagnostic/status output and exposure ledger.
-4. Eliminate stale pre-gate `candidate_active` emission.
-5. Emit exactly one decomposition/ledger record for every qualified C1 evaluation, including ZERO/no-offer cycles.
-6. Re-run a fresh ZERO + nonzero 20 ms engineering smoke in a new KINGSTON root.
-
-No owner review is required unless repair would change control/scientific semantics.
-
-## Current success gate
-
-The bounded primitive remains unqualified until fresh evidence proves at least:
-
-```text
-T_U source-qualified from effective post-gate state
-candidate ZERO before T_U
-control candidate == ledger candidate every cycle
-ZERO ledger complete
-MISSING_EXPOSURE_CYCLES=0
-DUPLICATE_EXPOSURE_CYCLES=0
-planned T_U-relative exposure completed as planned
-baseline + candidate composition PASS
-physical termination source-bound
-parent-linked release ACK PASS
-release ACK does not extend dose
-FAST active
-```
-
-If this passes:
-
-```text
-CONTIGUOUS_EXPOSURE_SOURCE_QUALIFIED=true
-V2R1_TEMPORAL_LADDER_NOW_DERIVABLE=true
-NEXT_TASK=WORLD_MODEL_G_ACTION_MRT_V2R1_EXECUTABLE_FREEZE
-```
-
-The 20 ms hold remains engineering-only and is not a frozen scientific MRT duration.
-
-## MRT / scientific boundary
-
-Future MRT structure is intended to use:
-
-```text
-assignment at T_D
-physical treatment onset at T_U
-transaction confirmation at T_A
-bounded duration from T_U
-parent-linked release
-T_U-relative proximal outcomes
-```
-
-But no formal MRT campaign has run.
-
-```text
-SCIENTIFIC_ACQUISITION_EXECUTED=false
-G_ACTION_CAUSAL_STATUS=UNQUALIFIED
-MRT_RANDOMIZATION_LAW=NOT_FINAL_FROZEN
-SCIENTIFIC_HOLD_DURATIONS=NOT_FINAL_FROZEN
-```
+No new response campaign should execute before this decision.
 
 ## Hard invariants
 
 ```text
 PX4 remains authoritative
 FAST remains active immediate-response baseline
+AURA_EXECUTION_PHASE_V1=CANONICAL
+ATTITUDE_MAX_AGE_US=10000
 legacy EVENT_ONLY_V1 remains unchanged
-bounded-contiguous mode remains explicit opt-in
 historical failed/invalid roots remain immutable
-large runtime/dataset artifacts=/media/nahhao74/KINGSTON
-V1_MODEL_MODIFIED=false
-V1_1_MODEL_MODIFIED=false
-V1_2_MODEL_MODIFIED=false
-CURRENT_V2_MODIFIED=false
+consumed response manifest remains immutable
+large artifacts=/media/nahhao74/KINGSTON
+V1/V1.1/V1.2 model lineage unchanged
 PX4_FIRMWARE_MODIFIED=false
 FAST_CONTROL_LAW_MODIFIED=false
+T1_C1_MATH_MODIFIED=false
+SOURCE_RATE_CHANGED=false
+CONTROL_AUTHORITY_CHANGED=false
 WM_CONTROL_WRITE=false
 WISE_ENABLED=false
 AEGIS_WM_AUTHORITY=false
@@ -308,12 +314,12 @@ SEALED_PAYLOAD_OPENED=false
 G_ACTION_CAUSAL_STATUS=UNQUALIFIED
 ```
 
-## Current checkpoint
+## Latest complete handoff
 
 See:
 
-- `CURRENT_STATE_CHECKPOINT_20260911_TU_TA_RUNTIME_REPAIR.md` — latest complete handoff.
-- `../03_evidence/world_model/G_ACTION_TU_TA_RUNTIME_20260911.md` — compact runtime evidence update.
-- `../05_scientific_contracts/G_ACTION_MRT_V2R1_TU_ORIGIN_PRE_FREEZE_20260911.md` — owner-approved timing delta and current pre-freeze scientific boundary.
+- `CURRENT_STATE_CHECKPOINT_20260911_G_ACTION_E8_PREOFFER_REVIEW.md` — latest complete checkpoint.
+- `CURRENT_STATE_CHECKPOINT_20260911_TU_TA_RUNTIME_REPAIR.md` — prior T_U/T_A implementation-repair checkpoint retained as lineage.
+- `../05_scientific_contracts/G_ACTION_MRT_V2R1_TU_ORIGIN_PRE_FREEZE_20260911.md` — current pre-freeze scientific timing boundary; still not execution authority.
 
-Earlier 2026-09-10 checkpoints, Phase-D documents and failed roots remain historical lineage.
+Earlier checkpoints and failed roots remain historical lineage.
