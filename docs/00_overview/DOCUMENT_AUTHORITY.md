@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This file defines how humans and AI agents must read `main` without mixing current authority, architecture, evidence and future research.
+This file defines how humans and AI agents must read `main` without mixing current authority, architecture, evidence, scientific contracts and historical lineage.
 
-The repository keeps **one current truth** in `main`. Superseded states and rejected research remain recoverable through Git history rather than existing as competing active documents.
+The repository keeps one current truth in `main`. Dated checkpoints and older contracts remain available for lineage, but the newest current-status documents take precedence.
 
 ## Authority order
 
@@ -12,30 +12,32 @@ When documents disagree, use this order:
 
 ```text
 1. docs/00_overview/CURRENT_STATUS.md
-2. docs/00_overview/CURRENT_EXECUTION_LADDER_WM_20260905.md
-3. docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md
+2. docs/00_overview/CURRENT_STATE_CHECKPOINT_20260911_TU_TA_RUNTIME_REPAIR.md
+3. docs/05_scientific_contracts/G_ACTION_MRT_V2R1_TU_ORIGIN_PRE_FREEZE_20260911.md
 4. docs/01_architecture/*
-5. docs/03_evidence/MILESTONE_SUMMARY.md
-6. docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md
-7. docs/02_source_registry/*
+5. docs/03_evidence/world_model/G_ACTION_TU_TA_RUNTIME_20260911.md
+6. docs/03_evidence/MILESTONE_SUMMARY.md
+7. docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md
+8. docs/02_source_registry/*
 ```
 
-Do not infer current execution state from research references, source-registry metadata, commit history or deleted/superseded documents.
+Older dated checkpoints and contracts are lineage unless explicitly restored by owner decision.
+
+Do not infer current execution authority from research references, commit history, old Phase-D ladders, or superseded randomized-identification contracts.
 
 ## Required read order for a new AI
 
 ```text
 README.md
-→ CURRENT_STATUS.md
-→ CURRENT_EXECUTION_LADDER_WM_20260905.md
-→ SYSTEM_ARCHITECTURE.md
-→ CONTROL_ACTION_PATH.md
-→ TIMING_CAUSALITY_STATEBANK.md
-→ WM_CAUSAL_VALIDITY_ENGINE.md
-→ WORLD_MODEL_WISE.md
-→ WM1_RANDOMIZED_IDENTIFICATION.md
-→ MILESTONE_SUMMARY.md
-→ FUTURE_IMPLEMENTATION_ROADMAP.md
+→ docs/00_overview/CURRENT_STATUS.md
+→ docs/00_overview/CURRENT_STATE_CHECKPOINT_20260911_TU_TA_RUNTIME_REPAIR.md
+→ docs/05_scientific_contracts/G_ACTION_MRT_V2R1_TU_ORIGIN_PRE_FREEZE_20260911.md
+→ docs/01_architecture/SYSTEM_ARCHITECTURE.md
+→ docs/01_architecture/CONTROL_ACTION_PATH.md
+→ docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md
+→ docs/03_evidence/world_model/G_ACTION_TU_TA_RUNTIME_20260911.md
+→ docs/03_evidence/MILESTONE_SUMMARY.md
+→ docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md
 ```
 
 ## Canonical pipeline model
@@ -45,7 +47,7 @@ FAST PATH
 Sensors/PX4/Reference
 → AURA
 → FAST/T1/C1
-→ bounded AEGIS acceleration-correction path
+→ bounded AEGIS path
 → PX4
 → UAV
 
@@ -61,99 +63,58 @@ Hard invariants:
 
 ```text
 PX4 remains authoritative
+FAST remains active immediate-response baseline
 World Model must not block first response
-current Phase-0 FAST/T1/C1 baseline remains active
-candidate action is bounded incremental augmentation
-StateBank is causal and always warm
+candidate action remains bounded incremental augmentation
+StateBank remains causal and always warm
 stale/unsupported WM plan -> candidate ZERO/unavailable
+legacy EVENT_ONLY_V1 remains unchanged
 ```
 
 ## Current scientific target
 
 ```text
 G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
-B = active PX4 + AURA + current FAST/T1/C1 baseline
+B = active PX4 + AURA + FAST/T1/C1
 ```
 
-This is closed-loop action identification, not open-loop airframe identification.
-
-A material FAST change changes baseline `B` and therefore requires a versioned review of the action-conditioned data/model contract.
-
-## Current execution state
-
-As of 2026-09-05:
+Current owner-approved timing semantics for future bounded-contiguous `G_action` design:
 
 ```text
-LATEST_FAILED_SCIENTIFIC_ROOT=fresh_35
-FRESH35_RESULT=INVALID_INFRASTRUCTURE_NEW_ROOT_IMMUTABLE
-PRIMARY_BOUNDARY=ACCEPTED_CYCLE_STATUS_SUCCESSOR_UNAVAILABLE_TO_PROBE
-PRODUCER_ABSENCE=NOT_PROVEN
-CAPACITY_CAUSALITY=LIKELY_BUT_NOT_PROVEN
-
-G_ACTION_PILOT_RESULT=NOT_EVALUATED
-CAUSAL_DATASET_ACCEPTANCE=BLOCKED
-SCIENTIFIC_EXECUTION=NOT_RUN
-MANIFEST_SLOTS_CONSUMED=0
-SEALED=LOCKED_PRE_EVALUATION
-production_authority=false
+T_D = decision/planning frontier
+T_U = first source-bound applied candidate frontier
+T_A = exact native accepted ACK frontier
+TREATMENT_ONSET=T_U
+T_A_SEMANTICS_MODIFIED=false
+HOLD_EXPIRY_ORIGIN=T_U_PLUS_PLANNED_HOLD_DURATION_US
+G_TARGET_ORIGIN_PROPOSAL=T_U
 ```
 
-The exact next task is the accepted-cycle callback visibility/retention forensic defined by the latest execution ladder.
+A material FAST change changes baseline `B` and requires versioned review of the action-conditioned data/model contract.
 
-No new randomized root is currently authorized.
-
-## Evidence semantics
+## Current execution boundary
 
 ```text
-infrastructure-invalid root != scientific negative result
-partial valid rows != scientific dataset
-terminal timeout != necessarily first causal divergence
-capacity pressure != eviction proof
-native producer evidence != observer receipt proof
+CURRENT_STATUS=INVALID_RUNTIME_IMPLEMENTATION
+NEXT_TASK=G_ACTION_TU_TA_RUNTIME_IMPLEMENTATION_REPAIR
+SCIENTIFIC_ACQUISITION_EXECUTED=false
+G_ACTION_CAUSAL_STATUS=UNQUALIFIED
 ```
 
-A later repair may explain a historical failure but never converts the failed root into scientific data.
+The current runtime defect is stale pre-gate candidate state in the emitted exposure ledger after fail-closed C1 evaluation. This is not a new timing-semantic conflict.
 
-## Runtime vs research authority
+No AI should freeze or execute MRT until a fresh bounded-contiguous runtime qualifies the source-grounded `T_U`-relative exposure primitive.
 
-The active research scope is defined only by:
+## Evidence governance
+
+Engineering smoke data is not formal scientific evidence unless a scientific contract explicitly admits it.
+
+Historical failed/invalid roots remain immutable. Do not post-process an invalid root into a PASS classification.
+
+Large runtime/data artifacts remain under:
 
 ```text
-docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md
+/media/nahhao74/KINGSTON
 ```
 
-Research material answers what should be benchmarked later; it does not authorize runtime/scientific changes.
-
-Methods not present in the active roadmap must be treated as background reference only, regardless of whether they appear in the source registry or Git history.
-
-## Time-domain rule
-
-Keep these domains distinct unless an explicit qualified mapping exists:
-
-```text
-PX4 native / PX4_BOOT_US
-Gazebo simulation time
-host monotonic / receipt time
-mapped cross-domain time
-```
-
-Never fabricate a PX4 source timestamp for a host-only diagnostic.
-
-## AI change checklist
-
-Before proposing code, experiment or model changes, an AI must answer:
-
-```text
-1. What is the current estimand?
-2. What is active baseline B?
-3. What is the latest immutable root?
-4. What is the first proven blocker?
-5. What has already been qualified?
-6. What exact next task is authorized?
-7. What is explicitly forbidden?
-8. Does the proposed change alter baseline B or scientific semantics?
-9. Is the proposal current work or future research?
-10. Which canonical document supports each answer?
-```
-
-If these answers are inconsistent, resolve documentation/state ambiguity before changing runtime or scientific semantics.
+Do not place large runtime captures or training artifacts under `/home` or this documentation repository.

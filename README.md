@@ -7,22 +7,21 @@ Large telemetry, runtime roots, datasets, replay bundles, and generated plots re
 ## Read order
 
 1. [`docs/00_overview/CURRENT_STATUS.md`](docs/00_overview/CURRENT_STATUS.md) — authoritative current state.
-2. [`docs/00_overview/CURRENT_STATE_CHECKPOINT_20260910_G_ACTION_CONTIGUOUS_MRT_PREP.md`](docs/00_overview/CURRENT_STATE_CHECKPOINT_20260910_G_ACTION_CONTIGUOUS_MRT_PREP.md) — latest complete World Model/G-action handoff.
-3. [`docs/00_overview/CURRENT_STATE_CHECKPOINT_20260910.md`](docs/00_overview/CURRENT_STATE_CHECKPOINT_20260910.md) — earlier 2026-09-10 FAST/Phase-D checkpoint retained as lineage.
-4. [`docs/00_overview/DOCUMENT_AUTHORITY.md`](docs/00_overview/DOCUMENT_AUTHORITY.md) — authority and onboarding rules.
-5. [`docs/01_architecture/SYSTEM_ARCHITECTURE.md`](docs/01_architecture/SYSTEM_ARCHITECTURE.md) — structural end-to-end pipeline.
-6. [`docs/01_architecture/CONTROL_ACTION_PATH.md`](docs/01_architecture/CONTROL_ACTION_PATH.md) — control path and PX4 authority.
-7. [`docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md`](docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md) — timing, causality, and StateBank.
-8. [`docs/03_evidence/world_model/G_ACTION_PROGRESS_20260910.md`](docs/03_evidence/world_model/G_ACTION_PROGRESS_20260910.md) — compact current G-action milestone trail.
-9. [`docs/03_evidence/MILESTONE_SUMMARY.md`](docs/03_evidence/MILESTONE_SUMMARY.md) — historical audit trail.
-10. [`docs/03_evidence/phase_d/README.md`](docs/03_evidence/phase_d/README.md) — retained Phase-D evidence index.
-11. [`docs/05_scientific_contracts/G_ACTION_MRT_V2R1_PRE_FREEZE_STATUS_20260910.md`](docs/05_scientific_contracts/G_ACTION_MRT_V2R1_PRE_FREEZE_STATUS_20260910.md) — current MRT/G-action scientific boundary before executable freeze.
-12. [`docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md`](docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md) — older frozen WM1 randomized-identification contract retained as lineage.
-13. [`docs/05_scientific_contracts/phase_d/README.md`](docs/05_scientific_contracts/phase_d/README.md) — retained formal Phase-D contracts.
-14. [`docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md`](docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md) — future implementation roadmap.
-15. [`docs/02_source_registry/CURRENT_REGISTRY_V9.md`](docs/02_source_registry/CURRENT_REGISTRY_V9.md) — source registry.
+2. [`docs/00_overview/CURRENT_STATE_CHECKPOINT_20260911_TU_TA_RUNTIME_REPAIR.md`](docs/00_overview/CURRENT_STATE_CHECKPOINT_20260911_TU_TA_RUNTIME_REPAIR.md) — latest complete G-action/T_U/T_A handoff.
+3. [`docs/03_evidence/world_model/G_ACTION_TU_TA_RUNTIME_20260911.md`](docs/03_evidence/world_model/G_ACTION_TU_TA_RUNTIME_20260911.md) — latest compact runtime evidence.
+4. [`docs/05_scientific_contracts/G_ACTION_MRT_V2R1_TU_ORIGIN_PRE_FREEZE_20260911.md`](docs/05_scientific_contracts/G_ACTION_MRT_V2R1_TU_ORIGIN_PRE_FREEZE_20260911.md) — current MRT/G-action pre-freeze timing boundary.
+5. [`docs/00_overview/CURRENT_STATE_CHECKPOINT_20260910_G_ACTION_CONTIGUOUS_MRT_PREP.md`](docs/00_overview/CURRENT_STATE_CHECKPOINT_20260910_G_ACTION_CONTIGUOUS_MRT_PREP.md) — prior contiguous/MRT-preparation checkpoint retained as lineage.
+6. [`docs/00_overview/DOCUMENT_AUTHORITY.md`](docs/00_overview/DOCUMENT_AUTHORITY.md) — authority and onboarding rules.
+7. [`docs/01_architecture/SYSTEM_ARCHITECTURE.md`](docs/01_architecture/SYSTEM_ARCHITECTURE.md) — structural pipeline.
+8. [`docs/01_architecture/CONTROL_ACTION_PATH.md`](docs/01_architecture/CONTROL_ACTION_PATH.md) — control path and PX4 authority.
+9. [`docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md`](docs/01_architecture/TIMING_CAUSALITY_STATEBANK.md) — timing, causality, and StateBank.
+10. [`docs/03_evidence/MILESTONE_SUMMARY.md`](docs/03_evidence/MILESTONE_SUMMARY.md) — historical audit trail.
+11. [`docs/03_evidence/phase_d/README.md`](docs/03_evidence/phase_d/README.md) — retained Phase-D evidence index.
+12. [`docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md`](docs/05_scientific_contracts/WM1_RANDOMIZED_IDENTIFICATION.md) — older frozen randomized-identification contract retained as lineage.
+13. [`docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md`](docs/04_research/FUTURE_IMPLEMENTATION_ROADMAP.md) — future implementation roadmap.
+14. [`docs/02_source_registry/CURRENT_REGISTRY_V9.md`](docs/02_source_registry/CURRENT_REGISTRY_V9.md) — source registry.
 
-Superseded current-state and qualification decisions remain available as dated lineage; they are not competing current authority.
+Superseded states remain available as dated lineage; they are not competing current authority.
 
 ## Pipeline
 
@@ -40,43 +39,92 @@ Sensors / PX4 / Reference ──────┬────> StateBank (always w
                               AURA ─────> FAST/T1/C1 ─────> PX4 ─────> UAV
 ```
 
-## Current state — 2026-09-10
+## Current state — 2026-09-11
 
-The active engineering frontier is now **World Model `G_action` acquisition readiness**, not model-capacity expansion.
-
-The latest diagnosis established that the dominant limitation is insufficient clean effective action horizon. Historical `3C/5C/7C` treatments were then source-audited and proven to be event-count semantics rather than continuous candidate holds.
-
-A new explicit engineering mode has therefore been implemented:
+The active engineering task is now:
 
 ```text
-BOUNDED_CONTIGUOUS_CANDIDATE_EXPOSURE_V1
+G_ACTION_TU_TA_RUNTIME_IMPLEMENTATION_REPAIR
 ```
 
-Legacy `EVENT_ONLY_V1` remains unchanged.
-
-Current status:
+Current canonical state:
 
 ```text
-CURRENT_MODE=WM_G_ACTION_CONTIGUOUS_RUNTIME_QUALIFICATION_PREP
 CURRENT_BASELINE_B=PX4+AURA+FAST/T1/C1
 FAST_ACTIVE_BASELINE=true
-QUALIFIED_TRANSACTION_HOOK_IMPLEMENTED=FULL
-STAGE1PROBE_USES_SHARED_HOOK=true
-CONTIGUOUS_RUNNER_USES_SHARED_HOOK=true
-RELEASE_TRANSACTION_IMPLEMENTED=true
-LEGACY_EQUIVALENCE_PASS=true
+QUALIFIED_LIFECYCLE_MIGRATION_COMPLETE=true
+CONTIGUOUS_MODE=BOUNDED_CONTIGUOUS_CANDIDATE_EXPOSURE_V1
+TREATMENT_ONSET=T_U
+T_A_ROLE=EXACT_NATIVE_ACCEPTANCE_ACK
 CONTIGUOUS_EXPOSURE_SOURCE_QUALIFIED=false
 V2R1_TEMPORAL_LADDER_NOW_DERIVABLE=false
 SCIENTIFIC_ACQUISITION_EXECUTED=false
 G_ACTION_CAUSAL_STATUS=UNQUALIFIED
-NEXT_TASK=G_ACTION_CONTIGUOUS_MINIMAL_RUNTIME_QUALIFICATION
 ```
 
-The shared `QualifiedActionLinkLifecycle` now owns qualified C1 arming, transport retry identity, exact accepted-status matching and native `T_A` binding for both legacy Stage1 and the new contiguous runner. The migration passed 100 focused tests, ROS imports, `py_compile`, and task-scoped diff validation.
+Two fresh engineering runtime roots now exist.
 
-## World Model conclusion
+First root:
 
-Current model work supports a useful short-horizon `F` predictor, but not a useful/qualified `G` predictor under the historical action support.
+```text
+/media/nahhao74/KINGSTON/g_action_contiguous_minimal_runtime_qualification_20260910_234803
+```
+
+proved that candidate application can precede exact accepted `T_A`, creating a real conflict with the old assumption that `T_A` was physical treatment onset.
+
+Owner then approved:
+
+```text
+T_U = first source-bound candidate application
+T_A = exact native accepted ACK
+physical treatment onset = T_U
+hold expiry origin = T_U + planned duration
+G target origin proposal = T_U
+```
+
+Fresh requalification root:
+
+```text
+/media/nahhao74/KINGSTON/g_action_tu_ta_contiguous_requalification_20260911_001245
+```
+
+showed `T_U=T_A=16440000` for the nonzero plan, but did not qualify the primitive because an invalid C1 evaluation failed closed while the emitted ledger retained stale pre-gate candidate-active state.
+
+```text
+STATUS=INVALID_RUNTIME_IMPLEMENTATION
+FIRST_MATERIAL_BLOCKER=NONE
+```
+
+This is an implementation/observability defect, not a new timing-semantic conflict.
+
+## Immediate repair target
+
+The next prospective repair must make one post-gate effective candidate state the single truth for both control composition and ledger output:
+
+```text
+C1 gates
+  -> effective candidate state
+  -> baseline + candidate composition
+  -> status/diagnostics
+  -> exposure ledger
+```
+
+Required runtime invariants include:
+
+```text
+LEDGER_CANDIDATE == CONTROL_COMPOSITION_CANDIDATE
+exactly one ledger row per qualified C1 evaluation
+MISSING_EXPOSURE_CYCLES=0
+DUPLICATE_EXPOSURE_CYCLES=0
+candidate ZERO before T_U
+planned T_U-relative exposure completed as planned
+release ACK does not extend physical dose
+FAST remains active
+```
+
+## World Model and MRT boundary
+
+Current model conclusion remains:
 
 ```text
 F_ENGINEERING_STATUS=USEFUL_SHORT_HORIZON_ENGINEERING_PREDICTION
@@ -85,87 +133,30 @@ PRIMARY_G_LIMITATION=INSUFFICIENT_EFFECTIVE_ACTION_HORIZON
 MODEL_CAPACITY_INCREASE_JUSTIFIED=false
 ```
 
-The current order is therefore:
+Future MRT design is intended to use:
 
 ```text
-qualify bounded contiguous action exposure live
-    ↓
-freeze MRT-style scientific acquisition
-    ↓
-collect clean prospectively randomized U/ZERO action-response data
-    ↓
-evaluate G identifiability and treatment signal
-    ↓
-only then reconsider model capacity/family
-```
-
-## MRT direction
-
-Micro-Randomized Trial methodology is the intended future framework for `G_action` identification after live qualification of the bounded action primitive.
-
-Conceptually:
-
-```text
-qualified decision point
-    ↓
-causal pre-treatment state fixed
-    ↓
-micro-randomize ZERO / +N / -N / +E / -E / approved duration profile
-    ↓
-exact accepted T_A
-    ↓
-bounded contiguous action exposure
-    ↓
+assignment at T_D
+physical treatment onset T_U
+transaction confirmation T_A
+bounded duration from T_U
 parent-linked release
-    ↓
-proximal T_A-relative outcome
+T_U-relative proximal outcome
 ```
 
-No formal MRT campaign has run yet.
-
-## Immediate next gate
-
-Exactly one fresh non-scientific SITL qualification is next:
-
-```text
-1 bounded-mode ZERO plan
-1 bounded-mode nonzero plan
-planned_hold_duration_us=20000  # engineering-only qualification value
-complete exposure ledger
-parent-linked release
-FAST active
-landing / cleanup
-```
-
-The 20 ms hold is not a frozen scientific horizon and must not be promoted into the future MRT contract merely because the smoke passes.
-
-## Qualification / Phase-D state retained
-
-Formal Phase-D/Q1 qualification remains paused, not deleted. Earlier FAST/Phase-D documents and immutable failed roots remain historical authority for that branch.
-
-Engineering runs are not formal scientific evidence and must not be retroactively promoted.
-
-## Scientific target
-
-```text
-G_action(X,U,h) = Y(B+U,h) - Y(B+ZERO,h)
-B = active PX4 + AURA + FAST/T1/C1 baseline
-```
-
-Current evidence does not authorize `G_ACTION_CAUSAL_VALID`, FAST removal, WISE control authority, or World Model control writes.
+But the scientific campaign is not frozen or executed.
 
 ## Hard invariants
 
 ```text
 PX4 remains authoritative
-FAST remains the immediate disturbance-response baseline
+FAST remains active immediate-response baseline
 legacy EVENT_ONLY_V1 remains unchanged
 bounded-contiguous mode remains explicit opt-in
-World Model must not block first response
-candidate action remains bounded incremental augmentation
-StateBank remains causal and always warm
-historical failed roots remain immutable
+historical invalid roots remain immutable
 large artifacts=/media/nahhao74/KINGSTON
+V1/V1.1/V1.2 unchanged
+current V2 unchanged
 PX4_FIRMWARE_MODIFIED=false
 FAST_CONTROL_LAW_MODIFIED=false
 WM_CONTROL_WRITE=false
