@@ -6,9 +6,11 @@ For current authority use:
 
 ```text
 ../00_overview/CURRENT_STATUS.md
-../00_overview/CURRENT_EXECUTION_LADDER_PHASE_D_20260908.md
-phase_d/README.md
+../00_overview/CURRENT_STATE_CHECKPOINT_20260911_G_ACTION_E8_PREOFFER_REVIEW.md
+../00_overview/DOCUMENT_AUTHORITY.md
 ```
+
+Older Phase-D ladders and dated checkpoints remain lineage unless current authority explicitly reactivates them.
 
 ## Historical foundation retained
 
@@ -28,7 +30,7 @@ native-event CLEAR lifecycle
 next_status source-frontier repair
 ```
 
-The randomized WM1 `G_action` scientific campaign remains separately gated; it is not the current executable priority.
+The randomized WM1 `G_action` scientific campaign remains separately gated; it is not currently qualified scientific evidence.
 
 ## D0 V3 closure
 
@@ -146,7 +148,7 @@ The previously approved prospective `[V2,F0)` live population was therefore supe
 
 ### 7. Prewind Qualification V2 — fixed checkpoint C
 
-Current owner-approved prospective rule:
+Current owner-approved prospective rule at that historical Phase-D checkpoint:
 
 ```text
 PREWIND_POPULATION_V2=[V2_ELIGIBLE,C)
@@ -162,7 +164,7 @@ with:
 
 `C` must be prospectively frozen, source-owned, control-independent, non-adaptive, and immutable for the bound execution design.
 
-This is explicitly a qualification/admission contract revision:
+This was explicitly a qualification/admission contract revision:
 
 ```text
 SCIENTIFIC_EXPERIMENT_DESIGN_CHANGED=false
@@ -176,38 +178,190 @@ PHASE_D_METRIC_SEMANTIC_DELTA=NONE
 
 Physical F0 remains native Gazebo application truth.
 
+## Phase-D current disposition
+
+Phase-D is retained but not the active execution priority:
+
+```text
+ENGINEERING_BUILD_MODE=ACTIVE
+FORMAL_PHASE_D_QUALIFICATION=PAUSED_NOT_DELETED
+```
+
+The older Phase-D immediate sequence must not be mistaken for the current project `NEXT_TASK`.
+
+---
+
+# Current World-Model / G-action engineering line — 2026-09-10 to 2026-09-11
+
+## World Model timing / target closure
+
+Physical-target semantics were corrected and the structured World Model progressed through V1, V1.1 and V1.2.
+
+Retained conclusion:
+
+```text
+F_ENGINEERING_STATUS=USEFUL_SHORT_HORIZON_ENGINEERING_PREDICTION
+G_ENGINEERING_STATUS=NO_PREDICTIVE_GAIN_AT_CURRENT_EFFECTIVE_ACTION_SUPPORT
+PRIMARY_G_LIMITATION=INSUFFICIENT_EFFECTIVE_ACTION_HORIZON
+MODEL_CAPACITY_INCREASE_JUSTIFIED=false
+```
+
+V1.2 explicit-delay corrected decision/application timing semantics but did not recover general G gain. Oracle-delay checks did not justify capacity escalation.
+
+## Event-only action semantics closed
+
+Historical `3C/5C/7C` semantics were proven to represent accepted-event counts, not source-guaranteed contiguous treatment duration.
+
+Result:
+
+```text
+CONTINUOUS_EXPOSURE_REQUIRES_EXPLICIT_BOUNDED_CONTROL_SEMANTICS
+```
+
+## Bounded treatment timing closure
+
+Owner-approved canonical treatment timing:
+
+```text
+T_U = first source-bound effective E8 candidate application
+T_A = exact native accepted ACK frontier
+TREATMENT_ONSET=T_U
+```
+
+`T_A` remains transaction-confirmation semantics. Run-specific observed order/equality is not a universal invariant.
+
+## T_U/T_A implementation closure
+
+Runtime repair closed multiple implementation defects including rejected-status misclassification, stale bounded candidate cache, bounded zero/fail-close suppression and false invalid-source FAST zero semantics.
+
+The repaired path reached a 328-test regression pass during closure.
+
+A 20 ms engineering exposure still failed to complete under unchanged freshness because attitude context became stale after about 4 ms in the key fresh root.
+
+## Minimum realizable exposure characterization
+
+Retained conditional source-history support:
+
+```text
+>=4 ms   ~99.96–100%
+>=8 ms   ~80.2%
+>=12 ms  ~51.5%
+>=16 ms  ~13.5%
+>=20 ms  ~7.0%
+>=40 ms  ~0.35–0.42%
+>=80 ms  ~0–0.06%
+```
+
+These are engineering support diagnostics, not treatment completion probabilities.
+
+## AURA execution-phase V2.1 closure
+
+Experimental `MultiThreadedExecutor(2)` sharply reduced stale-attitude incidence but introduced repeatable large ready-to-handler dispatcher tails.
+
+Exact hash-guarded instrumentation and sparse/full perturbation closure established:
+
+```text
+INSTRUMENTATION_CAUSES_MATERIAL_V2_TAIL=false
+V2_READY_TO_HANDLER_TAIL_INTRINSICALLY_SUPPORTED=true
+STATUS=V2_CONCURRENCY_ARCHITECTURE_NOT_SUITABLE_CONFIRMED
+AURA_EXECUTION_PHASE_V1=CANONICAL
+```
+
+V2/V2.1 is closed for the current runtime architecture.
+
+## Source-rate path
+
+Runtime binary provenance binds the retained PX4 uXRCE attitude export path to the local compiled ~10 ms default poll interval, while upstream native producer rate remains unidentified.
+
+```text
+EXPORT_THROTTLE_BOUND_TO_RUNTIME=true
+NATIVE_PRODUCER_RATE_IDENTIFIED=false
+RATE_PATH_PRIMARY_LIMIT=RATE_PATH_MIXED
+SOURCE_RATE_INTERVENTION_CURRENTLY_JUSTIFIED=false
+```
+
+## Short-duration targeted identification
+
+Retained evidence could not identify 8 ms or 12 ms treatment signal, response latency, SNR, minimum detectable effect, or scientific sample size.
+
+A finite ZERO/8/12 engineering response campaign was therefore justified before any source-rate intervention.
+
+## Consumed 12-session ZERO/8/12 campaign
+
+Frozen manifest SHA256:
+
+```text
+9cf311644423ab1c65bd52977ef014db1eaeb0e184cd7a1c0c0e3efb3cb13486
+```
+
+Observed exposure evidence:
+
+```text
+8MS accepted=3; completed=2; one early source-invalid termination
+12MS accepted=3; completed=0; three early source-invalid terminations
+```
+
+The campaign is retained as:
+
+```text
+STATUS=ENGINEERING_CAMPAIGN_RUNTIME_INVALID
+```
+
+because four assigned offers failed before exact native acceptance and one historical release acceptance was not bound by the then-current validator. No assignment was replaced or replayed.
+
+## Runtime implementation repair
+
+Two implementation defects were repaired:
+
+```text
+1. runner now observes a current prospective C1 admission witness before its one offer
+2. release validator binds the exact accepted lifecycle transaction
+```
+
+Regression and fresh lifecycle-only qualification:
+
+```text
+FOCUSED_TESTS_PASS=84
+ZERO_QUALIFICATION_RESULT=PASS
+8MS_QUALIFICATION_RESULT=PASS
+12MS_QUALIFICATION_RESULT=RETAINED_NATIVE_ACCEPTANCE_TIMEOUT_AFTER_QUALIFIED_ADMISSION
+```
+
+For accepted transactions:
+
+```text
+T_A_SOURCE_BINDING_PASS=true
+T_U_SOURCE_BINDING_PASS=true
+CONTROL_LEDGER_IDENTITY_PASS=true
+BRIDGE_EFFECTIVE_STATE_IDENTITY_PASS=true
+FAIL_CLOSED_SEMANTICS_PASS=true
+```
+
+No T_U/T_A was fabricated for the rejected 12 ms transaction.
+
 ## Current milestone gate
 
-Current state:
+The old offer-before-C1 race is closed. The remaining issue is a material opportunity-definition question:
 
 ```text
-INFRASTRUCTURE_LAUNCH_ATTEMPTS=7
-F0_REACHED_ACQUISITION_ATTEMPTS=6
-RECORDED_USABLE_CONDITIONS=5_UNCHANGED_PENDING_PREWIND_REVIEW
-CHECKPOINT_C_CANONICAL_BINDING=PENDING
-PREWIND_PREFIX_SEAL=NOT_IMPLEMENTED
-EXACT_EXECUTION_HARNESS_GATE=NOT_COMPLETED
-READY_FOR_PHASE_D_RUNTIME=false
-READY_FOR_FAST_CHALLENGER_SELECTION=false
+current C1-qualified admission witness
+→ one pending assigned offer
+→ E8 can still reject before native accepted ACK
 ```
 
-Immediate sequence:
+Preventing the rejection requires a stronger E8 prospective condition than the current C1 admission predicate. Adding that condition changes the eligible opportunity population and therefore requires owner review.
+
+Current authority:
 
 ```text
-identify/freeze exact canonical C
--> owner upper-watermark through C
--> writer flush/accounting through C
--> C1/E8 reconciliation through C
--> one-shot disturbance authorization
--> adversarial exact execution harness
--> Astra independent audit
--> historical comparability / missing-condition decision
--> execution binding
--> Phase-D runtime
+CURRENT_STATUS=BLOCKED_MATERIAL_RUNTIME_SEMANTIC_CHANGE
+NEXT_TASK=OWNER_REVIEW_G_ACTION_E8_PREOFFER_ADMISSION_CONTRACT
+SCIENTIFIC_ACQUISITION_EXECUTED=false
+G_ACTION_CAUSAL_STATUS=UNQUALIFIED
 ```
 
-No scientific runtime is authorized before the exact harness passes.
+The owner must choose whether stronger source-proven E8 pre-offer eligibility is allowed, whether pre-acceptance E8 rejection remains an assigned outcome, or whether conditional response and C1→E8 admission/support are handled as separate engineering questions.
 
 ## Evidence retention rule
 
-Formal roots, failed attempts, historical audits, and superseded owner decisions remain immutable lineage. New prospective qualification decisions do not rewrite historical classifications.
+Formal roots, failed attempts, historical audits, consumed manifests, and superseded owner decisions remain immutable lineage. New prospective qualification decisions do not rewrite historical classifications.
